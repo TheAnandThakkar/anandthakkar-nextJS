@@ -7,8 +7,9 @@ const navItems = {
   '/blog': {
     name: 'blog',
   },
-  'https://vercel.com/templates/next.js/portfolio-starter-kit': {
-    name: 'deploy',
+  '/resume': {
+    name: 'Download Resume',
+    download: true,  // add a flag to identify download links
   },
 }
 
@@ -21,16 +22,31 @@ export function Navbar() {
           id="nav"
         >
           <div className="flex flex-row space-x-0 pr-10">
-            {Object.entries(navItems).map(([path, { name }]) => {
-              return (
-                <Link
-                  key={path}
-                  href={path}
-                  className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
-                >
-                  {name}
-                </Link>
-              )
+            {Object.entries(navItems).map(([path, { name, download }]) => {
+              if (download) {
+                // For resume, use <a> with download attribute
+                return (
+                  <a
+                    key={path}
+                    href="/Anand_Thakkar.pdf"  // path relative to public folder
+                    download
+                    className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
+                  >
+                    {name}
+                  </a>
+                )
+              } else {
+                // For normal nav links use Next.js Link component
+                return (
+                  <Link
+                    key={path}
+                    href={path}
+                    className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
+                  >
+                    {name}
+                  </Link>
+                )
+              }
             })}
           </div>
         </nav>
