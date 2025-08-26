@@ -1,6 +1,11 @@
 import Link from 'next/link'
 
-const navItems = {
+type NavItem = {
+  name: string
+  download?: boolean
+}
+
+const navItems: Record<string, NavItem> = {
   '/': {
     name: 'home',
   },
@@ -9,7 +14,7 @@ const navItems = {
   },
   '/resume': {
     name: 'Download Resume',
-    download: true,  // add a flag to identify download links
+    download: true, // optional flag to identify download links
   },
 }
 
@@ -24,11 +29,10 @@ export function Navbar() {
           <div className="flex flex-row space-x-0 pr-10">
             {Object.entries(navItems).map(([path, { name, download }]) => {
               if (download) {
-                // For resume, use <a> with download attribute
                 return (
                   <a
                     key={path}
-                    href="/Anand_Thakkar.pdf"  // path relative to public folder
+                    href="/Anand_Thakkar.pdf" // file in public folder
                     download
                     className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex align-middle relative py-1 px-2 m-1"
                   >
@@ -36,7 +40,6 @@ export function Navbar() {
                   </a>
                 )
               } else {
-                // For normal nav links use Next.js Link component
                 return (
                   <Link
                     key={path}
