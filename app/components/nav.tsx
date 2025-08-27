@@ -1,22 +1,22 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 type NavItem = {
-  name: string
-  download?: boolean
-}
+  name: string;
+  download?: boolean;
+};
 
 const navItems: Record<string, NavItem> = {
-  '/': {
-    name: 'home',
+  "/": {
+    name: "Home",
   },
-  '/blog': {
-    name: 'blog',
+  "/blog": {
+    name: "View all blogs",
   },
-  '/resume': {
-    name: 'Download Resume',
+  "/resume": {
+    name: "Download Resume",
     download: true, // optional flag to identify download links
   },
-}
+};
 
 export function Navbar() {
   return (
@@ -38,7 +38,7 @@ export function Navbar() {
                   >
                     {name}
                   </a>
-                )
+                );
               } else {
                 return (
                   <Link
@@ -48,12 +48,39 @@ export function Navbar() {
                   >
                     {name}
                   </Link>
-                )
+                );
               }
             })}
           </div>
+          {/* This new div acts as a spacer to push the icons to the end */}
+          {/* <div className="flex flex-row items-center space-x-4 ml-auto">
+            <a
+              className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://linkedin.com/in/theanandthakkar"
+            >
+              <img src="/linkedin.png" alt="LinkedIn Logo" className="h-7" />
+            </a>
+            <a
+              className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://twitter.com/theanandthakkar"
+            >
+              <img src="/twitter.png" alt="Twitter Logo" className="h-7" />
+            </a>
+            <a
+              className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
+              rel="noopener noreferrer"
+              target="_blank"
+              href="https://github.com/theanandthakkar"
+            >
+              <img src="/github.png" alt="GitHub Logo" className="h-7" />
+            </a>
+          </div> */}
         </nav>
       </div>
     </aside>
-  )
+  );
 }

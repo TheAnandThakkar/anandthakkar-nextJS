@@ -12,7 +12,7 @@ function ArrowIcon() {
         fill="currentColor"
       />
     </svg>
-  )
+  );
 }
 
 export default function Footer() {
@@ -27,7 +27,7 @@ export default function Footer() {
             href="https://github.com/theanandthakkar"
           >
             <ArrowIcon />
-            <p className="ml-2 h-7">github</p>
+            <p className="ml-2 h-7">GitHub</p>
           </a>
         </li>
         <li>
@@ -38,7 +38,7 @@ export default function Footer() {
             href="https://linkedin.com/in/theanandthakkar"
           >
             <ArrowIcon />
-            <p className="ml-2 h-7">linkedin</p>
+            <p className="ml-2 h-7">LinkedIn</p>
           </a>
         </li>
         <li>
@@ -49,13 +49,13 @@ export default function Footer() {
             href="https://twitter.com/theanandthakkar"
           >
             <ArrowIcon />
-            <p className="ml-2 h-7">twitter</p>
+            <p className="ml-2 h-7">Twitter</p>
           </a>
         </li>
       </ul>
-      {/* <p className="mt-8 text-neutral-600 dark:text-neutral-300">
-        © {new Date().getFullYear()} MIT Licensed
-      </p> */}
+      <p className="mt-8 text-neutral-600 dark:text-neutral-300 text-center transition-all duration-300 hover:text-cyan-400 hover:scale-105 cursor-pointer">
+        © {new Date().getFullYear()} Anand Thakkar. With ❤️ in India.
+      </p>
     </footer>
-  )
+  );
 }
