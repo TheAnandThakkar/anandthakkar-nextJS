@@ -1,5 +1,23 @@
 import { BlogPosts } from "app/components/posts";
 
+// Helper function
+function getExperience(startDate: string) {
+  const start = new Date(startDate);
+  const now = new Date();
+
+  let years = now.getFullYear() - start.getFullYear();
+  let months = now.getMonth() - start.getMonth();
+
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+
+  const experience = years + months / 12;
+
+  return experience.toFixed(1); // e.g., "3.3"
+}
+
 export default function Page() {
   return (
     <section>
@@ -19,8 +37,11 @@ export default function Page() {
       </h1>
 
       <p className="mb-4">
-        {`Backend Developer & AWS Certified Cloud Practitioner with 4+ years in fintech/SaaS. Skilled in Java, Spring Boot, AWS, scalable APIs, and cloud optimisation. Strong cross-functional experience bridging engineering and product.`}
+        {`Backend Developer & AWS Certified Cloud Practitioner with ${getExperience(
+          "2022-05-16"
+        )} years in fintech/SaaS. Skilled in Java, Spring Boot, AWS, scalable APIs, and cloud optimisation. Strong cross-functional experience bridging engineering and product.`}
       </p>
+
       <div className="my-8">
         <BlogPosts />
       </div>
