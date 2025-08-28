@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/preview-image.png",
+        url: "https://www.anandthakkar.com/preview-image.png",
         width: 1200,
         height: 630,
         alt: "Anand Thakkar Personal Website Preview",
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     title: "Anand Thakkar – Software Developer & Tech Creator",
     description:
       "Explore projects, blogs, and open-source contributions of Anand Thakkar.",
-    images: ["/preview-image.png"],
+    images: ["https://www.anandthakkar.com/preview-image.png"],
     creator: "@theanandthakkar",
   },
   robots: {
