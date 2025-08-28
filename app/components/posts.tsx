@@ -5,34 +5,32 @@ export function BlogPosts() {
   let allBlogs = getBlogPosts();
 
   return (
-    <div>
-      {allBlogs
-        .sort((a, b) => {
-          if (
+    <section>
+      <h2 className="mb-6 text-2xl font-semibold tracking-tighter">
+        Blog Posts 📝
+      </h2>
+      <div className="space-y-6">
+        {allBlogs
+          .sort((a, b) =>
             new Date(a.metadata.publishedAt) > new Date(b.metadata.publishedAt)
-          ) {
-            return -1;
-          }
-          return 1;
-        })
-        .map((post) => (
-          <Link
-            key={post.slug}
-            className="flex flex-col space-y-1 mb-4"
-            href={`/blog/${post.slug}`}
-          >
-            {/* The parent container is now always a column (flex-col) */}
-            <div className="w-full flex flex-col space-x-0">
-              <p className="text-neutral-900 dark:text-neutral-100 tracking-tight underline hover:text-neutral-600 dark:hover:text-neutral-400 font-medium">
+              ? -1
+              : 1
+          )
+          .map((post) => (
+            <Link
+              key={post.slug}
+              className="flex flex-col space-y-1"
+              href={`/blog/${post.slug}`}
+            >
+              <p className="text-blue-600 dark:text-blue-400 tracking-tight underline hover:text-blue-800 dark:hover:text-blue-300 font-medium text-lg">
                 {post.metadata.title}
               </p>
-              {/* This line is now full width and aligns text to the right */}
-              <p className="text-neutral-600 dark:text-neutral-400 w-full text-left tabular-nums">
+              <p className="text-neutral-600 dark:text-neutral-400 text-left tabular-nums text-sm">
                 {formatDate(post.metadata.publishedAt, false)}
               </p>
-            </div>
-          </Link>
-        ))}
-    </div>
+            </Link>
+          ))}
+      </div>
+    </section>
   );
 }

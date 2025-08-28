@@ -1,4 +1,8 @@
 import { BlogPosts } from "app/components/posts";
+import { Skills } from "./components/skills";
+import { Contributions } from "./components/contributions";
+import { Awards } from "./components/awards";
+import { Experience } from "./components/experience";
 
 // Helper function
 function getExperience(startDate: string) {
@@ -21,6 +25,7 @@ function getExperience(startDate: string) {
 export default function Page() {
   return (
     <section>
+      {/* Intro / Hero */}
       <h1 className="mb-8 text-2xl font-semibold tracking-tighter flex items-end space-x-4">
         <div>
           <img
@@ -42,7 +47,29 @@ export default function Page() {
         )} years in fintech/SaaS. Skilled in Java, Spring Boot, AWS, scalable APIs, and cloud optimisation. Strong cross-functional experience bridging engineering and product.`}
       </p>
 
-      <div className="my-8">
+      {/* Work Experience */}
+      <div className="my-12">
+        <Experience />
+      </div>
+
+      {/* Open Source Contributions */}
+      <div className="my-12">
+        <Contributions />
+      </div>
+
+      {/* Awards & Certifications */}
+      <div className="my-12">
+        <Awards />
+      </div>
+
+      {/* Skills */}
+      {/* <div className="my-12">
+        <h2 className="mb-6 text-xl font-semibold tracking-tight">Skills</h2>
+        <Skills />
+      </div> */}
+
+      {/* Blog Posts */}
+      <div className="my-12">
         <BlogPosts />
       </div>
     </section>
