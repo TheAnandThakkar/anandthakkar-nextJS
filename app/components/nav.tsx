@@ -53,6 +53,15 @@ export function Navbar() {
             })}
           </div>
           {/* This new div acts as a spacer to push the icons to the end */}
+          {/* Contact at the end */}
+          <div className="ml-auto">
+            <a
+              href="mailto:anand.thakkar92@gmail.com"
+              className="transition-all hover:text-neutral-800 dark:hover:text-neutral-200 flex items-center relative py-1 px-2 m-1"
+            >
+              ✉️ Email me
+            </a>
+          </div>
         </nav>
       </div>
     </aside>

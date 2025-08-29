@@ -53,8 +53,8 @@ export default function Footer() {
           </a>
         </li>
       </ul>
-      <p className="mt-8 text-neutral-600 dark:text-neutral-300 text-center transition-all duration-300 hover:text-cyan-400 hover:scale-105 cursor-pointer">
-        © {new Date().getFullYear()} Anand Thakkar. With ❤️ in India.
+      <p className="mt-8 text-neutral-600 dark:text-neutral-300 text-left cursor-default">
+        © {new Date().getFullYear()} Anand Thakkar. Made in Bharat.
       </p>
     </footer>
   );

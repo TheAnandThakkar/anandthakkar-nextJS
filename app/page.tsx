@@ -5,6 +5,7 @@ import { Awards } from "./components/awards";
 import { Experience } from "./components/experience";
 
 // Helper function
+// Helper function
 function getExperience(startDate: string) {
   const start = new Date(startDate);
   const now = new Date();
@@ -17,12 +18,11 @@ function getExperience(startDate: string) {
     months += 12;
   }
 
-  const experience = years + months / 12;
-
-  return experience.toFixed(1); // e.g., "3.3"
+  return { years, months }; // return as object
 }
 
 export default function Page() {
+  const experience = getExperience("2022-05-16");
   return (
     <section>
       {/* Intro / Hero */}
@@ -42,9 +42,13 @@ export default function Page() {
       </h1>
 
       <p className="mb-4">
-        {`Backend Developer & AWS Certified Cloud Practitioner with ${getExperience(
-          "2022-05-16"
-        )} years in fintech/SaaS. Skilled in Java, Spring Boot, AWS, scalable APIs, and cloud optimisation. Strong cross-functional experience bridging engineering and product.`}
+        {`Backend Developer & AWS Certified Cloud Practitioner with ${
+          experience.years
+        } year${experience.years > 1 ? "s" : ""} and ${
+          experience.months
+        } month${
+          experience.months !== 1 ? "s" : ""
+        } of experience in fintech/SaaS. Skilled in Java, Spring Boot, AWS, scalable APIs, and cloud optimisation. Strong cross-functional experience bridging engineering and product.`}
       </p>
 
       {/* Work Experience */}
