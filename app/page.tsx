@@ -24,7 +24,9 @@ function getExperience(startDate: string) {
 export default function Page() {
   const experience = getExperience("2022-05-16");
   return (
-    <section>
+    <section className="pt-16">
+      {" "}
+      {/* <-- Add padding top here */}
       {/* Intro / Hero */}
       <h1 className="mb-8 text-2xl font-semibold tracking-tighter flex items-end space-x-4">
         <div>
@@ -40,7 +42,6 @@ export default function Page() {
           <span className="text-5xl font-bold">Thakkar</span>
         </div>
       </h1>
-
       <p className="mb-4">
         {`Backend Developer & AWS Certified Cloud Practitioner with ${
           experience.years
@@ -50,28 +51,18 @@ export default function Page() {
           experience.months !== 1 ? "s" : ""
         } of experience in fintech/SaaS. Skilled in Java, Spring Boot, AWS, scalable APIs, and cloud optimisation. Strong cross-functional experience bridging engineering and product.`}
       </p>
-
       {/* Work Experience */}
       <div className="my-12">
         <Experience />
       </div>
-
       {/* Open Source Contributions */}
       <div className="my-12">
         <Contributions />
       </div>
-
       {/* Awards & Certifications */}
       <div className="my-12">
         <Awards />
       </div>
-
-      {/* Skills */}
-      {/* <div className="my-12">
-        <h2 className="mb-6 text-xl font-semibold tracking-tight">Skills</h2>
-        <Skills />
-      </div> */}
-
       {/* Blog Posts */}
       <div className="my-12">
         <BlogPosts />
