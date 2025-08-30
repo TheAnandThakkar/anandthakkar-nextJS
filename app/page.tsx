@@ -1,11 +1,14 @@
 // app/page.tsx
 import Image from "next/image";
 import { BlogPosts } from "app/components/posts";
-import { Skills } from "./components/skills";
+// import { Skills } from "./components/skills"; // unused right now
 import { Contributions } from "./components/contributions";
 import { Awards } from "./components/awards";
 import { Experience } from "./components/experience";
 import { FaEnvelope, FaFilePdf } from "react-icons/fa";
+
+import { baseUrl } from "./sitemap";
+import SocialPreviewCard from "./components/social-preview";
 
 // Helper: compute years & months since a start date
 function getExperience(startDate: string) {
@@ -39,8 +42,8 @@ export default function Page() {
         <Image
           src="/headshot.jpg"
           alt="Portrait of Anand Thakkar"
-          width={112}
-          height={112}
+          width={144} // was 128
+          height={144} // was 128
           priority
           className="rounded-xl border border-neutral-200 dark:border-neutral-800 object-cover"
         />
@@ -103,14 +106,24 @@ export default function Page() {
         <Awards />
       </div>
 
-      {/* Skills */}
-      {/* <div className="my-10 md:my-12">
+      {/* Skills (currently hidden)
+      <div className="my-10 md:my-12">
         <Skills />
       </div> */}
 
       {/* Blog Posts */}
       <div className="my-10 md:my-12">
         <BlogPosts />
+      </div>
+
+      {/* Social preview card */}
+      <div className="my-8">
+        <SocialPreviewCard
+          url={baseUrl}
+          title="Anand Thakkar – Software Developer & Tech Creator"
+          description="Explore projects, blogs, and open-source contributions of Anand Thakkar."
+          image="/preview-image.png"
+        />
       </div>
     </section>
   );

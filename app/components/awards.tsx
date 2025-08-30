@@ -1,6 +1,6 @@
 // app/components/awards.tsx
 import Image from "next/image";
-import { awards } from "app/data/awards"; // if your file is app/data/award.ts, change this import
+import { awards } from "app/data/awards";
 import { SiCredly } from "react-icons/si";
 import { FaExternalLinkAlt, FaGoogle } from "react-icons/fa";
 
@@ -51,19 +51,25 @@ export function Awards() {
                 ) : null}
 
                 <div className="flex-1">
+                  {/* Title + (year pill for non-Credly only) */}
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-medium">{item.title}</h3>
-                    {item.year && (
+                    {/* For AWS/Cre dly: don't show the pill; we'll show a simple line below the link */}
+                    {platform !== "credly" && item.year && (
                       <span className="inline-flex items-center rounded-full border border-neutral-200 dark:border-neutral-800 px-2 py-0.5 text-xs text-neutral-600 dark:text-neutral-400">
                         {item.year}
                       </span>
                     )}
                   </div>
 
-                  <p className="text-neutral-600 dark:text-neutral-400 text-left text-sm">
-                    {item.description}
-                  </p>
+                  {/* Description */}
+                  {item.description && (
+                    <p className="text-neutral-600 dark:text-neutral-400 text-left text-sm">
+                      {item.description}
+                    </p>
+                  )}
 
+                  {/* CTA link */}
                   {item.url && (
                     <a
                       href={item.url}
@@ -75,6 +81,13 @@ export function Awards() {
                       <Icon className="text-lg" />
                       <span>{label}</span>
                     </a>
+                  )}
+
+                  {/* For AWS/ Credly: simple issue date line below the link (no pill) */}
+                  {platform === "credly" && item.year && (
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
+                      Issue date: {item.year}
+                    </p>
                   )}
                 </div>
               </div>

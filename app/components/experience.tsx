@@ -31,15 +31,8 @@ export function Experience() {
               ) : null}
 
               <div className="flex-1">
-                {/* Company + period pill (no link on title) */}
-                <div className="flex items-center gap-2">
-                  <h3 className="text-lg font-medium">{job.company}</h3>
-                  {job.joiningDate && (
-                    <span className="inline-flex items-center rounded-full border border-neutral-200 dark:border-neutral-800 px-2 py-0.5 text-xs text-neutral-600 dark:text-neutral-400">
-                      {job.joiningDate}
-                    </span>
-                  )}
-                </div>
+                {/* Company (no link on title) */}
+                <h3 className="text-lg font-medium">{job.company}</h3>
 
                 {/* Designation */}
                 {job.designation && (
@@ -55,13 +48,21 @@ export function Experience() {
                   </p>
                 )}
 
+                {/* Joining date (simple line, no pill) */}
+                {job.joiningDate && (
+                  <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
+                    <span className="font-medium">Joining Date:</span>{" "}
+                    {job.joiningDate}
+                  </p>
+                )}
+
                 {/* Separate CTA link */}
                 {job.website && (
                   <a
                     href={job.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 no-underline"
+                    className="mt-1 flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 no-underline"
                     aria-label={`Visit website: ${job.company}`}
                   >
                     <FaExternalLinkAlt className="text-lg" />
