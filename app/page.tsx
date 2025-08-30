@@ -77,7 +77,7 @@ export default function Page() {
           Email
         </a>
         <a
-          href="/resume.pdf" // ensure /public/resume.pdf exists
+          href="/Anand_Thakkar.pdf"
           target="_blank"
           rel="noopener noreferrer"
           className="group inline-flex items-center gap-2 rounded-xl border border-neutral-200 px-3 py-2 text-sm font-medium text-neutral-800 hover:bg-neutral-50 dark:border-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-900"
