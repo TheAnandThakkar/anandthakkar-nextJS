@@ -1,60 +1,65 @@
-function ArrowIcon() {
+// app/components/footer.tsx
+import { FaGithub, FaLinkedin } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
+type SocialLinkProps = {
+  href: string;
+  label: string;
+  Icon: React.ComponentType<{ className?: string }>;
+  hoverClass?: string; // brand hover color
+};
+
+function SocialLink({ href, label, Icon, hoverClass }: SocialLinkProps) {
   return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 12 12"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
-        fill="currentColor"
-      />
-    </svg>
+    <li>
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={label}
+        className={`group inline-flex items-center gap-2 rounded-xl px-2 py-1 text-sm text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white ${
+          hoverClass ?? ""
+        }`}
+        title={label}
+      >
+        <Icon className="text-[18px] opacity-90 transition-colors" />
+        <span className="font-medium">{label}</span>
+      </a>
+    </li>
   );
 }
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="mb-16">
-      <ul className="font-sm mt-8 flex flex-col space-x-0 space-y-2 text-neutral-600 md:flex-row md:space-x-4 md:space-y-0 dark:text-neutral-300">
-        <li>
-          <a
-            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://github.com/theanandthakkar"
-          >
-            <ArrowIcon />
-            <p className="ml-2 h-7">GitHub</p>
-          </a>
-        </li>
-        <li>
-          <a
-            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://linkedin.com/in/theanandthakkar"
-          >
-            <ArrowIcon />
-            <p className="ml-2 h-7">LinkedIn</p>
-          </a>
-        </li>
-        <li>
-          <a
-            className="flex items-center transition-all hover:text-neutral-800 dark:hover:text-neutral-100"
-            rel="noopener noreferrer"
-            target="_blank"
-            href="https://twitter.com/theanandthakkar"
-          >
-            <ArrowIcon />
-            <p className="ml-2 h-7">Twitter</p>
-          </a>
-        </li>
+      <ul className="mt-8 flex flex-wrap gap-3">
+        <SocialLink
+          href="https://github.com/TheAnandThakkar"
+          label="GitHub"
+          Icon={FaGithub}
+          // GitHub brand is neutral; keep text color change subtle
+          hoverClass="hover:text-neutral-900 dark:hover:text-white"
+        />
+        <SocialLink
+          href="https://linkedin.com/in/theanandthakkar"
+          label="LinkedIn"
+          Icon={FaLinkedin}
+          // LinkedIn blue on hover
+          hoverClass="hover:text-[#0A66C2]"
+        />
+        <SocialLink
+          href="https://x.com/theanandthakkar"
+          label="X (Twitter)"
+          Icon={FaXTwitter}
+          // X brand is black/white; keep neutral hover
+          hoverClass="hover:text-neutral-900 dark:hover:text-white"
+        />
       </ul>
-      <p className="mt-8 text-neutral-600 dark:text-neutral-300 text-left cursor-default">
-        © {new Date().getFullYear()} Anand Thakkar. Made in Bharat.
+
+      <p className="mt-8 cursor-default text-left text-neutral-600 dark:text-neutral-300">
+        © {year} Anand Thakkar. Made in Bharat.
       </p>
     </footer>
   );

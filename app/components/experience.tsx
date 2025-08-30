@@ -1,40 +1,74 @@
+// app/components/experience.tsx
 import Image from "next/image";
 import { experience } from "app/data/experience";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 export function Experience() {
+  // Keep logo size consistent with Awards (32x32)
+  const LOGO_SIZE = 32;
+
   return (
     <section>
       <h2 className="mb-6 text-2xl font-semibold tracking-tighter">
         Work Experience 💼
       </h2>
+
       <div className="space-y-6">
         {experience.map((job) => (
-          <div key={job.company} className="flex items-start space-x-3">
-            {/* Company Logo */}
-            <Image
-              src={job.logo}
-              alt={job.company}
-              width={64}
-              height={64}
-              className="rounded"
-            />
+          <div
+            key={`${job.company}-${job.joiningDate ?? ""}`}
+            className="space-y-1"
+          >
+            <div className="flex items-start gap-3">
+              {job.logo ? (
+                <Image
+                  src={job.logo}
+                  alt={`${job.company} logo`}
+                  width={LOGO_SIZE}
+                  height={LOGO_SIZE}
+                  className="rounded-md border border-neutral-200 dark:border-neutral-800 bg-white object-contain p-1"
+                />
+              ) : null}
 
-            {/* Job Details */}
-            <div className="flex flex-col space-y-1">
-              <a
-                href={job.website}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 dark:text-blue-400 tracking-tight underline hover:text-blue-800 dark:hover:text-blue-300 font-medium"
-              >
-                {job.company}
-              </a>
-              <p className="text-neutral-600 dark:text-neutral-400 text-left tabular-nums">
-                {job.designation} • {job.joiningDate}
-              </p>
-              <p className="text-neutral-600 dark:text-neutral-400 text-left">
-                {job.description}
-              </p>
+              <div className="flex-1">
+                {/* Company + period pill (no link on title) */}
+                <div className="flex items-center gap-2">
+                  <h3 className="text-lg font-medium">{job.company}</h3>
+                  {job.joiningDate && (
+                    <span className="inline-flex items-center rounded-full border border-neutral-200 dark:border-neutral-800 px-2 py-0.5 text-xs text-neutral-600 dark:text-neutral-400">
+                      {job.joiningDate}
+                    </span>
+                  )}
+                </div>
+
+                {/* Designation */}
+                {job.designation && (
+                  <p className="text-neutral-700 dark:text-neutral-300 text-sm">
+                    {job.designation}
+                  </p>
+                )}
+
+                {/* Description */}
+                {job.description && (
+                  <p className="text-neutral-600 dark:text-neutral-400 text-left text-sm">
+                    {job.description}
+                  </p>
+                )}
+
+                {/* Separate CTA link */}
+                {job.website && (
+                  <a
+                    href={job.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 no-underline"
+                    aria-label={`Visit website: ${job.company}`}
+                  >
+                    <FaExternalLinkAlt className="text-lg" />
+                    <span>Visit website</span>
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         ))}

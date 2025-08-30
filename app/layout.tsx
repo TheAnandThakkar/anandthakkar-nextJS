@@ -1,11 +1,11 @@
+// app/layout.tsx
 import "./global.css";
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
-import { Navbar } from "./components/nav";
+import Footer from "./components/footer";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import Footer from "./components/footer";
 import { baseUrl } from "./sitemap";
 
 export const metadata: Metadata = {
@@ -26,7 +26,8 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://www.anandthakkar.com/preview-image.png",
+        // Use relative URL since metadataBase is set
+        url: "/preview-image.png",
         width: 1200,
         height: 630,
         alt: "Anand Thakkar Personal Website Preview",
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     title: "Anand Thakkar – Software Developer & Tech Creator",
     description:
       "Explore projects, blogs, and open-source contributions of Anand Thakkar.",
-    images: ["https://www.anandthakkar.com/preview-image.png"],
+    images: ["/preview-image.png"],
     creator: "@theanandthakkar",
   },
   robots: {
@@ -54,7 +55,9 @@ export const metadata: Metadata = {
   },
 };
 
-const cx = (...classes) => classes.filter(Boolean).join(" ");
+// Tiny utility for conditional classnames (typed)
+const cx = (...classes: Array<string | false | null | undefined>) =>
+  classes.filter(Boolean).join(" ");
 
 export default function RootLayout({
   children,
@@ -71,10 +74,8 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
-        {/* Navbar should live outside <main> */}
-        <Navbar />
-
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
+        {/* Main content */}
+        <main className="flex-auto min-w-0 flex flex-col px-2 md:px-0">
           {children}
         </main>
 
