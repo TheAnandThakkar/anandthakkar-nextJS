@@ -1,14 +1,15 @@
 // app/page.tsx
 import Image from "next/image";
 import { BlogPosts } from "app/components/posts";
-// import { Skills } from "./components/skills"; // unused right now
 import { Contributions } from "./components/contributions";
 import { Awards } from "./components/awards";
 import { Experience } from "./components/experience";
-import { FaEnvelope, FaFilePdf } from "react-icons/fa";
-
+import { FaEnvelope, FaFilePdf } from "react-icons/fa6";
 import { baseUrl } from "./sitemap";
 import SocialPreviewCard from "./components/social-preview";
+import QrContactButton from "./components/qr-contact";
+
+export const revalidate = 86400; // ✅ lightly cache the page (24h)
 
 // Helper: compute years & months since a start date
 function getExperience(startDate: string) {
@@ -26,9 +27,10 @@ function getExperience(startDate: string) {
 function formatExperience(exp: { years: number; months: number }) {
   const y = exp.years;
   const m = exp.months;
-  const ys = y > 0 ? `${y} yr${y > 1 ? "s" : ""}` : "";
-  const ms = m > 0 ? `${m} mo${m > 1 ? "s" : ""}` : "";
-  return [ys, ms].filter(Boolean).join(" ");
+  const parts: string[] = [];
+  if (y > 0) parts.push(`${y} year${y > 1 ? "s" : ""}`);
+  if (m > 0) parts.push(`${m} month${m > 1 ? "s" : ""}`);
+  return parts.length ? parts.join(" & ") : "0 months";
 }
 
 export default function Page() {
@@ -41,9 +43,9 @@ export default function Page() {
       <header className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-end gap-4">
         <Image
           src="/headshot.jpg"
-          alt="Portrait of Anand Thakkar"
-          width={144} // was 128
-          height={144} // was 128
+          alt="Photo of Anand Thakkar"
+          width={144}
+          height={144}
           priority
           className="rounded-xl border border-neutral-200 dark:border-neutral-800 object-cover"
         />
@@ -63,37 +65,37 @@ export default function Page() {
         {`Backend developer with ${expStr} of experience in fintech/SaaS. Skilled in Java, Spring Boot, AWS, and building scalable APIs with a focus on performance and cost optimization. Strong cross-functional collaborator bridging engineering and product.`}
       </p>
 
-      {/* Quick actions (colorful icons) */}
+      {/* Quick actions */}
       <div className="mb-10 flex flex-wrap items-center gap-3">
+        {/* Primary: Contact (neutral wording) */}
         <a
-          href="mailto:anand.thakkar@outlook.com"
-          className="group inline-flex items-center gap-2 rounded-xl border border-neutral-200 px-3 py-2 text-sm font-medium text-neutral-800 hover:bg-neutral-50 dark:border-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-900"
-          aria-label="Email Anand Thakkar"
+          href="mailto:anand.thakkar@outlook.com?subject=Hello%20Anand"
+          className="group inline-flex items-center gap-2 rounded-xl border border-blue-600 bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:focus-visible:ring-offset-0"
+          aria-label="Contact Anand Thakkar"
         >
-          <FaEnvelope
-            aria-hidden
-            className="text-blue-600 group-hover:text-blue-700 dark:group-hover:text-blue-500"
-          />
-          Email
+          <FaEnvelope aria-hidden className="opacity-95" />
+          Let’s connect
         </a>
+
+        {/* Secondary: Resume */}
         <a
           href="/Anand_Thakkar.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className="group inline-flex items-center gap-2 rounded-xl border border-neutral-200 px-3 py-2 text-sm font-medium text-neutral-800 hover:bg-neutral-50 dark:border-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-900"
-          aria-label="Download Resume"
+          className="group inline-flex items-center gap-2 rounded-xl border border-neutral-300 px-3 py-2 text-sm font-medium text-neutral-800 hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:border-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-900"
+          aria-label="Download résumé"
         >
-          <FaFilePdf
-            aria-hidden
-            className="text-red-600 group-hover:text-red-700 dark:group-hover:text-red-500"
-          />
-          Resume
+          <FaFilePdf aria-hidden className="text-red-600" />
+          Download résumé
         </a>
+
+        {/* Save contact: open QR modal */}
+        {/* <QrContactButton /> */}
       </div>
 
-      {/* Work Experience */}
-      <div className="my-10 md:my-12">
-        <Experience />
+      {/* Awards (cred strip near top for quick skim) */}
+      <div className="my-8 md:my-10">
+        <Awards />
       </div>
 
       {/* Open Source Contributions */}
@@ -101,17 +103,12 @@ export default function Page() {
         <Contributions />
       </div>
 
-      {/* Awards & Certifications */}
+      {/* Work Experience */}
       <div className="my-10 md:my-12">
-        <Awards />
+        <Experience />
       </div>
 
-      {/* Skills (currently hidden)
-      <div className="my-10 md:my-12">
-        <Skills />
-      </div> */}
-
-      {/* Blog Posts */}
+      {/* Blog */}
       <div className="my-10 md:my-12">
         <BlogPosts />
       </div>

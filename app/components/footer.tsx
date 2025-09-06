@@ -1,6 +1,4 @@
-// app/components/footer.tsx
-import { FaGithub, FaLinkedin } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
 
 type SocialLinkProps = {
   href: string;
@@ -17,7 +15,7 @@ function SocialLink({ href, label, Icon, hoverClass }: SocialLinkProps) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={label}
-        className={`group inline-flex items-center gap-2 rounded-xl px-2 py-1 text-sm text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white ${
+        className={`group inline-flex items-center gap-2 rounded-xl px-2 py-1 text-sm text-neutral-600 transition-colors hover:text-neutral-900 dark:text-neutral-300 dark:hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 ${
           hoverClass ?? ""
         }`}
         title={label}

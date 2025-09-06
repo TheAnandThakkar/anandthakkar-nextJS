@@ -1,6 +1,6 @@
 export const contributions = [
   {
-    name: "Concerto Linter (GSoC 2024 Proposal)",
+    name: "Concerto Linter (GSoC 2025 Proposal)",
     description:
       "A linter tool for the Concerto modeling language, designed to enhance code validation, catch errors early, and improve overall developer productivity.",
     url: "https://github.com/TheAnandThakkar/concerto-linter",

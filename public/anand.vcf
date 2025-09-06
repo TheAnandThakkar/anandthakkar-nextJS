@@ -1,0 +1,15 @@
+BEGIN:VCARD
+
+VERSION:3.0
+
+N:Thakkar;Anand;;;
+
+FN:Anand Thakkar
+
+EMAIL;TYPE=INTERNET;TYPE=WORK:anand.thakkar@outlook.com
+
+TEL;TYPE=CELL:+919825012364
+
+URL:https://www.anandthakkar.com
+
+END:VCARD

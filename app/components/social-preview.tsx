@@ -3,8 +3,7 @@
 
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
-import { FaLinkedin, FaWhatsapp, FaLink } from "react-icons/fa";
-import { FaXTwitter } from "react-icons/fa6";
+import { FaLinkedin, FaWhatsapp, FaLink, FaXTwitter } from "react-icons/fa6";
 import { IoShareOutline } from "react-icons/io5";
 
 type Props = {

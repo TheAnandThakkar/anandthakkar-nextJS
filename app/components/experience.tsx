@@ -59,10 +59,11 @@ export function Experience() {
                 {/* Separate CTA link */}
                 {job.website && (
                   <a
+                    // inside <a ...> in Experience()
+                    className="mt-1 flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded"
                     href={job.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-1 flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 no-underline"
                     aria-label={`Visit website: ${job.company}`}
                   >
                     <FaExternalLinkAlt className="text-lg" />

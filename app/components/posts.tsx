@@ -1,3 +1,4 @@
+// app/components/posts.tsx
 import Link from "next/link";
 import { formatDate, getBlogPosts } from "app/blog/utils";
 
@@ -25,7 +26,8 @@ export function BlogPosts() {
     return tb - ta;
   });
 
-  if (!blogs.length) {
+  // If there are no posts, show a simple placeholder
+  if (blogs.length === 0) {
     return (
       <section>
         <h2 className="mb-6 text-2xl font-semibold tracking-tighter">
@@ -38,11 +40,31 @@ export function BlogPosts() {
     );
   }
 
+  // JSON-LD for visible posts
+  const jsonLd = blogs
+    .filter((p) => !!p.metadata.publishedAt)
+    .map((p) => ({
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      headline: p.metadata.title,
+      datePublished: p.metadata.publishedAt,
+      url: `https://www.anandthakkar.com/blog/${p.slug}`,
+      description: p.metadata.summary || p.metadata.description || "",
+      author: { "@type": "Person", name: "Anand Thakkar" },
+    }));
+
   return (
     <section>
       <h2 className="mb-6 text-2xl font-semibold tracking-tighter">
         Blog Posts 📝
       </h2>
+
+      {/* SEO: BlogPosting JSON-LD */}
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
 
       <div className="space-y-6">
         {blogs.map((post) => {
@@ -54,23 +76,20 @@ export function BlogPosts() {
 
           return (
             <article key={post.slug} className="space-y-2">
-              {/* Title (no link) */}
               <h3 className="text-lg font-medium tracking-tight">
                 {post.metadata.title}
               </h3>
 
-              {/* Optional summary */}
               {summary && (
                 <p className="text-neutral-600 dark:text-neutral-400 text-sm">
                   {summary}
                 </p>
               )}
 
-              {/* Read more link */}
               <div>
                 <Link
                   href={`/blog/${post.slug}`}
-                  className="text-sm font-medium text-blue-600 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+                  className="text-sm font-medium text-blue-600 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded"
                   aria-label={`Read blog post: ${post.metadata.title}${
                     dateStr ? ` (${dateStr})` : ""
                   }`}
@@ -79,7 +98,6 @@ export function BlogPosts() {
                 </Link>
               </div>
 
-              {/* Date at the bottom (no pill) */}
               {dateStr && (
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   {dateStr}

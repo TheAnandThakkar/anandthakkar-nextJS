@@ -16,6 +16,7 @@ export const metadata: Metadata = {
   },
   description:
     "Anand Thakkar – software developer sharing projects, blogs, and open-source insights.",
+  alternates: { canonical: "/" }, // ✅ canonical
   openGraph: {
     title: "Anand Thakkar – Software Developer & Tech Creator",
     description:
@@ -26,7 +27,6 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        // Use relative URL since metadataBase is set
         url: "/preview-image.png",
         width: 1200,
         height: 630,
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     description:
       "Explore projects, blogs, and open-source contributions of Anand Thakkar.",
     images: ["/preview-image.png"],
-    creator: "@theanandthakkar",
+    creator: "@TheAnandThakkar",
   },
   robots: {
     index: true,
@@ -64,6 +64,20 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Anand Thakkar",
+    jobTitle: "Backend Engineer",
+    url: "https://www.anandthakkar.com",
+    image: "https://www.anandthakkar.com/headshot.jpg",
+    sameAs: [
+      "https://github.com/TheAnandThakkar",
+      "https://www.linkedin.com/in/theanandthakkar/",
+      "https://x.com/TheAnandThakkar",
+    ],
+  };
+
   return (
     <html
       lang="en"
@@ -74,14 +88,17 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
+        {/* JSON-LD (ok in body) */}
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         {/* Main content */}
         <main className="flex-auto min-w-0 flex flex-col px-2 md:px-0">
           {children}
         </main>
-
         <Footer />
-
-        {/* Analytics & Performance */}
         <Analytics />
         <SpeedInsights />
       </body>
