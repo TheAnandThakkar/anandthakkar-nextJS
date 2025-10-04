@@ -1,4 +1,3 @@
-// app/components/posts.tsx
 import Link from "next/link";
 import { formatDate, getBlogPosts } from "app/blog/utils";
 
