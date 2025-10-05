@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${baseUrl}/preview-image.png`, // <- absolute URL
+        url: `${baseUrl}/preview-image.png`,
         width: 1200,
         height: 630,
         alt: "Anand Thakkar Personal Website Preview",
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: "Anand Thakkar",
     description:
       "Explore projects, blogs, and open-source contributions of Anand Thakkar.",
-    images: [`${baseUrl}/preview-image.png`], // <- absolute URL
+    images: [`${baseUrl}/preview-image.png`],
     creator: "@TheAnandThakkar",
   },
   robots: {
