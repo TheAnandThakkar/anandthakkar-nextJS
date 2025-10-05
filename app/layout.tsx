@@ -8,17 +8,18 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { baseUrl } from "./sitemap";
 
+// 1) Tweak titles for exact-name ranking
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Anand Thakkar – Software Developer & Tech Creator",
+    default: "Anand Thakkar", // <- put your name first
     template: "%s | Anand Thakkar",
   },
   description:
-    "Anand Thakkar – software developer sharing projects, blogs, and open-source insights.",
-  alternates: { canonical: "/" }, // ✅ canonical
+    "Software developer & tech creator — projects, blogs, and open-source.",
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Anand Thakkar – Software Developer & Tech Creator",
+    title: "Anand Thakkar",
     description:
       "Explore projects, blogs, and open-source contributions of Anand Thakkar.",
     url: baseUrl,
@@ -27,7 +28,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/preview-image.png",
+        url: `${baseUrl}/preview-image.png`, // <- absolute URL
         width: 1200,
         height: 630,
         alt: "Anand Thakkar Personal Website Preview",
@@ -36,10 +37,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anand Thakkar – Software Developer & Tech Creator",
+    title: "Anand Thakkar",
     description:
       "Explore projects, blogs, and open-source contributions of Anand Thakkar.",
-    images: ["/preview-image.png"],
+    images: [`${baseUrl}/preview-image.png`], // <- absolute URL
     creator: "@TheAnandThakkar",
   },
   robots: {
@@ -55,7 +56,65 @@ export const metadata: Metadata = {
   },
 };
 
-// Tiny utility for conditional classnames (typed)
+// ================= JSON-LD blocks (put ABOVE RootLayout) =================
+const siteUrl = "https://www.anandthakkar.com";
+const personId = `${siteUrl}#person`;
+const websiteId = `${siteUrl}#website`;
+
+const imageObject = {
+  "@context": "https://schema.org",
+  "@type": "ImageObject",
+  "@id": `${siteUrl}#headshot`,
+  url: `${siteUrl}/headshot.jpg`,
+  contentUrl: `${siteUrl}/headshot.jpg`,
+  caption: "Anand Thakkar headshot",
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": websiteId,
+  url: siteUrl,
+  name: "Anand Thakkar",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${siteUrl}/search?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
+  },
+};
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "@id": personId,
+  name: "Anand Thakkar",
+  alternateName: ["TheAnandThakkar"],
+  jobTitle: "Backend Engineer",
+  url: siteUrl,
+  image: { "@id": `${siteUrl}#headshot` },
+  sameAs: [
+    "https://github.com/TheAnandThakkar",
+    "https://www.linkedin.com/in/theanandthakkar/",
+    "https://x.com/TheAnandThakkar",
+  ],
+  worksFor: { "@type": "Organization", name: "Agile Infoways" },
+  knowsAbout: [
+    "Java",
+    "Spring Boot",
+    "NestJS",
+    "PostgreSQL",
+    "AWS",
+    "Docker",
+    "Kubernetes",
+  ],
+  address: {
+    "@type": "PostalAddress",
+    addressCountry: "IN",
+    addressLocality: "Ahmedabad",
+  },
+};
+// ========================================================================
+
 const cx = (...classes: Array<string | false | null | undefined>) =>
   classes.filter(Boolean).join(" ");
 
@@ -64,20 +123,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const personJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "Person",
-    name: "Anand Thakkar",
-    jobTitle: "Backend Engineer",
-    url: "https://www.anandthakkar.com",
-    image: "https://www.anandthakkar.com/headshot.jpg",
-    sameAs: [
-      "https://github.com/TheAnandThakkar",
-      "https://www.linkedin.com/in/theanandthakkar/",
-      "https://x.com/TheAnandThakkar",
-    ],
-  };
-
   return (
     <html
       lang="en"
@@ -88,12 +133,20 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
-        {/* JSON-LD (ok in body) */}
+        {/* JSON-LD (OK in body) */}
         <script
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(imageObject) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+        <script
+          type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
+
         {/* Main content */}
         <main className="flex-auto min-w-0 flex flex-col px-2 md:px-0">
           {children}
