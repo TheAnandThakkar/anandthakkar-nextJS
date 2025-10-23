@@ -1,3 +1,5 @@
+// app/components/posts.tsx
+import Image from "next/image";
 import Link from "next/link";
 import { formatDate, getBlogPosts } from "app/blog/utils";
 
@@ -8,6 +10,7 @@ type Blog = {
     publishedAt?: string;
     summary?: string;
     description?: string;
+    image?: string; // <- thumbnail path (e.g., "/ai_vs_developer.png")
   };
 };
 
@@ -25,7 +28,6 @@ export function BlogPosts() {
     return tb - ta;
   });
 
-  // If there are no posts, show a simple placeholder
   if (blogs.length === 0) {
     return (
       <section>
@@ -39,7 +41,7 @@ export function BlogPosts() {
     );
   }
 
-  // JSON-LD for visible posts
+  // SEO: BlogPosting JSON-LD for visible posts
   const jsonLd = blogs
     .filter((p) => !!p.metadata.publishedAt)
     .map((p) => ({
@@ -50,59 +52,81 @@ export function BlogPosts() {
       url: `https://www.anandthakkar.com/blog/${p.slug}`,
       description: p.metadata.summary || p.metadata.description || "",
       author: { "@type": "Person", name: "Anand Thakkar" },
+      image: p.metadata.image
+        ? `https://www.anandthakkar.com${p.metadata.image}`
+        : undefined,
     }));
 
   return (
-    <section>
+    <section id="blog">
       <h2 className="mb-6 text-2xl font-semibold tracking-tighter">
         Blog Posts 📝
       </h2>
 
-      {/* SEO: BlogPosting JSON-LD */}
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="space-y-6">
+      {/* Responsive grid of cards */}
+      <div className="grid gap-5 sm:grid-cols-2">
         {blogs.map((post) => {
+          const href = `/blog/${post.slug}`;
           const dateStr = post.metadata.publishedAt
             ? formatDate(post.metadata.publishedAt, false)
             : null;
           const summary =
-            post.metadata.summary || post.metadata.description || null;
+            post.metadata.summary || post.metadata.description || "";
+          const img = post.metadata.image || "/preview-image.png"; // graceful fallback
 
           return (
-            <article key={post.slug} className="space-y-2">
-              <h3 className="text-lg font-medium tracking-tight">
-                {post.metadata.title}
-              </h3>
-
-              {summary && (
-                <p className="text-neutral-600 dark:text-neutral-400 text-sm">
-                  {summary}
-                </p>
-              )}
-
-              <div>
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="text-sm font-medium text-blue-600 underline hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded"
-                  aria-label={`Read blog post: ${post.metadata.title}${
-                    dateStr ? ` (${dateStr})` : ""
-                  }`}
-                >
-                  Read more →
-                </Link>
+            <Link
+              key={post.slug}
+              href={href}
+              className="group rounded-2xl border border-neutral-200 bg-white p-2 shadow-sm transition hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:border-neutral-800 dark:bg-neutral-950"
+              aria-label={`Read blog post: ${post.metadata.title}${
+                dateStr ? ` (${dateStr})` : ""
+              }`}
+            >
+              {/* Thumbnail */}
+              <div className="relative overflow-hidden rounded-xl">
+                <Image
+                  src={img}
+                  alt={post.metadata.title}
+                  width={800}
+                  height={420}
+                  className="h-44 w-full rounded-xl object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+                  priority={false}
+                />
+                {/* subtle overlay gradient */}
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent rounded-b-xl" />
               </div>
 
-              {dateStr && (
-                <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                  {dateStr}
-                </p>
-              )}
-            </article>
+              {/* Content */}
+              <div className="p-3">
+                <h3 className="line-clamp-2 text-base font-semibold tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                  {post.metadata.title}
+                </h3>
+
+                {summary && (
+                  <p className="mt-1 line-clamp-2 text-sm text-neutral-600 dark:text-neutral-400">
+                    {summary}
+                  </p>
+                )}
+
+                <div className="mt-3 flex items-center justify-between">
+                  {dateStr && (
+                    <span className="text-xs text-neutral-500 dark:text-neutral-400">
+                      {dateStr}
+                    </span>
+                  )}
+                  <span className="text-sm font-medium text-blue-600 underline-offset-4 group-hover:underline dark:text-blue-400">
+                    Read more →
+                  </span>
+                </div>
+              </div>
+            </Link>
           );
         })}
       </div>
