@@ -2,9 +2,9 @@
 import Image from "next/image";
 import { awards } from "app/data/awards";
 import { SiCredly } from "react-icons/si";
-import { FaExternalLinkAlt, FaGoogle } from "react-icons/fa";
+import { FaExternalLinkAlt, FaGoogle, FaGithub } from "react-icons/fa";
 
-type Platform = "credly" | "google-developers" | "other";
+type Platform = "credly" | "google-developers" | "github" | "other";
 
 const linkMeta: Record<
   Platform,
@@ -12,6 +12,7 @@ const linkMeta: Record<
 > = {
   credly: { label: "View on Credly", Icon: SiCredly },
   "google-developers": { label: "View on Google Developers", Icon: FaGoogle },
+  github: { label: "View on GitHub", Icon: FaGithub },
   other: { label: "Open link", Icon: FaExternalLinkAlt },
 };
 
@@ -19,6 +20,7 @@ function detectPlatform(url?: string): Platform {
   if (!url) return "other";
   if (/credly\.com/i.test(url)) return "credly";
   if (/g\.dev|developers\.google\.com/i.test(url)) return "google-developers";
+  if (/github\.com/i.test(url)) return "github";
   return "other";
 }
 
@@ -54,7 +56,6 @@ export function Awards() {
                   {/* Title + (year pill for non-Credly only) */}
                   <div className="flex items-center gap-2">
                     <h3 className="text-lg font-medium">{item.title}</h3>
-                    {/* For AWS/Cre dly: don't show the pill; we'll show a simple line below the link */}
                     {platform !== "credly" && item.year && (
                       <span className="inline-flex items-center rounded-full border border-neutral-200 dark:border-neutral-800 px-2 py-0.5 text-xs text-neutral-600 dark:text-neutral-400">
                         {item.year}
@@ -83,7 +84,7 @@ export function Awards() {
                     </a>
                   )}
 
-                  {/* For AWS/ Credly: simple issue date line below the link (no pill) */}
+                  {/* For Credly: simple issue date line below the link (no pill) */}
                   {platform === "credly" && item.year && (
                     <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">
                       Issue date: {item.year}
