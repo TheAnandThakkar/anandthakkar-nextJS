@@ -1,5 +1,12 @@
 export const awards = [
   {
+    title: "GitHub Pull Shark",
+    url: "https://github.com/users/TheAnandThakkar/achievements/pull-shark",
+    icon: "/github-pullshark.png",
+    description:
+      "Awarded for consistently creating high-quality pull requests that are well-documented, thoroughly tested, and demonstrate a strong understanding of the codebase. This recognition highlights a commitment to code excellence and collaboration within the GitHub community.",
+  },
+  {
     title: "GitHub YOLO",
     url: "https://github.com/users/TheAnandThakkar/achievements/yolo",
     icon: "/github-yolo.png",
