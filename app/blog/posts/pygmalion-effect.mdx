@@ -1,0 +1,159 @@
+---
+title: "The Pygmalion Effect in Code: How Belief Architected My Career"
+publishedAt: "2025-12-05"
+author: "Anand Thakkar"
+role: "Software Developer • Tech Creator"
+image: "/pygmalion_effect_dev.png"
+summary: "From not knowing what an API was to architecting AWS video solutions. How expectations—from myself and my team—fueled my transition from Intern to Backend Engineer."
+description: "A personal story of how the Pygmalion effect—high expectations creating better performance—showed up in my journey from intern to backend developer working with Node.js, databases, and AWS."
+tags:
+  - anand-thakkar
+  - software-developer
+  - codeosophy
+  - pygmalion-effect
+  - mindset
+  - backend
+  - aws
+  - growth
+  - career
+---
+
+When I joined the tech industry in 2022 as a trainee, I honestly had no idea what I was walking into.
+
+I didn’t know what the **IT domain** really entailed.
+
+I didn’t know:
+
+- What an **API** was
+- What a **database** did
+- Why everyone used **Postman**
+- Or even the difference between **GET** and **POST** requests
+
+But I knew one thing: **I wanted to understand how software actually ships**—from development to production, from the code editor to the real user.
+
+This is the story of how the **Pygmalion Effect**—the psychological phenomenon where higher expectations lead to increased performance—quietly shaped my journey from a mobile intern to a backend developer working with Node.js, databases, and AWS.
+
+---
+
+## What is the Pygmalion Effect?
+
+Before I dive into the code, here is the concept in simple terms.
+
+The **Pygmalion Effect** suggests that when people expect more from you (or when you expect more from yourself), you naturally rise to meet those standards.
+
+It works in two ways:
+
+1.  **External expectations:** What your mentors, team, or manager believe you can do.
+2.  **Internal expectations (The Galatea Effect):** What you keep telling yourself you are capable of.
+
+In my case, both were present from day one—long before I knew there was a name for it.
+
+---
+
+## 2022: The 45-Minute Interview That Changed Everything
+
+When I interviewed for the **Mobile Application Developer** intern role, something unusual happened.
+
+The interview lasted **45 minutes**.
+
+For a trainee role, that is rare. Usually, it’s a quick check of basics and a chat with HR. But this team spent time evaluating me. That interaction did two things:
+
+1.  It made me feel they took me seriously.
+2.  It forced me to set a higher standard for myself: _"If they are investing this much time, I have to be worth it."_
+
+I didn’t know backend. I didn’t know APIs.
+
+What I did have was some **UI work** I had done earlier, and a stubborn belief that I could become the best at mobile development. I almost "manifested" it:
+
+> _"I am the best at mobile application development. I don't know the rest yet, but I will figure it out."_
+
+That belief wasn't backed by deep technical knowledge yet. It was backed by **attitude**. Looking back, that was my personal Pygmalion effect starting in the background.
+
+---
+
+## Falling in Love with the "Black Box"
+
+Once I joined, reality hit. I started seeing the ecosystem behind the screen:
+
+- How the **frontend** talks to the **backend**.
+- How **APIs** carry data.
+- How **deployments**, **logs**, and **release cycles** actually work.
+
+I realized that a working app isn't just one dev writing code; it is a symphony of design, logic, infrastructure, and QA. This curiosity pulled me away from just building screens and toward the logic that powers them.
+
+---
+
+## The Pivot: Thrown into Backend (Node.js)
+
+Within three months, I transitioned to a **Backend Developer** role in **Node.js**.
+
+Again, I was a beginner. I didn't fully grasp what "backend" meant other than "the thing that sends JSON." For the first time, I encountered terms like **Server**, **Schema**, **Relations**, and **Queries**.
+
+I had no idea how data was structured or why schema design mattered. But again, my mindset was simple:
+
+> _"I can do this. I will understand it."_
+
+My surroundings played a huge role. The team didn't treat me like "just an intern"—they treated me like a developer who simply hadn't learned _yet_.
+
+- People trusted me with tasks.
+- I stopped taking myself lightly.
+- I dove into **SQL** and **NoSQL**.
+
+My mental image of the backend shifted from a "mysterious black box" to a "system I can reason about."
+
+---
+
+## Level Up: AWS and The 500MB Challenge
+
+The real test of this mindset came when I hit a wall with file storage. I learned that databases store text, but they aren't meant for heavy files like videos.
+
+_So, where do the files go?_
+
+That question led me to **AWS** and **S3 Buckets**. The chain reaction was immediate: S3 led to EC2, which led to RDS and Lambda. Once again, I was dropped into the deep end.
+
+### The Problem
+
+We needed to upload **500 MB video files** to our bucket. The standard flow—sending the file to the server first, then to S3—was failing. The request payload was too heavy for the server to handle efficiently.
+
+### The Solution
+
+We discussed it internally. The team looked at me and said, _"Maybe Anand can crack this."_
+
+That was the **Expectation**.
+
+I could have said, "I don't know how." Instead, I said: **"Sure. I'll figure it out."**
+
+I researched extensively and implemented **S3 Pre-Signed URLs**:
+
+1.  The server generates a secure, time-limited URL.
+2.  The client uploads the file _directly_ to AWS, bypassing our server bottleneck.
+
+This was a new concept for the office at the time. Implementing it independently was a turning point. I wasn't trying to prove I was a genius; I was proving that my **attitude** made me someone the team could trust with the unknown.
+
+---
+
+## The Compound Effect
+
+That success unlocked more opportunities:
+
+- Video compression on the server.
+- Image optimization pipelines.
+- Media manipulation with **FFmpeg**.
+
+The pattern kept repeating: **People expected more → I rose to meet it. → I expected more from myself → I grew into it.**
+
+By the time I hit my two-year mark, I realized that "years of experience" matters less than "years of curiosity." I could have spent two years just closing tickets. Instead, I spent two years saying "Yes" to things I didn't know how to do yet.
+
+---
+
+## Looking Back
+
+Writing this now, over three years since that first day, I am still doing the same thing. Whether it is learning **Spring Boot**, moving to **Java**, or exploring **GenAI**, the formula remains the same.
+
+The Pygmalion Effect isn't magic. It's a feedback loop.
+
+1.  **Believe you are capable.**
+2.  **Surround yourself with people who believe you are capable.**
+3.  **The skills will follow the belief.**
+
+_Have you ever accepted a technical challenge before you knew how to solve it? I’d love to hear your "Pygmalion" moment._
