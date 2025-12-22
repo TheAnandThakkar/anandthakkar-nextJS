@@ -1,5 +1,12 @@
 export const awards = [
   {
+    title: "Oracle Java Foundations",
+    url: "",
+    icon: "/oracle_java_foundations.jpg",
+    description:
+      "The Oracle Java Foundations certification demonstrates a solid understanding of Java programming fundamentals, including object-oriented programming concepts, data types, control structures, and basic algorithms. It validates the ability to write, compile, and debug simple Java applications.",
+  },
+  {
     title: "GitHub Pull Shark",
     url: "https://github.com/users/TheAnandThakkar/achievements/pull-shark",
     icon: "/github-pullshark.png",

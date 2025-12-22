@@ -11,32 +11,26 @@ import QrContactButton from "./components/qr-contact";
 
 export const revalidate = 86400; // ✅ lightly cache the page (24h)
 
-// Helper: compute years & months since a start date
-function getExperience(startDate: string) {
+// Helper: label like "more than 3 years" (no months)
+function getExperienceYearsLabel(startDate: string) {
   const start = new Date(startDate);
   const now = new Date();
   let years = now.getFullYear() - start.getFullYear();
-  let months = now.getMonth() - start.getMonth();
-  if (months < 0) {
-    years -= 1;
-    months += 12;
-  }
-  return { years, months };
+  const m = now.getMonth() - start.getMonth();
+  const d = now.getDate() - start.getDate();
+
+  // If current month/day is before start month/day, we haven't completed this year yet
+  if (m < 0 || (m === 0 && d < 0)) years -= 1;
+
+  // If there are leftover months/days beyond whole years, say "more than X years"
+  const hasRemainder = m > 0 || (m === 0 && d > 0);
+  return hasRemainder ? `more than ${years} years` : `${years} years`;
 }
 
-function formatExperience(exp: { years: number; months: number }) {
-  const y = exp.years;
-  const m = exp.months;
-  const parts: string[] = [];
-  if (y > 0) parts.push(`${y} year${y > 1 ? "s" : ""}`);
-  if (m > 0) parts.push(`${m} month${m > 1 ? "s" : ""}`);
-  return parts.length ? parts.join(" & ") : "0 months";
-}
+// Date when I started professional experience
+const expYearsLabel = getExperienceYearsLabel("2022-05-16");
 
 export default function Page() {
-  const exp = getExperience("2022-05-16");
-  const expStr = formatExperience(exp);
-
   return (
     <section className="pt-6 md:pt-10">
       {/* Intro / Hero */}
@@ -62,7 +56,7 @@ export default function Page() {
 
       {/* Summary */}
       <p className="mb-6 text-neutral-800 dark:text-neutral-200">
-        {`Backend developer with ${expStr} of experience in fintech/SaaS. Skilled in Java, Spring Boot, AWS, and building scalable APIs with a focus on performance and cost optimization. Strong cross-functional collaborator bridging engineering and product.`}
+        {`Backend developer with ${expYearsLabel} of experience in fintech/SaaS. Skilled in Java, Spring Boot, AWS, and building scalable APIs with a focus on performance and cost optimization. Strong cross-functional collaborator bridging engineering and product.`}
       </p>
 
       {/* Quick actions */}
