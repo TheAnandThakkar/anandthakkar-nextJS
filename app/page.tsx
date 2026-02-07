@@ -12,23 +12,7 @@ import QrContactButton from "./components/qr-contact";
 export const revalidate = 86400; // ✅ lightly cache the page (24h)
 
 // Helper: label like "more than 3 years" (no months)
-function getExperienceYearsLabel(startDate: string) {
-  const start = new Date(startDate);
-  const now = new Date();
-  let years = now.getFullYear() - start.getFullYear();
-  const m = now.getMonth() - start.getMonth();
-  const d = now.getDate() - start.getDate();
 
-  // If current month/day is before start month/day, we haven't completed this year yet
-  if (m < 0 || (m === 0 && d < 0)) years -= 1;
-
-  // If there are leftover months/days beyond whole years, say "more than X years"
-  const hasRemainder = m > 0 || (m === 0 && d > 0);
-  return hasRemainder ? `more than ${years} years` : `${years} years`;
-}
-
-// Date when I started professional experience
-const expYearsLabel = getExperienceYearsLabel("2022-05-16");
 
 export default function Page() {
   return (
@@ -49,14 +33,14 @@ export default function Page() {
             <span className="block">Thakkar</span>
           </h1>
           <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-            Backend Engineer • AWS Certified Cloud Practitioner • Fintech/SaaS
+            Software Engineer • AWS Certified Cloud Practitioner • Fintech/SaaS
           </p>
         </div>
       </header>
 
       {/* Summary */}
       <p className="mb-6 text-neutral-800 dark:text-neutral-200">
-        {`Backend developer with ${expYearsLabel} of experience in fintech/SaaS. Skilled in Java, Spring Boot, AWS, and building scalable APIs with a focus on performance and cost optimization. Strong cross-functional collaborator bridging engineering and product.`}
+        Software Engineer specializing in fintech and SaaS. Skilled in Java, Spring Boot, AWS, and building scalable APIs with a focus on performance and cost optimization. Strong cross-functional collaborator bridging engineering and product.
       </p>
 
       {/* Quick actions */}
