@@ -71,17 +71,6 @@ export default function Page() {
         </div>
       </section>
 
-      {/* ======= AWARDS / CERTIFICATIONS ======= */}
-      <section id="about" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
-        <div className="container-main">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-teal" />
-            <h2 className="section-title">Awards &amp; Certifications</h2>
-          </div>
-          <Awards />
-        </div>
-      </section>
-
       {/* ======= EXPERIENCE ======= */}
       <section id="experience" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
@@ -90,6 +79,17 @@ export default function Page() {
             <h2 className="section-title">Work Experience</h2>
           </div>
           <Experience />
+        </div>
+      </section>
+
+      {/* ======= AWARDS / CERTIFICATIONS ======= */}
+      <section id="about" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+        <div className="container-main">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-1 h-8 rounded-full bg-teal" />
+            <h2 className="section-title">Awards &amp; Certifications</h2>
+          </div>
+          <Awards />
         </div>
       </section>
 
