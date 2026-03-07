@@ -1,105 +1,135 @@
-// app/page.tsx
 import Image from "next/image";
 import { BlogPosts } from "app/components/posts";
 import { Contributions } from "./components/contributions";
 import { Awards } from "./components/awards";
 import { Experience } from "./components/experience";
-import { FaEnvelope, FaFilePdf } from "react-icons/fa6";
-import { baseUrl } from "./sitemap";
 import SocialPreviewCard from "./components/social-preview";
-import QrContactButton from "./components/qr-contact";
+import { HeroActions } from "./components/hero-actions";
 
-export const revalidate = 86400; // ✅ lightly cache the page (24h)
-
-// Helper: label like "more than 3 years" (no months)
-
+export const revalidate = 86400;
 
 export default function Page() {
   return (
-    <section className="pt-6 md:pt-10">
-      {/* Intro / Hero */}
-      <header className="mb-6 md:mb-8 flex flex-col sm:flex-row sm:items-end gap-4">
-        <Image
-          src="/headshot.jpg"
-          alt="Photo of Anand Thakkar"
-          width={144}
-          height={144}
-          priority
-          className="rounded-xl border border-neutral-200 dark:border-neutral-800 object-cover"
-        />
-        <div className="flex flex-col leading-tight">
-          <h1 className="text-4xl sm:text-5xl font-bold tracking-tight">
-            <span className="block">Anand</span>
-            <span className="block">Thakkar</span>
-          </h1>
-          <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">
-            Software Engineer • AWS Certified Cloud Practitioner • Fintech/SaaS
-          </p>
+    <div className="relative">
+
+      {/* ======= HERO ======= */}
+      <section id="home" className="min-h-screen flex flex-col justify-center relative overflow-hidden bg-white dark:bg-neutral-950">
+        {/* Background blobs */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute -top-32 -right-32 w-[500px] h-[500px] rounded-full bg-teal/10 blur-3xl" />
+          <div className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full bg-indigo/10 blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-teal/5 blur-3xl" />
         </div>
-      </header>
 
-      {/* Summary */}
-      <p className="mb-6 text-neutral-800 dark:text-neutral-200">
-        Software Engineer specializing in fintech and SaaS. Skilled in Java, Spring Boot, AWS, and building scalable APIs with a focus on performance and cost optimization. Strong cross-functional collaborator bridging engineering and product.
-      </p>
+        <div className="container-main relative z-10 pt-28 pb-24">
+          <div className="flex flex-col lg:flex-row items-center lg:items-start gap-12 lg:gap-20">
+            {/* Text content */}
+            <div className="flex-1 text-center lg:text-left">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-neutral-900 dark:text-white mb-6">
+                Hi, I'm{" "}
+                <span className="bg-gradient-to-r from-[#7B2FF7] to-[#E91E63] bg-clip-text text-transparent">
+                  Anand
+                </span>
+                <br />
+                <span className="text-neutral-800 dark:text-white/90">Thakkar</span>
+              </h1>
 
-      {/* Quick actions */}
-      <div className="mb-10 flex flex-wrap items-center gap-3">
-        {/* Primary: Contact (neutral wording) */}
-        <a
-          href="mailto:anand.thakkar@outlook.com?subject=Hello%20Anand"
-          className="group inline-flex items-center gap-2 rounded-xl border border-blue-600 bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:focus-visible:ring-offset-0"
-          aria-label="Contact Anand Thakkar"
-        >
-          <FaEnvelope aria-hidden className="opacity-95" />
-          Let’s connect
-        </a>
+              <p className="text-xl sm:text-2xl text-neutral-600 dark:text-neutral-300 max-w-xl leading-relaxed mb-4 mx-auto lg:mx-0 font-medium">
+                Software Developer · Fintech/SaaS
+              </p>
+              <p className="text-base sm:text-lg text-neutral-500 dark:text-neutral-400 max-w-xl leading-relaxed mb-10 mx-auto lg:mx-0">
+                Finance and technology are converging to reshape the global economy. At that intersection, every line of code is an opportunity to make financial access faster, smarter, and more human.
+              </p>
 
-        {/* Secondary: Resume */}
-        <a
-          href="/Anand_Thakkar.pdf"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group inline-flex items-center gap-2 rounded-xl border border-neutral-300 px-3 py-2 text-sm font-medium text-neutral-800 hover:bg-neutral-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:border-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-900"
-          aria-label="Download résumé"
-        >
-          <FaFilePdf aria-hidden className="text-red-600" />
-          Download résumé
-        </a>
+              {/* Client component for interactive scroll buttons */}
+              <HeroActions />
 
-        {/* Save contact: open QR modal */}
-        {/* <QrContactButton /> */}
-      </div>
+              {/* Removed skill pills */}
+            </div>
 
-      {/* Awards (cred strip near top for quick skim) */}
-      <div className="my-8 md:my-10">
-        <Awards />
-      </div>
+            {/* Photo */}
+            <div className="shrink-0 flex flex-col items-center gap-6">
+              <div className="relative w-56 h-56 sm:w-72 sm:h-72 lg:w-80 lg:h-80 shadow-2xl rounded-full overflow-hidden border-4 border-white dark:border-neutral-900">
+                {/* Photo */}
+                <Image
+                  src="/headshot.jpg"
+                  alt="Photo of Anand Thakkar"
+                  fill
+                  priority
+                  className="object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
 
-      {/* Open Source Contributions */}
-      <div className="my-10 md:my-12">
-        <Contributions />
-      </div>
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-neutral-300 dark:text-neutral-600 animate-bounce">
+          <div className="w-5 h-8 rounded-full border border-neutral-300 dark:border-neutral-600 flex items-start justify-center pt-1">
+            <div className="w-1 h-2 rounded-full bg-neutral-300 dark:bg-neutral-600" />
+          </div>
+        </div>
+      </section>
 
-      {/* Work Experience */}
-      <div className="my-10 md:my-12">
-        <Experience />
-      </div>
+      {/* ======= AWARDS / CERTIFICATIONS ======= */}
+      <section id="about" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+        <div className="container-main">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-1 h-8 rounded-full bg-teal" />
+            <h2 className="section-title">Awards &amp; Certifications</h2>
+          </div>
+          <Awards />
+        </div>
+      </section>
 
-      {/* Blog */}
-      <div className="my-10 md:my-12">
-        <BlogPosts />
-      </div>
+      {/* ======= EXPERIENCE ======= */}
+      <section id="experience" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+        <div className="container-main">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-1 h-8 rounded-full bg-gold" />
+            <h2 className="section-title">Work Experience</h2>
+          </div>
+          <Experience />
+        </div>
+      </section>
 
-      {/* Social preview card */}
-      <div className="my-8">
-        <SocialPreviewCard
-          url={baseUrl}
-          title="Anand Thakkar – Software Developer & Tech Creator"
-          description="Explore projects, blogs, and open-source contributions of Anand Thakkar."
-          image="/preview-image.png"
-        />
-      </div>
-    </section>
+      {/* ======= OPEN SOURCE ======= */}
+      <section id="projects" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+        <div className="container-main">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-1 h-8 rounded-full bg-indigo" />
+            <h2 className="section-title">Open Source &amp; Contributions</h2>
+          </div>
+          <Contributions />
+        </div>
+      </section>
+
+      {/* ======= BLOG ======= */}
+      <section id="blog" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+        <div className="container-main">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-1 h-8 rounded-full bg-teal" />
+            <h2 className="section-title">Blog</h2>
+          </div>
+          <BlogPosts />
+        </div>
+      </section>
+
+      {/* ======= FOOTER CTA ======= */}
+      <section className="py-16 bg-neutral-50 dark:bg-neutral-950 border-t border-neutral-100 dark:border-neutral-900">
+        <div className="container-main text-center">
+          <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white mb-4">Let's Shape What's Next</h2>
+          <p className="text-neutral-600 dark:text-neutral-400 max-w-lg mx-auto mb-8">
+            The intersection of finance, AI, and software is evolving fast. If you're building something meaningful in that space — or just want to exchange ideas — let's connect.
+          </p>
+          <a
+            href="mailto:anand.thakkar@outlook.com?subject=Hello%20Anand"
+            className="btn-primary"
+          >
+            Let's Connect
+          </a>
+        </div>
+      </section>
+    </div>
   );
 }

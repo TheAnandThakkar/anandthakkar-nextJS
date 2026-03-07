@@ -4,24 +4,21 @@ import { FaGithub } from "react-icons/fa";
 export function Contributions() {
   return (
     <section>
-      <h2 className="mb-6 text-2xl font-semibold tracking-tighter">
-        Open-Source & Contributions 👨🏻‍💻
-      </h2>
-      <div className="space-y-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
         {contributions.map((project) => (
-          <div key={project.url} className="space-y-1">
-            <h3 className="text-lg font-medium">{project.name}</h3>
-            <p className="text-neutral-600 dark:text-neutral-400 text-left text-sm">
+          <div key={project.url} className="card p-5 sm:p-6 flex flex-col">
+            <h3 className="text-lg font-bold text-neutral-900 dark:text-white mb-2">{project.name}</h3>
+            <p className="text-neutral-600 dark:text-neutral-400 text-sm/relaxed mb-5 flex-1">
               {project.description}
             </p>
             <a
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center space-x-2 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 no-underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded"
+              className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-teal hover:text-teal/80 transition-colors focus-visible:outline-none"
             >
-              <FaGithub className="text-lg" />
-              <span>View on GitHub</span>
+              <FaGithub className="text-sm" />
+              <span>View Source</span>
             </a>
           </div>
         ))}

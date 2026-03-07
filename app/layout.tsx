@@ -4,6 +4,7 @@ import type { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import Footer from "./components/footer";
+import { Navbar } from "./components/nav";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { baseUrl } from "./sitemap";
@@ -21,10 +22,11 @@ export const metadata: Metadata = {
     default: "Anand Thakkar",
     template: "%s | Anand Thakkar",
   },
-  description: "Software Developer & Tech Creator.",
+  keywords: ["Anand Thakkar", "Software Developer", "Tech Creator", "Fintech", "Taxaltus"],
+  description: "Software Developer · Fintech/SaaS · AWS Cloud Practitioner. Building scalable solutions at the intersection of finance and technology.",
   openGraph: {
     title: "Anand Thakkar",
-    description: "Software Developer & Tech Creator.",
+    description: "Software Developer · Fintech/SaaS · AWS Cloud Practitioner. Building scalable solutions at the intersection of finance and technology.",
     url: baseUrl,
     siteName: "Anand Thakkar",
     locale: "en_US",
@@ -41,7 +43,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Anand Thakkar",
-    description: "Software Developer & Tech Creator.",
+    description: "Software Developer · Fintech/SaaS · AWS Cloud Practitioner.",
     images: [`${baseUrl}/preview-image.png`],
     creator: "@TheAnandThakkar",
   },
@@ -103,13 +105,15 @@ const personJsonLd = {
   "@id": `${siteUrl}#person`,
   name: "Anand Thakkar",
   alternateName: ["TheAnandThakkar"],
-  jobTitle: "Software Developer & Tech Creator",
+  jobTitle: "Software Developer",
+  description: "Software Developer specializing in Fintech, SaaS, and AWS Cloud.",
   url: siteUrl,
   image: { "@id": `${siteUrl}#headshot` },
   sameAs: [
     "https://github.com/TheAnandThakkar",
     "https://www.linkedin.com/in/theanandthakkar/",
     "https://x.com/TheAnandThakkar",
+    "https://anandthakkar.dev"
   ],
   worksFor: { "@type": "Organization", name: "Agile Infoways" },
   // Keep this to real topics (10–15 max)
@@ -131,6 +135,8 @@ const personJsonLd = {
     "Performance optimization",
     "Microservices",
     "Distributed systems",
+    "Tech Creator",
+    "Taxaltus",
     "Technical writing",
     "Developer tooling",
   ],
@@ -159,7 +165,7 @@ export default function RootLayout({
         GeistMono.variable
       )}
     >
-      <body className="antialiased max-w-xl mx-4 mt-8 lg:mx-auto">
+      <body className="antialiased min-h-screen">
         {/* JSON-LD (OK in body) */}
         <script
           type="application/ld+json"
@@ -174,7 +180,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
 
-        <main className="flex-auto min-w-0 flex flex-col px-2 md:px-0">
+        <Navbar />
+        <main className="flex-auto min-w-0 flex flex-col">
           {children}
         </main>
         <Footer />

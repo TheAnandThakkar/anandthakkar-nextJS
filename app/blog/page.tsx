@@ -1,15 +1,19 @@
 import { BlogPosts } from "app/components/posts";
 
 export const metadata = {
-  title: "Blog",
-  description: "Read my blog.",
+  title: 'Blog | Anand Thakkar',
+  description: 'Technical writing and insights on Fintech, SaaS architecture, AWS cloud, and modern software development.',
 };
 
-export default function Page() {
+export default function BlogPage() {
   return (
-    <section>
-      <h1 className="font-semibold text-2xl mb-8 tracking-tighter">My Blog</h1>
-      <BlogPosts />
+    <section className="pt-20 pb-12">
+      <div className="container-main">
+        <h1 className="section-title mb-8">Blog</h1>
+        <div className="mb-12">
+          <BlogPosts />
+        </div>
+      </div>
     </section>
   );
 }

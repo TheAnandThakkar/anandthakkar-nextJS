@@ -31,9 +31,6 @@ export function BlogPosts() {
   if (blogs.length === 0) {
     return (
       <section>
-        <h2 className="mb-6 text-2xl font-semibold tracking-tighter">
-          Blog Posts 📝
-        </h2>
         <p className="text-neutral-600 dark:text-neutral-400">
           No posts yet — check back soon.
         </p>
@@ -59,10 +56,6 @@ export function BlogPosts() {
 
   return (
     <section id="blog">
-      <h2 className="mb-6 text-2xl font-semibold tracking-tighter">
-        Blog Posts 📝
-      </h2>
-
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger
@@ -81,52 +74,52 @@ export function BlogPosts() {
           const img = post.metadata.image || "/preview-image.png"; // graceful fallback
 
           return (
-            <Link
+            <div
               key={post.slug}
-              href={href}
-              className="group rounded-2xl border border-neutral-200 bg-white p-2 shadow-sm transition hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 dark:border-neutral-800 dark:bg-neutral-950"
-              aria-label={`Read blog post: ${post.metadata.title}${
-                dateStr ? ` (${dateStr})` : ""
-              }`}
+              className="card-hover flex flex-col group p-2"
+              aria-label={`Read blog post: ${post.metadata.title}${dateStr ? ` (${dateStr})` : ""
+                }`}
             >
-              {/* Thumbnail */}
-              <div className="relative overflow-hidden rounded-xl">
-                <Image
-                  src={img}
-                  alt={post.metadata.title}
-                  width={800}
-                  height={420}
-                  className="h-44 w-full rounded-xl object-cover transition-transform duration-200 group-hover:scale-[1.02]"
-                  priority={false}
-                />
-                {/* subtle overlay gradient */}
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent rounded-b-xl" />
-              </div>
-
-              {/* Content */}
-              <div className="p-3">
-                <h3 className="line-clamp-2 text-base font-semibold tracking-tight group-hover:text-blue-600 dark:group-hover:text-blue-400">
-                  {post.metadata.title}
-                </h3>
-
-                {summary && (
-                  <p className="mt-1 line-clamp-2 text-sm text-neutral-600 dark:text-neutral-400">
-                    {summary}
-                  </p>
-                )}
-
-                <div className="mt-3 flex items-center justify-between">
-                  {dateStr && (
-                    <span className="text-xs text-neutral-500 dark:text-neutral-400">
-                      {dateStr}
-                    </span>
-                  )}
-                  <span className="text-sm font-medium text-blue-600 underline-offset-4 group-hover:underline dark:text-blue-400">
-                    Read more →
-                  </span>
+              <Link href={href} className="flex-1 flex flex-col focus-visible:outline-none">
+                {/* Thumbnail */}
+                <div className="relative overflow-hidden rounded-xl">
+                  <Image
+                    src={img}
+                    alt={post.metadata.title}
+                    width={800}
+                    height={420}
+                    className="h-44 w-full rounded-xl object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+                    priority={false}
+                  />
+                  {/* subtle overlay gradient */}
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent rounded-b-xl" />
                 </div>
-              </div>
-            </Link>
+
+                {/* Content */}
+                <div className="p-3">
+                  <h3 className="line-clamp-2 text-lg font-bold tracking-tight text-neutral-900 dark:text-white group-hover:text-teal transition-colors">
+                    {post.metadata.title}
+                  </h3>
+
+                  {summary && (
+                    <p className="mt-2 line-clamp-2 text-sm text-neutral-600 dark:text-neutral-400">
+                      {summary}
+                    </p>
+                  )}
+
+                  <div className="mt-4 flex items-center justify-between">
+                    {dateStr && (
+                      <span className="block text-xs font-semibold text-teal bg-teal/10 px-2 py-0.5 rounded-sm">
+                        {dateStr}
+                      </span>
+                    )}
+                    <span className="text-sm font-semibold text-teal flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                      Read more <span aria-hidden="true">&rarr;</span>
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </div>
           );
         })}
       </div>

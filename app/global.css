@@ -1,8 +1,43 @@
 @import 'tailwindcss';
 
-::selection {
-  background-color: #47a3f3;
-  color: #fefefe;
+@theme {
+  --color-navy: #13072E;
+  /* Deep dark purple for main backgrounds */
+  --color-teal: #E91E63;
+  /* Magenta primary accent */
+  --color-teal-light: #E91E6315;
+  --color-gold: #7B2FF7;
+  /* Deep Purple accent */
+  --color-gold-light: #7B2FF715;
+  --color-indigo: #C2185B;
+  /* Dark Magenta secondary accent */
+  --color-indigo-light: #C2185B15;
+}
+
+@layer components {
+  .container-main {
+    @apply max-w-5xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .card {
+    @apply bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-100 dark:border-neutral-800 shadow-sm;
+  }
+
+  .card-hover {
+    @apply bg-white dark:bg-neutral-900 rounded-2xl border border-neutral-100 dark:border-neutral-800 shadow-sm transition-all duration-200 hover:shadow-md hover:border-neutral-300 dark:hover:border-neutral-700;
+  }
+
+  .btn-primary {
+    @apply bg-teal text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:bg-teal/90 hover:shadow-lg hover:shadow-teal/25 active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply border-2 border-teal text-teal font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:bg-teal/5;
+  }
+
+  .section-title {
+    @apply text-2xl sm:text-3xl font-bold text-navy dark:text-teal;
+  }
 }
 
 :root {
@@ -24,6 +59,7 @@
     --sh-keyword: #f47067;
     --sh-string: #0fa295;
   }
+
   html {
     color-scheme: dark;
   }
@@ -56,7 +92,7 @@ html {
   content: '#';
 }
 
-.prose *:hover > .anchor {
+.prose *:hover>.anchor {
   @apply visible;
 }
 
@@ -115,7 +151,7 @@ html {
   @apply list-decimal pl-6;
 }
 
-.prose > :first-child {
+.prose> :first-child {
   /* Override removing top margin, causing layout shift */
   margin-top: 1.25em !important;
   margin-bottom: 1.25em !important;
@@ -126,8 +162,10 @@ pre::-webkit-scrollbar {
 }
 
 pre {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 /* Remove Safari input shadow on mobile */
