@@ -24,9 +24,20 @@ export default function Page() {
         <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-transparent via-neutral-950/40 to-neutral-950/90 pointer-events-none z-10" />
 
         {/* Content Container */}
-        <div className="relative z-20 flex-1 flex flex-col justify-center bg-gradient-to-b from-[#111] to-black lg:bg-none lg:bg-transparent lg:min-h-screen">
-          {/* subtle top shadow on mobile to blend the dark gradient with the image above it */}
-          <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-black/50 to-transparent lg:hidden pointer-events-none" />
+        <div className="relative z-20 flex-1 flex flex-col justify-center lg:min-h-screen overflow-hidden lg:overflow-visible">
+
+          {/* Mobile Ambient Glow Background (Behind the glass) */}
+          <div className="absolute inset-0 lg:hidden bg-[#050505] z-0">
+            <div className="absolute top-[5%] -left-[10%] w-[20rem] h-[20rem] bg-green-500/40 rounded-full blur-[80px]" />
+            <div className="absolute top-[40%] right-[0%] w-[18rem] h-[18rem] bg-orange-500/40 rounded-full blur-[80px]" />
+            <div className="absolute bottom-[5%] left-[15%] w-[22rem] h-[22rem] bg-[#c47731]/40 rounded-full blur-[90px]" />
+          </div>
+
+          {/* Frosted Black Glass Overlay (Mobile only) */}
+          <div className="absolute inset-0 lg:hidden z-0 bg-black/30 backdrop-blur-[50px] border-t border-white/10" />
+
+          {/* subtle top shadow on mobile to blend with the image above it */}
+          <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/80 to-transparent lg:hidden pointer-events-none z-10" />
 
           <div className="container-main relative z-20 h-full flex justify-end items-center py-12 lg:py-24 lg:m-0 lg:max-w-none lg:pr-[10%]">
             <div className="flex flex-col w-full lg:w-1/2 items-center text-center">

@@ -31,20 +31,11 @@ export const metadata: Metadata = {
     siteName: "Anand Thakkar",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: `${baseUrl}/preview-image.png`,
-        width: 1200,
-        height: 630,
-        alt: "Anand Thakkar – Software Developer & Tech Creator",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Anand Thakkar",
     description: "Software Developer · Fintech/SaaS · AWS Cloud Practitioner.",
-    images: [`${baseUrl}/preview-image.png`],
     creator: "@TheAnandThakkar",
   },
   robots: {
