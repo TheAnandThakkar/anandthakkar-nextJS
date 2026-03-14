@@ -88,14 +88,6 @@ export function Navbar() {
 
             {/* Right side actions */}
             <div className="flex items-center gap-3">
-              <a
-                href="/Anand_Thakkar.pdf"
-                download
-                className="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-white bg-teal hover:bg-teal/90 px-4 py-2 rounded-lg transition-all duration-200 shadow-[0_2px_8px_-2px_rgba(233,30,99,0.3)]"
-              >
-                Resume
-              </a>
-
               {/* Mobile hamburger */}
               <button
                 className="md:hidden flex flex-col gap-1.5 p-2 text-neutral-600 dark:text-white/70 hover:text-neutral-900 dark:hover:text-white"
@@ -125,13 +117,6 @@ export function Navbar() {
                 {label}
               </button>
             ))}
-            <a
-              href="/Anand_Thakkar.pdf"
-              download
-              className="mx-4 mt-2 text-center text-sm font-semibold text-white bg-teal hover:bg-teal/90 transition-colors px-4 py-2.5 rounded-lg shadow-sm"
-            >
-              Download Resume
-            </a>
           </div>
         )}
       </div>
