@@ -8,6 +8,7 @@ import { usePathname } from "next/navigation";
 const NAV_SECTIONS = [
   { href: "#about", label: "About" },
   { href: "#experience", label: "Experience" },
+  { href: "#recognition", label: "Recognition" },
   { href: "#projects", label: "Projects" },
   { href: "#blog", label: "Blog" },
 ];
@@ -15,7 +16,7 @@ const NAV_SECTIONS = [
 function scrollToSection(id: string) {
   const el = document.getElementById(id.replace("#", ""));
   if (el) {
-    const navbarHeight = 80; // fixed navbar height offset
+    const navbarHeight = 48; // fixed navbar height offset
     const top = el.getBoundingClientRect().top + window.scrollY - navbarHeight;
     window.scrollTo({ top, behavior: "smooth" });
   }
@@ -35,10 +36,10 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md shadow-lg shadow-black/5 dark:shadow-black/20 border-b border-neutral-200 dark:border-white/5 ${scrolled ? "py-0" : "py-1"}`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 dark:bg-neutral-950/95 backdrop-blur-md shadow-lg shadow-black/5 dark:shadow-black/20 border-b border-neutral-200 dark:border-white/5 py-0`}
     >
       <div className="container-main">
-        <nav className="flex items-center justify-between h-16 sm:h-18">
+        <nav className="flex items-center justify-between h-12">
           {/* Logo */}
           <Link
             href="/"
