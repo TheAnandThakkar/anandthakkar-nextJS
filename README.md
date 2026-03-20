@@ -13,7 +13,7 @@ This is the source for my personal website, **[anandthakkar.com](https://www.ana
 
 - **Next.js App Router** + **TypeScript**
 - **Tailwind CSS** (clean, accessible UI with light/dark mode)
-- SEO best-practices (metadata, OpenGraph/Twitter, JSON-LD)
+- SEO best-practices (metadata, OpenGraph/Twitter, JSON-LD, blog RSS at `/rss.xml`)
 - Sections for **Awards/Certifications**, **Open-Source & Contributions**, **Experience**, **Blog**
 - Optional **QR vCard** component to save contact info quickly
 
@@ -58,6 +58,12 @@ npm run dev
 # 4) Build for production (optional)
 npm run build
 npm run start
+
+# Lint (same as CI)
+npm run lint
+
+# Regenerate small WebP avatar from public/headshot.jpg (optional)
+npm run optimize-images
 ```
 
 **Environment variables?**  

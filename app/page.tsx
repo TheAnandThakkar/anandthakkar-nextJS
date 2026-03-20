@@ -1,9 +1,7 @@
-import Image from "next/image";
 import { BlogPosts } from "app/components/posts";
 import { Contributions } from "./components/contributions";
 import { Awards } from "./components/awards";
 import { Experience } from "./components/experience";
-import SocialPreviewCard from "./components/social-preview";
 import { HeroActions } from "./components/hero-actions";
 import { About } from "./components/about";
 
@@ -43,7 +41,7 @@ export default function Page() {
             <div className="flex flex-col w-full lg:w-1/2 items-center text-center">
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-white mb-6 mt-4 lg:mt-0">
-                Hi, I'm{" "}
+                Hi, I&apos;m{" "}
                 <span className="bg-gradient-to-r from-[#7B2FF7] to-[#E91E63] bg-clip-text text-transparent">
                   Anand
                 </span>
@@ -69,7 +67,7 @@ export default function Page() {
         </div>
 
         {/* Scroll indicator - hidden on mobile so it doesn't overlap the white background block */}
-        <div className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-neutral-300 dark:text-neutral-600 animate-bounce">
+        <div className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-neutral-300 dark:text-neutral-600 motion-reduce:animate-none animate-bounce">
           <div className="w-5 h-8 rounded-full border border-neutral-300 dark:border-neutral-600 flex items-start justify-center pt-1">
             <div className="w-1 h-2 rounded-full bg-neutral-300 dark:bg-neutral-600" />
           </div>
@@ -80,7 +78,7 @@ export default function Page() {
       <section id="about" className="py-8 sm:py-10 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-white/10">
         <div className="container-main">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-[#E91E63]" />
+            <div className="w-1 h-8 rounded-full bg-magenta" />
             <h2 className="section-title">About Me</h2>
           </div>
           <About />
@@ -91,7 +89,7 @@ export default function Page() {
       <section id="experience" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-gold" />
+            <div className="w-1 h-8 rounded-full bg-violet" />
             <h2 className="section-title">Work Experience</h2>
           </div>
           <Experience />
@@ -102,7 +100,7 @@ export default function Page() {
       <section id="recognition" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-teal" />
+            <div className="w-1 h-8 rounded-full bg-magenta" />
             <h2 className="section-title">Recognition</h2>
           </div>
           <Awards />
@@ -113,7 +111,7 @@ export default function Page() {
       <section id="projects" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-indigo" />
+            <div className="w-1 h-8 rounded-full bg-brand-rose" />
             <h2 className="section-title">Open Source &amp; Contributions</h2>
           </div>
           <Contributions />
@@ -124,7 +122,7 @@ export default function Page() {
       <section id="blog" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
           <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-teal" />
+            <div className="w-1 h-8 rounded-full bg-magenta" />
             <h2 className="section-title">Blog</h2>
           </div>
           <BlogPosts />
@@ -134,15 +132,15 @@ export default function Page() {
       {/* ======= FOOTER CTA ======= */}
       <section className="py-16 bg-neutral-50 dark:bg-neutral-950 border-t border-neutral-100 dark:border-neutral-900">
         <div className="container-main text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white mb-4">Let's Shape What's Next</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white mb-4">Let&apos;s Shape What&apos;s Next</h2>
           <p className="text-neutral-600 dark:text-neutral-400 max-w-lg mx-auto mb-8">
-            The intersection of finance, AI, and software is evolving fast. If you're building something meaningful in that space — or just want to exchange ideas — let's connect.
+            The intersection of finance, AI, and software is evolving fast. If you&apos;re building something meaningful in that space — or just want to exchange ideas — let&apos;s connect.
           </p>
           <a
             href="mailto:anand.thakkar@outlook.com?subject=Hello%20Anand"
             className="btn-primary"
           >
-            Let's Connect
+            Let&apos;s Connect
           </a>
         </div>
       </section>

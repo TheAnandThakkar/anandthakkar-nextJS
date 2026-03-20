@@ -62,7 +62,7 @@ export function Awards() {
                   )}
                   {/* For Credly: simple issue date line below the link (no pill) */}
                   {platform === "credly" && item.year && (
-                    <p className="text-xs font-medium text-teal mt-1">
+                    <p className="text-xs font-medium text-magenta mt-1">
                       Issued: {item.year}
                     </p>
                   )}
@@ -82,7 +82,7 @@ export function Awards() {
                   href={item.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-teal hover:text-teal/80 transition-colors focus-visible:outline-none"
+                  className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-magenta hover:text-magenta/80 transition-colors focus-visible:outline-none"
                   aria-label={`${label}: ${item.title}`}
                 >
                   <Icon className="text-sm" />

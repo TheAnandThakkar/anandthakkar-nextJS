@@ -36,7 +36,7 @@ export function Experience() {
 
                     {/* Designation */}
                     {job.designation && (
-                      <p className="text-teal font-semibold text-sm">
+                      <p className="text-magenta font-semibold text-sm">
                         {job.designation}
                       </p>
                     )}
@@ -60,7 +60,7 @@ export function Experience() {
                 {/* Separate CTA link */}
                 {job.website && (
                   <a
-                    className="inline-flex items-center gap-2 text-sm font-medium text-teal hover:text-teal/80 transition-colors focus-visible:outline-none"
+                    className="inline-flex items-center gap-2 text-sm font-medium text-magenta hover:text-magenta/80 transition-colors focus-visible:outline-none"
                     href={job.website}
                     target="_blank"
                     rel="noopener noreferrer"

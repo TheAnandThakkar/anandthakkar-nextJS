@@ -24,8 +24,10 @@ export default async function Image() {
           position: 'relative',
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text -- OG ImageResponse requires raw img + data URL */}
         <img
           src={bgDataUrl}
+          alt=""
           style={{
             position: 'absolute',
             top: 0,

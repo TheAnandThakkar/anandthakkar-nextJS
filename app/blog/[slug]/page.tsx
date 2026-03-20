@@ -63,6 +63,45 @@ export default async function Blog({
   const post = getBlogPosts().find((p) => p.slug === slug);
   if (!post) notFound();
 
+  const heroImageUrl = post.metadata.image
+    ? `${baseUrl}${post.metadata.image}`
+    : `${baseUrl}/og?title=${encodeURIComponent(post.metadata.title)}`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.metadata.title,
+    datePublished: post.metadata.publishedAt,
+    dateModified: post.metadata.publishedAt,
+    description: post.metadata.summary,
+    image: heroImageUrl,
+    url: `${baseUrl}/blog/${post.slug}`,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${baseUrl}/blog/${post.slug}`,
+    },
+    author: {
+      "@type": "Person",
+      "@id": `${baseUrl}#person`,
+      name: "Anand Thakkar",
+      url: baseUrl,
+      image: {
+        "@type": "ImageObject",
+        url: `${baseUrl}/headshot.jpg`,
+      },
+      sameAs: [
+        "https://github.com/TheAnandThakkar",
+        "https://www.linkedin.com/in/theanandthakkar/",
+        "https://x.com/TheAnandThakkar",
+      ],
+    },
+    publisher: {
+      "@type": "Person",
+      name: "Anand Thakkar",
+      url: baseUrl,
+    },
+  };
+
   return (
     <div className="bg-white dark:bg-neutral-950 min-h-screen pt-28 pb-24">
       <section className="container-main max-w-3xl">
@@ -75,19 +114,7 @@ export default async function Blog({
           type="application/ld+json"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "BlogPosting",
-              headline: post.metadata.title,
-              datePublished: post.metadata.publishedAt,
-              dateModified: post.metadata.publishedAt,
-              description: post.metadata.summary,
-              image: post.metadata.image
-                ? `${baseUrl}${post.metadata.image}`
-                : `/og?title=${encodeURIComponent(post.metadata.title)}`,
-              url: `${baseUrl}/blog/${post.slug}`,
-              author: { "@type": "Person", name: "Anand Thakkar" },
-            }),
+            __html: JSON.stringify(jsonLd),
           }}
         />
 
@@ -99,16 +126,18 @@ export default async function Blog({
           <div className="flex items-center gap-4">
             <div className="w-12 h-12 rounded-full overflow-hidden shadow-sm border border-neutral-100 dark:border-neutral-800">
               <Image
-                src="/favicon.ico"
+                src="/headshot-avatar.webp"
                 alt="Anand Thakkar"
                 width={48}
                 height={48}
-                className="object-cover"
+                sizes="48px"
+                quality={85}
+                className="object-cover w-full h-full"
               />
             </div>
             <div>
               <p className="font-bold text-neutral-900 dark:text-white">Anand Thakkar</p>
-              <p className="text-sm font-medium text-teal">
+              <p className="text-sm font-medium text-magenta">
                 {formatDate(post.metadata.publishedAt)}
               </p>
             </div>

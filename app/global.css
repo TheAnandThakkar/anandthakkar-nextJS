@@ -1,17 +1,20 @@
 @import 'tailwindcss';
 
+/* Manual theme toggle (next-themes): `dark:` must follow `.dark` on <html>, not OS media query */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
+  /* Deep dark purple for headings / contrast */
   --color-navy: #13072E;
-  /* Deep dark purple for main backgrounds */
-  --color-teal: #E91E63;
-  /* Magenta primary accent */
-  --color-teal-light: #E91E6315;
-  --color-gold: #7B2FF7;
-  /* Deep Purple accent */
-  --color-gold-light: #7B2FF715;
-  --color-indigo: #C2185B;
-  /* Dark Magenta secondary accent */
-  --color-indigo-light: #C2185B15;
+  /* Primary accent (magenta) */
+  --color-magenta: #E91E63;
+  --color-magenta-light: #E91E6315;
+  /* Secondary accent (violet) */
+  --color-violet: #7B2FF7;
+  --color-violet-light: #7B2FF715;
+  /* Tertiary accent (deep rose) — name avoids clash with Tailwind default `rose` */
+  --color-brand-rose: #C2185B;
+  --color-brand-rose-light: #C2185B15;
 }
 
 @layer components {
@@ -28,15 +31,44 @@
   }
 
   .btn-primary {
-    @apply bg-teal text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:bg-teal/90 hover:shadow-lg hover:shadow-teal/25 active:scale-[0.98];
+    @apply bg-magenta text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:bg-magenta/90 hover:shadow-lg hover:shadow-magenta/25 active:scale-[0.98];
   }
 
   .btn-outline {
-    @apply border-2 border-teal text-teal font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:bg-teal/5;
+    @apply border-2 border-magenta text-magenta font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:bg-magenta/5;
   }
 
   .section-title {
-    @apply text-2xl sm:text-3xl font-bold text-navy dark:text-teal;
+    @apply text-2xl sm:text-3xl font-bold text-navy dark:text-magenta;
+  }
+
+  /* Keyboard / screen reader: skip past fixed nav */
+  .skip-link {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .skip-link:focus {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 100;
+    width: auto;
+    height: auto;
+    padding: 0.75rem 1rem;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+    border-radius: 0.5rem;
+    @apply bg-white text-sm font-semibold text-neutral-900 shadow-lg outline-none ring-2 ring-magenta dark:bg-neutral-950 dark:text-white;
   }
 }
 
@@ -52,17 +84,13 @@
   --sh-entity: #e25a1c;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --sh-class: #4c97f8;
-    --sh-identifier: white;
-    --sh-keyword: #f47067;
-    --sh-string: #0fa295;
-  }
-
-  html {
-    color-scheme: dark;
-  }
+/* Code block colors follow app theme (next-themes `class` on <html>), not OS alone */
+html.dark {
+  color-scheme: dark;
+  --sh-class: #4c97f8;
+  --sh-identifier: white;
+  --sh-keyword: #f47067;
+  --sh-string: #0fa295;
 }
 
 html {

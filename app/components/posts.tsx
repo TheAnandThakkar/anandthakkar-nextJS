@@ -97,7 +97,7 @@ export function BlogPosts() {
 
                 {/* Content */}
                 <div className="p-3">
-                  <h3 className="line-clamp-2 text-lg font-bold tracking-tight text-neutral-900 dark:text-white group-hover:text-teal transition-colors">
+                  <h3 className="line-clamp-2 text-lg font-bold tracking-tight text-neutral-900 dark:text-white group-hover:text-magenta transition-colors">
                     {post.metadata.title}
                   </h3>
 
@@ -109,11 +109,11 @@ export function BlogPosts() {
 
                   <div className="mt-4 flex items-center justify-between">
                     {dateStr && (
-                      <span className="block text-xs font-semibold text-teal bg-teal/10 px-2 py-0.5 rounded-sm">
+                      <span className="block text-xs font-semibold text-magenta bg-magenta/10 px-2 py-0.5 rounded-sm">
                         {dateStr}
                       </span>
                     )}
-                    <span className="text-sm font-semibold text-teal flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    <span className="text-sm font-semibold text-magenta flex items-center gap-1 group-hover:translate-x-1 transition-transform">
                       Read more <span aria-hidden="true">&rarr;</span>
                     </span>
                   </div>

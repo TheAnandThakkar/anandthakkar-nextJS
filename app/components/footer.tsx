@@ -1,4 +1,4 @@
-import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import { FaGithub, FaLinkedin, FaRss, FaXTwitter } from "react-icons/fa6";
 
 type SocialLinkProps = {
   href: string;
@@ -14,7 +14,7 @@ function SocialLink({ href, label, Icon }: SocialLinkProps) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={label}
-        className="group inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-neutral-500 transition-colors hover:text-neutral-900 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
+        className="group inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-neutral-500 transition-colors hover:text-neutral-900 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta"
         title={label}
       >
         <Icon className="text-[18px] transition-colors" />
@@ -34,6 +34,16 @@ export default function Footer() {
           © {year} Anand Thakkar. Crafted with passion &amp; purpose.
         </p>
         <ul className="flex flex-wrap gap-1 items-center">
+          <li>
+            <a
+              href="/rss.xml"
+              className="group inline-flex items-center gap-2 rounded-xl px-3 py-2 text-sm text-neutral-500 transition-colors hover:text-neutral-900 hover:bg-neutral-100 dark:text-neutral-400 dark:hover:text-white dark:hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-magenta"
+              title="RSS feed"
+            >
+              <FaRss className="text-[18px]" aria-hidden />
+              <span className="font-medium">RSS</span>
+            </a>
+          </li>
           <SocialLink
             href="https://github.com/TheAnandThakkar"
             label="GitHub"

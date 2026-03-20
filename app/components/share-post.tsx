@@ -60,7 +60,7 @@ export default function SharePost({ title, slug }: { title: string; slug: string
                 </a>
                 <button
                     onClick={copyToClipboard}
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors hover:bg-teal hover:text-white dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-teal dark:hover:text-white"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-neutral-100 text-neutral-600 transition-colors hover:bg-magenta hover:text-white dark:bg-neutral-800 dark:text-neutral-400 dark:hover:bg-magenta dark:hover:text-white"
                     aria-label="Copy link"
                 >
                     {copied ? (

@@ -15,7 +15,7 @@ export function Contributions() {
               href={project.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-teal hover:text-teal/80 transition-colors focus-visible:outline-none"
+              className="mt-auto inline-flex items-center gap-2 text-sm font-medium text-magenta hover:text-magenta/80 transition-colors focus-visible:outline-none"
             >
               <FaGithub className="text-sm" />
               <span>View Source</span>
