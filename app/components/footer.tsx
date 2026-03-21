@@ -1,4 +1,5 @@
 import { FaGithub, FaLinkedin, FaXTwitter } from "react-icons/fa6";
+import { VisitorCounter } from "./visitor-counter";
 
 type SocialLinkProps = {
   href: string;
@@ -30,9 +31,12 @@ export default function Footer() {
   return (
     <footer className="bg-white dark:bg-neutral-950 border-t border-neutral-100 dark:border-neutral-900 py-8">
       <div className="container-main flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-neutral-500 dark:text-neutral-400 text-sm font-medium">
-          © {year} Anand Thakkar. Crafted with passion &amp; purpose.
-        </p>
+        <div className="flex flex-col gap-1 items-center sm:items-start text-center sm:text-left">
+          <p className="text-neutral-500 dark:text-neutral-400 text-sm font-medium">
+            © {year} Anand Thakkar — public site, built in the open.
+          </p>
+          <VisitorCounter />
+        </div>
         <ul className="flex flex-wrap gap-1 items-center">
           <SocialLink
             href="https://github.com/TheAnandThakkar"

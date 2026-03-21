@@ -26,8 +26,9 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# env files
+# env files (Next.js loads .env.local — never commit secrets)
 .env
+.env*.local
 
 # vercel
 .vercel

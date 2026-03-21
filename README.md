@@ -67,7 +67,22 @@ npm run optimize-images
 ```
 
 **Environment variables?**  
-For most use-cases, none are required. If you add analytics/providers, create a `.env.local` as needed.
+For most use-cases, none are required. Copy `.env.example` to `.env.local` if you use optional features.
+
+### Visitor counter (optional)
+
+The footer can show **total visits** using [Upstash Redis](https://upstash.com/) (serverless key-value over HTTPS — no traditional database). Without these vars, the counter is hidden.
+
+1. Create a free **Redis** database on Upstash and copy **REST URL** + **REST TOKEN**.
+2. Put them in **`.env.local`** (not `.env.example` — Next.js never loads that file). Variable names:
+
+   - `UPSTASH_REDIS_REST_URL`
+   - `UPSTASH_REDIS_REST_TOKEN`
+
+3. Restart `npm run dev`. For **Vercel production**, add the same variables under **Project → Settings → Environment Variables**, then redeploy.
+4. Each **new browser** gets a random id in `localStorage`; the API increments the global count **once per id** (idempotent, safe with React Strict Mode).
+
+**Vercel Web Analytics** (`@vercel/analytics`) does **not** expose visit totals through any public API — those numbers stay in the Vercel dashboard. The **hero** and **footer** “Visits” numbers use this same Redis counter only (they share one request).
 
 ---
 

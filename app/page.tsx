@@ -3,6 +3,7 @@ import { Contributions } from "./components/contributions";
 import { Awards } from "./components/awards";
 import { Experience } from "./components/experience";
 import { HeroActions } from "./components/hero-actions";
+import { HeroVisitBadge } from "./components/hero-visit-badge";
 import { About } from "./components/about";
 
 export const revalidate = 86400;
@@ -13,7 +14,6 @@ export default function Page() {
 
       {/* ======= HERO ======= */}
       <section id="home" className="relative lg:min-h-screen flex flex-col lg:block overflow-hidden">
-
         {/* Background Image Container */}
         {/* On mobile, this occupies the top 55vh, on desktop it covers the whole screen */}
         <div className="w-full h-[55vh] lg:h-auto lg:absolute lg:inset-0 bg-[url('/anand_thakkar_bg.png')] bg-cover bg-[position:40%_top] lg:bg-[position:center_center] bg-no-repeat z-0" />
@@ -39,6 +39,7 @@ export default function Page() {
 
           <div className="container-main relative z-20 h-full flex justify-end items-center py-12 lg:py-24 lg:m-0 lg:max-w-none lg:pr-[10%]">
             <div className="flex flex-col w-full lg:w-1/2 items-center text-center">
+              <HeroVisitBadge />
 
               <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-white mb-6 mt-4 lg:mt-0">
                 Hi, I&apos;m{" "}
