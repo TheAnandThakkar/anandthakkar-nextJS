@@ -5,7 +5,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { scrollToSectionId } from "app/lib/scroll";
-import { ThemeToggle } from "./theme-toggle";
 
 const NAV_SECTIONS = [
   { href: "#about", label: "About" },
@@ -143,7 +142,6 @@ export function Navbar() {
             </div>
 
             <div className="flex items-center gap-1 sm:gap-2">
-              <ThemeToggle />
               <button
                 ref={menuButtonRef}
                 type="button"

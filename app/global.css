@@ -1,8 +1,5 @@
 @import 'tailwindcss';
 
-/* Manual theme toggle (next-themes): `dark:` must follow `.dark` on <html>, not OS media query */
-@custom-variant dark (&:where(.dark, .dark *));
-
 @theme {
   /* Deep dark purple for headings / contrast */
   --color-navy: #13072E;
@@ -84,13 +81,14 @@
   --sh-entity: #e25a1c;
 }
 
-/* Code block colors follow app theme (next-themes `class` on <html>), not OS alone */
-html.dark {
-  color-scheme: dark;
-  --sh-class: #4c97f8;
-  --sh-identifier: white;
-  --sh-keyword: #f47067;
-  --sh-string: #0fa295;
+@media (prefers-color-scheme: dark) {
+  html {
+    color-scheme: dark;
+    --sh-class: #4c97f8;
+    --sh-identifier: white;
+    --sh-keyword: #f47067;
+    --sh-string: #0fa295;
+  }
 }
 
 html {

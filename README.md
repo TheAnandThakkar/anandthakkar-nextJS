@@ -11,9 +11,9 @@ This is the source for my personal website, **[anandthakkar.com](https://www.ana
 
 ## ✨ What’s inside
 
-- **Next.js App Router** + **TypeScript**
+- **Next.js 15** (App Router) + **TypeScript** + **React 19**
 - **Tailwind CSS** (clean, accessible UI with light/dark mode)
-- SEO best-practices (metadata, OpenGraph/Twitter, JSON-LD, blog RSS at `/rss.xml`)
+- SEO best-practices (metadata, OpenGraph/Twitter, JSON-LD)
 - Sections for **Awards/Certifications**, **Open-Source & Contributions**, **Experience**, **Blog**
 - Optional **QR vCard** component to save contact info quickly
 
@@ -39,7 +39,7 @@ If you like this project:
 
 ## 📦 Getting started (clone my repo)
 
-> Requires **Node 18+** and **npm** (or **pnpm**/**yarn**).
+> Requires **Node 20+** (LTS recommended) and **npm** (or **pnpm**/**yarn**).
 
 ```bash
 # 1) Clone this repository

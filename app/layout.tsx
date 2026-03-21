@@ -5,12 +5,11 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import Footer from "./components/footer";
 import { Navbar } from "./components/nav";
-import { Providers } from "./providers";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { baseUrl } from "./sitemap";
 
-/** Light-first default; `next-themes` still controls actual theme on <html> */
+/** Light-first default; dark styles follow system preference. */
 export const viewport: Viewport = {
   themeColor: "#ffffff",
   colorScheme: "light dark",
@@ -69,11 +68,6 @@ export const metadata: Metadata = {
   verification: {
     google: "NcYI6AaN1NLYNYRJKntQcoJ0stFodzOvIsNDpqXOGfw",
   },
-  alternates: {
-    types: {
-      "application/rss+xml": `${baseUrl}/rss.xml`,
-    },
-  },
 };
 
 const cx = (...classes: Array<string | false | null | undefined>) =>
@@ -87,7 +81,6 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      suppressHydrationWarning
       className={cx(
         "text-black bg-white dark:text-white dark:bg-black",
         GeistSans.variable,
@@ -95,22 +88,20 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased min-h-screen">
-        <Providers>
-          <a href="#main-content" className="skip-link">
-            Skip to main content
-          </a>
-          <Navbar />
-          <main
-            id="main-content"
-            tabIndex={-1}
-            className="flex-auto min-w-0 flex flex-col outline-none focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black"
-          >
-            {children}
-          </main>
-          <Footer />
-          <Analytics />
-          <SpeedInsights />
-        </Providers>
+        <a href="#main-content" className="skip-link">
+          Skip to main content
+        </a>
+        <Navbar />
+        <main
+          id="main-content"
+          tabIndex={-1}
+          className="flex-auto min-w-0 flex flex-col outline-none focus-visible:ring-2 focus-visible:ring-magenta focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black"
+        >
+          {children}
+        </main>
+        <Footer />
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
