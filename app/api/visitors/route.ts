@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 /** Single counter key in Redis (one integer, not a relational DB). */
 const VISITOR_KEY = "site:visitors:v1";
 
-/** Per-browser anonymous id — prevents double-count on parallel requests / React Strict Mode. */
+/** Per-browser anonymous id, prevents double-count on parallel requests / React Strict Mode. */
 const DEDUPE_PREFIX = "visitor:dedupe:";
 
 const DEDUPE_TTL_SEC = 60 * 60 * 24 * 365 * 10; // 10 years

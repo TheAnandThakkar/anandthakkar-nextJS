@@ -8,21 +8,16 @@ export const VISITOR_COUNT_SINCE_LABEL = "March 21, 2026";
 
 type Variant = "hero" | "footer";
 
+/** Matches one wrapped line of the counter on small screens (prevents CLS when content appears). */
+const RESERVED_MIN_H = "min-h-[2.75rem] sm:min-h-[1.75rem]";
+
 /**
  * Shared visitor line: pulse icon + count + “Number of visitors since …”.
- * Hero: light text on dark image. Footer: readable on light/dark footer backgrounds.
+ * Reserves space while loading so hero/footer don’t jump; visible only when data is ready.
  */
 export function VisitorCountLine({ variant }: { variant: Variant }) {
   const { count, loading, configured } = useVisitorCount();
   const isHero = variant === "hero";
-
-  if (!configured) {
-    return null;
-  }
-
-  const iconClass = isHero
-    ? "h-3.5 w-3.5 shrink-0 opacity-75 text-neutral-300"
-    : "h-3.5 w-3.5 shrink-0 opacity-75 text-neutral-500 dark:text-neutral-400";
 
   const wrapClass = isHero ? "mb-4 w-full px-2 text-center" : "w-full";
 
@@ -40,9 +35,28 @@ export function VisitorCountLine({ variant }: { variant: Variant }) {
     ? "text-neutral-300"
     : "text-neutral-700 dark:text-neutral-300";
 
-  const skeletonClass = isHero
-    ? "inline-block h-3 w-14 animate-pulse rounded bg-white/10"
-    : "inline-block h-3 w-14 animate-pulse rounded bg-neutral-200 dark:bg-white/10";
+  // Fetch finished, Redis not enabled → no row, no reserved space
+  if (!loading && !configured) {
+    return null;
+  }
+
+  // Still fetching: reserve space only (nothing visible, avoids jump when line appears)
+  if (loading) {
+    const loadingAlign = isHero
+      ? "flex items-center justify-center"
+      : "flex items-center justify-center sm:justify-start";
+    return (
+      <div
+        className={`${wrapClass} ${RESERVED_MIN_H} ${loadingAlign}`}
+        aria-hidden
+      />
+    );
+  }
+
+  // Configured but no count (e.g. API error)
+  if (count == null) {
+    return null;
+  }
 
   return (
     <div className={wrapClass}>
@@ -51,24 +65,25 @@ export function VisitorCountLine({ variant }: { variant: Variant }) {
         aria-live="polite"
         title="Approximate visits (one per browser; Upstash Redis). Same total as the hero."
       >
-        <IoPulseOutline className={iconClass} aria-hidden />
+        <IoPulseOutline
+          className={
+            isHero
+              ? "h-3.5 w-3.5 shrink-0 opacity-75 text-neutral-300"
+              : "h-3.5 w-3.5 shrink-0 opacity-75 text-neutral-500 dark:text-neutral-400"
+          }
+          aria-hidden
+        />
 
-        {loading ? (
-          <span className={skeletonClass} aria-busy="true" />
-        ) : count != null ? (
-          <>
-            <span className={countClass}>{count.toLocaleString("en-IN")}</span>
-            <span className={dotClass} aria-hidden>
-              ·
-            </span>
-            <span>
-              Number of visitors since{" "}
-              <time dateTime={VISITOR_COUNT_SINCE_ISO} className={timeClass}>
-                {VISITOR_COUNT_SINCE_LABEL}
-              </time>
-            </span>
-          </>
-        ) : null}
+        <span className={countClass}>{count.toLocaleString("en-IN")}</span>
+        <span className={dotClass} aria-hidden>
+          ·
+        </span>
+        <span>
+          Number of visitors since{" "}
+          <time dateTime={VISITOR_COUNT_SINCE_ISO} className={timeClass}>
+            {VISITOR_COUNT_SINCE_LABEL}
+          </time>
+        </span>
       </p>
     </div>
   );

@@ -33,7 +33,7 @@ export default function Footer() {
       <div className="container-main flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="flex flex-col gap-1 items-center sm:items-start text-center sm:text-left">
           <p className="text-neutral-500 dark:text-neutral-400 text-sm font-medium">
-            © {year} Anand Thakkar — public site, built in the open.
+            © {year} Anand Thakkar, public site, built in the open.
           </p>
           <VisitorCounter />
         </div>

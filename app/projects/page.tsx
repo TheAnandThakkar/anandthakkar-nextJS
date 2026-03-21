@@ -9,7 +9,12 @@ export default function ProjectsPage() {
     return (
         <section className="pt-20 pb-12">
             <div className="container-main">
-                <h1 className="section-title mb-8">Projects & Open Source</h1>
+                <header className="mb-8 sm:mb-10">
+                    <h1 className="section-title">Projects &amp; Open Source</h1>
+                    <p className="section-subtitle mt-2">
+                        Repositories I maintain publicly, clone, fork, or use as a reference.
+                    </p>
+                </header>
                 <div className="mb-12">
                     <Contributions />
                 </div>

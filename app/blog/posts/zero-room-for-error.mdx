@@ -25,7 +25,7 @@ Coming from a background in **Taxation and Accounting** before moving into Softw
 
 When I started building financial applications, I realized that much of this trust is protected by a simple (but powerful) database idea: **ACID**.
 
-Instead of only defining it, let’s see what ACID _does_ in the moments that matter most—especially when systems fail in the real world.
+Instead of only defining it, let’s see what ACID _does_ in the moments that matter most, especially when systems fail in the real world.
 
 ![ACID Properties Diagram](/acid_diagram_placeholder.png)
 
@@ -82,7 +82,7 @@ No money is “stuck between steps.” That’s the trust ACID is designed to pr
 
 Here’s how each ACID property protects real-world financial flows.
 
-### A — Atomicity (All-or-Nothing)
+### A, Atomicity (All-or-Nothing)
 
 In FinTech, a transfer is only successful if _every step_ succeeds.
 
@@ -95,7 +95,7 @@ So users don’t end up paying for something they didn’t receive.
 
 ---
 
-### C — Consistency (Rules Always Hold)
+### C, Consistency (Rules Always Hold)
 
 **Example:** if an account has ₹100, the system should never allow a transfer of ₹500 that results in **-₹400**.
 
@@ -103,7 +103,7 @@ Consistency means the database only moves from one valid state to another. Const
 
 ---
 
-### I — Isolation (Correct Under Concurrency)
+### I, Isolation (Correct Under Concurrency)
 
 Financial systems run many transactions at once.
 
@@ -115,7 +115,7 @@ Financial systems run many transactions at once.
 
 ---
 
-### D — Durability (Success Means Permanent)
+### D, Durability (Success Means Permanent)
 
 When the system says **“Success!”**, it should mean the record is safely stored.
 
@@ -129,7 +129,7 @@ In many apps, UX means animations, loading speed, and smooth flows.
 
 In FinTech, UX also means one critical promise:
 
-**If the app confirms a transaction, it stays correct—always.**
+**If the app confirms a transaction, it stays correct, always.**
 
 That’s why ACID isn’t just a database concept. It’s a credibility layer.
 

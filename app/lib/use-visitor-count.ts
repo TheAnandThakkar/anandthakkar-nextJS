@@ -71,7 +71,7 @@ async function fetchVisitorCount(): Promise<VisitorCountState> {
 
 /**
  * Live visit total from `/api/visitors` (Upstash Redis).
- * Vercel Analytics does not expose page-view totals via API — this is the on-site counter only.
+ * Vercel Analytics does not expose page-view totals via API, this is the on-site counter only.
  * Fetch is deduped across hero + footer.
  */
 export function useVisitorCount(): VisitorCountState {

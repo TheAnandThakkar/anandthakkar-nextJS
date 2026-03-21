@@ -5,6 +5,7 @@ import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import Footer from "./components/footer";
 import { Navbar } from "./components/nav";
+import { SiteJsonLd } from "./components/site-json-ld";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { baseUrl } from "./sitemap";
@@ -88,6 +89,7 @@ export default function RootLayout({
       )}
     >
       <body className="antialiased min-h-screen">
+        <SiteJsonLd />
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>

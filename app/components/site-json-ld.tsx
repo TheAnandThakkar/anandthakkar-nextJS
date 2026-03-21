@@ -1,6 +1,10 @@
-import { baseUrl } from "./sitemap";
+import { baseUrl } from "app/sitemap";
 
-export default function Head() {
+/**
+ * Person + WebSite + ImageObject JSON-LD for Google rich results.
+ * Lives in root layout because `app/head.tsx` is not used by the App Router.
+ */
+export function SiteJsonLd() {
   const siteUrl = baseUrl;
   const personId = `${siteUrl}#person`;
   const websiteId = `${siteUrl}#website`;
@@ -75,8 +79,6 @@ export default function Head() {
 
   return (
     <>
-      <link rel="icon" href="/favicon.ico" />
-      <link rel="image_src" href={`${siteUrl}/headshot.jpg`} />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(imageObject) }}

@@ -1,32 +1,44 @@
-export const contributions = [
+export type Contribution = {
+  name: string;
+  description: string;
+  url: string;
+};
+
+export const contributions: Contribution[] = [
   {
-    name: "Anand Thakkar — nextJS Portfolio (Typescript, mock data)",
+    name: "anandthakkar-nextJS",
     description:
-      "Build your portfolio in minutes — clone, customize, deploy. Free & open-source.",
+      "This very site, open source. Clone it, break it, ship your own presence. Free for anyone who wants a fast Next.js starting point.",
     url: "https://github.com/TheAnandThakkar/anandthakkar-nextJS",
   },
   {
-    name: "Anand Thakkar — iOS Portfolio (SwiftUI, mock data)",
+    name: "anandthakkar-swiftUI",
     description:
-      "A minimal SwiftUI learning project that renders a personal portfolio with a bottom tab bar: Home · Certificates · Projects · Blogs · Settings. This repo currently uses static mock data and does not include an app icon. It’s intended as a simple starting point for learners — contributions are welcome! 🙌",
+      "A minimal SwiftUI learning project with a tabbed shell: Home · Certificates · Projects · Blogs · Settings. Mock data, learner-friendly, contributions welcome.",
     url: "https://github.com/TheAnandThakkar/anandthakkar-swiftUI",
   },
   {
-    name: "Concerto Linter (GSoC 2025 Proposal)",
+    name: "Concerto Linter",
     description:
-      "A linter tool for the Concerto modeling language, designed to enhance code validation, catch errors early, and improve overall developer productivity.",
+      "A linter tool for the Concerto modeling language, validation, early error catching, and better developer productivity.",
     url: "https://github.com/TheAnandThakkar/concerto-linter",
   },
   {
     name: "EMI Calculation API (NestJS)",
     description:
-      "A backend API service built with NestJS for calculating wage-based loan and salary EMIs, enabling accurate and efficient financial planning.",
+      "A NestJS API for wage-based loan and salary EMIs, accurate financial planning behind clean HTTP endpoints.",
     url: "https://github.com/TheAnandThakkar/emi_calculation_nestjs",
   },
   {
-    name: "Todo (Task Management App)",
+    name: "Taxaltus",
     description:
-      "A lightweight task management application for creating, tracking, and organizing to-do items with a simple and efficient workflow.",
+      "Open source, powers Taxaltus.com. An income-tax companion for Indian salaried employees: Form 16 explorer, old vs new regime comparison, tax & CTC estimators, and plain-English guides for filing prep (educational only).",
+    url: "https://github.com/TheAnandThakkar/Taxaltus",
+  },
+  {
+    name: "Todo, task app",
+    description:
+      "A lightweight task manager: create, track, and organize to-dos with a simple workflow.",
     url: "https://github.com/TheAnandThakkar/todo",
   },
 ];

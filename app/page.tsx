@@ -5,6 +5,7 @@ import { Experience } from "./components/experience";
 import { HeroActions } from "./components/hero-actions";
 import { HeroVisitBadge } from "./components/hero-visit-badge";
 import { About } from "./components/about";
+import { SectionHeading } from "./components/section-heading";
 
 export const revalidate = 86400;
 
@@ -14,9 +15,11 @@ export default function Page() {
 
       {/* ======= HERO ======= */}
       <section id="home" className="relative lg:min-h-screen flex flex-col lg:block overflow-hidden">
-        {/* Background Image Container */}
-        {/* On mobile, this occupies the top 55vh, on desktop it covers the whole screen */}
-        <div className="w-full h-[55vh] lg:h-auto lg:absolute lg:inset-0 bg-[url('/anand_thakkar_bg.png')] bg-cover bg-[position:40%_top] lg:bg-[position:center_center] bg-no-repeat z-0" />
+        {/* Background image: portrait/tablet use cover + face-biased position; landscape (pre-lg) uses height-first sizing so wide viewports don’t crop the face; desktop full-bleed cover */}
+        <div
+          className="pointer-events-none z-0 w-full overflow-hidden bg-[url('/anand_thakkar_bg.png')] bg-no-repeat h-[55vh] min-h-[260px] sm:min-h-[280px] md:min-h-[300px] max-lg:landscape:h-[min(72vh,560px)] max-lg:landscape:min-h-[320px] bg-cover bg-[position:50%_18%] sm:bg-[position:48%_16%] md:bg-[position:50%_12%] max-lg:landscape:bg-[length:auto_100%] max-lg:landscape:bg-center lg:h-auto lg:min-h-0 lg:max-h-none lg:absolute lg:inset-0 lg:bg-cover lg:bg-[position:center_center]"
+          aria-hidden
+        />
 
         {/* Desktop Gradient Overlay (hidden on mobile) */}
         <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-transparent via-neutral-950/40 to-neutral-950/90 pointer-events-none z-10" />
@@ -78,10 +81,11 @@ export default function Page() {
       {/* ======= ABOUT ======= */}
       <section id="about" className="py-8 sm:py-10 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-white/10">
         <div className="container-main">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-magenta" />
-            <h2 className="section-title">About Me</h2>
-          </div>
+          <SectionHeading
+            accent="magenta"
+            title="About Me"
+            subtitle="Background, focus areas, and what I care about in software and finance."
+          />
           <About />
         </div>
       </section>
@@ -89,10 +93,11 @@ export default function Page() {
       {/* ======= EXPERIENCE ======= */}
       <section id="experience" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-violet" />
-            <h2 className="section-title">Work Experience</h2>
-          </div>
+          <SectionHeading
+            accent="violet"
+            title="Work Experience"
+            subtitle="Roles and impact across fintech, SaaS, and cloud, where I’ve shipped and learned."
+          />
           <Experience />
         </div>
       </section>
@@ -100,10 +105,11 @@ export default function Page() {
       {/* ======= AWARDS / CERTIFICATIONS ======= */}
       <section id="recognition" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-magenta" />
-            <h2 className="section-title">Recognition</h2>
-          </div>
+          <SectionHeading
+            accent="magenta"
+            title="Recognition"
+            subtitle="Certifications and credentials that back how I build and ship."
+          />
           <Awards />
         </div>
       </section>
@@ -111,10 +117,11 @@ export default function Page() {
       {/* ======= OPEN SOURCE ======= */}
       <section id="projects" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-brand-rose" />
-            <h2 className="section-title">Open Source &amp; Contributions</h2>
-          </div>
+          <SectionHeading
+            accent="brand-rose"
+            title="Open Source & Contributions"
+            subtitle="Public repos I maintain, tools, experiments, and things others can fork or learn from."
+          />
           <Contributions />
         </div>
       </section>
@@ -122,11 +129,12 @@ export default function Page() {
       {/* ======= BLOG ======= */}
       <section id="blog" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 rounded-full bg-magenta" />
-            <h2 className="section-title">Blog</h2>
-          </div>
-          <BlogPosts />
+          <SectionHeading
+            accent="magenta"
+            title="Blog"
+            subtitle="Longer notes on engineering, systems, and building at the edge of finance and tech."
+          />
+          <BlogPosts limit={4} showLoadMore />
         </div>
       </section>
 
@@ -135,7 +143,7 @@ export default function Page() {
         <div className="container-main text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white mb-4">Let&apos;s Shape What&apos;s Next</h2>
           <p className="text-neutral-600 dark:text-neutral-400 max-w-lg mx-auto mb-8">
-            The intersection of finance, AI, and software is evolving fast. If you&apos;re building something meaningful in that space — or just want to exchange ideas — let&apos;s connect.
+            The intersection of finance, AI, and software is evolving fast. If you&apos;re building something meaningful in that space, or just want to exchange ideas, let&apos;s connect.
           </p>
           <a
             href="mailto:anand.thakkar@outlook.com?subject=Hello%20Anand"

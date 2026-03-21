@@ -59,7 +59,7 @@ export default function SocialPreviewCard({
   );
 
   const whatsappHref = useMemo(() => {
-    const text = `${title} — ${absoluteUrl}`;
+    const text = `${title}, ${absoluteUrl}`;
     return `https://wa.me/?text=${encodeURIComponent(text)}`;
   }, [title, absoluteUrl]);
 

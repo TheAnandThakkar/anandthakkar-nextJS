@@ -1,23 +1,20 @@
 // app/components/posts.tsx
-import Image from "next/image";
 import Link from "next/link";
-import { formatDate, getBlogPosts } from "app/blog/utils";
+import { getBlogPosts } from "app/blog/utils";
+import { BlogPostGrid, type BlogPostItem } from "./blog-post-grid";
 
-type Blog = {
-  slug: string;
-  metadata: {
-    title: string;
-    publishedAt?: string;
-    summary?: string;
-    description?: string;
-    image?: string; // <- thumbnail path (e.g., "/ai_vs_developer.png")
-  };
+type Blog = BlogPostItem;
+
+type BlogPostsProps = {
+  /** If set, only the first N posts (after newest-first sort) are shown. */
+  limit?: number;
+  /** When there are more posts than `limit`, show a link to `/blog`. */
+  showLoadMore?: boolean;
 };
 
-export function BlogPosts() {
+export function BlogPosts({ limit, showLoadMore }: BlogPostsProps = {}) {
   const allBlogs = getBlogPosts() as Blog[];
 
-  // Sort newest first
   const blogs = [...allBlogs].sort((a, b) => {
     const ta = a.metadata.publishedAt
       ? new Date(a.metadata.publishedAt).getTime()
@@ -28,18 +25,22 @@ export function BlogPosts() {
     return tb - ta;
   });
 
+  const visible =
+    typeof limit === "number" && limit > 0 ? blogs.slice(0, limit) : blogs;
+  const hasMore =
+    Boolean(showLoadMore && typeof limit === "number" && blogs.length > limit);
+
   if (blogs.length === 0) {
     return (
       <section>
         <p className="text-neutral-600 dark:text-neutral-400">
-          No posts yet — check back soon.
+          No posts yet, check back soon.
         </p>
       </section>
     );
   }
 
-  // SEO: BlogPosting JSON-LD for visible posts
-  const jsonLd = blogs
+  const jsonLd = visible
     .filter((p) => !!p.metadata.publishedAt)
     .map((p) => ({
       "@context": "https://schema.org",
@@ -61,67 +62,46 @@ export function BlogPosts() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* Responsive grid of cards */}
-      <div className="grid gap-5 sm:grid-cols-2">
-        {blogs.map((post) => {
-          const href = `/blog/${post.slug}`;
-          const dateStr = post.metadata.publishedAt
-            ? formatDate(post.metadata.publishedAt, false)
-            : null;
-          const summary =
-            post.metadata.summary || post.metadata.description || "";
-          const img = post.metadata.image || "/preview-image.png"; // graceful fallback
+      <BlogPostGrid posts={visible} />
 
-          return (
+      {hasMore && (
+        <div className="relative mt-12 sm:mt-14">
+          {/* Hairline separator, ties the CTA to the grid without a heavy box */}
+          <div
+            className="pointer-events-none absolute inset-x-0 -top-6 h-px bg-gradient-to-r from-transparent via-neutral-200 to-transparent dark:via-neutral-800"
+            aria-hidden
+          />
+          <Link
+            href="/blog"
+            className="group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-neutral-200/90 bg-gradient-to-br from-white via-white to-neutral-50/90 p-5 shadow-sm transition-all duration-300 hover:border-magenta/30 hover:shadow-md dark:border-neutral-800 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-950/90 dark:hover:border-magenta/35 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-6"
+            aria-label={`View all blog posts. Showing ${visible.length} of ${blogs.length} on the home page.`}
+          >
+            {/* Soft accent wash on hover */}
             <div
-              key={post.slug}
-              className="card-hover flex flex-col group p-2"
-              aria-label={`Read blog post: ${post.metadata.title}${dateStr ? ` (${dateStr})` : ""
-                }`}
-            >
-              <Link href={href} className="flex-1 flex flex-col focus-visible:outline-none">
-                {/* Thumbnail */}
-                <div className="relative overflow-hidden rounded-xl">
-                  <Image
-                    src={img}
-                    alt={post.metadata.title}
-                    width={800}
-                    height={420}
-                    className="h-44 w-full rounded-xl object-cover transition-transform duration-200 group-hover:scale-[1.02]"
-                    priority={false}
-                  />
-                  {/* subtle overlay gradient */}
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent rounded-b-xl" />
-                </div>
-
-                {/* Content */}
-                <div className="p-3">
-                  <h3 className="line-clamp-2 text-lg font-bold tracking-tight text-neutral-900 dark:text-white group-hover:text-magenta transition-colors">
-                    {post.metadata.title}
-                  </h3>
-
-                  {summary && (
-                    <p className="mt-2 line-clamp-2 text-sm text-neutral-600 dark:text-neutral-400">
-                      {summary}
-                    </p>
-                  )}
-
-                  <div className="mt-4 flex items-center justify-between">
-                    {dateStr && (
-                      <span className="block text-xs font-semibold text-magenta bg-magenta/10 px-2 py-0.5 rounded-sm">
-                        {dateStr}
-                      </span>
-                    )}
-                    <span className="text-sm font-semibold text-magenta flex items-center gap-1 group-hover:translate-x-1 transition-transform">
-                      Read more <span aria-hidden="true">&rarr;</span>
-                    </span>
-                  </div>
-                </div>
-              </Link>
+              className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-magenta/[0.06] opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100 dark:bg-magenta/10"
+              aria-hidden
+            />
+            <div className="relative min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
+                Full archive
+              </p>
+              <p className="mt-1.5 text-sm leading-snug text-neutral-600 dark:text-neutral-300">
+                You&apos;re seeing the latest {visible.length} of {blogs.length}{" "}
+                posts, continue to the blog for the full list.
+              </p>
             </div>
-          );
-        })}
-      </div>
+            <span className="relative inline-flex shrink-0 items-center justify-center gap-2 self-stretch rounded-xl bg-neutral-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 group-hover:bg-magenta group-hover:shadow-lg group-hover:shadow-magenta/25 dark:bg-white dark:text-neutral-900 dark:group-hover:bg-magenta dark:group-hover:text-white sm:self-center sm:py-3.5">
+              <span>View all posts</span>
+              <span
+                className="inline-block transition-transform duration-300 group-hover:translate-x-0.5"
+                aria-hidden
+              >
+                →
+              </span>
+            </span>
+          </Link>
+        </div>
+      )}
     </section>
   );
 }

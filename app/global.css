@@ -9,7 +9,7 @@
   /* Secondary accent (violet) */
   --color-violet: #7B2FF7;
   --color-violet-light: #7B2FF715;
-  /* Tertiary accent (deep rose) — name avoids clash with Tailwind default `rose` */
+  /* Tertiary accent (deep rose), name avoids clash with Tailwind default `rose` */
   --color-brand-rose: #C2185B;
   --color-brand-rose-light: #C2185B15;
 }
@@ -37,6 +37,11 @@
 
   .section-title {
     @apply text-2xl sm:text-3xl font-bold text-navy dark:text-magenta;
+  }
+
+  /** One line under section headings (home + inner pages) */
+  .section-subtitle {
+    @apply text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-2xl;
   }
 
   /* Keyboard / screen reader: skip past fixed nav */
