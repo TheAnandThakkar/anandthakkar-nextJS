@@ -12,6 +12,12 @@ export const contributions: Contribution[] = [
     url: "https://github.com/TheAnandThakkar/anandthakkar-nextJS",
   },
   {
+    name: "Sanity Portfolio",
+    description:
+      "Sanity Studio plus Next.js in one repo: schema-driven content, GROQ queries, blog routes, and Sanity image URLs, open source starter for a CMS-backed portfolio.",
+    url: "https://github.com/TheAnandThakkar/sanity-portfolio",
+  },
+  {
     name: "anandthakkar-swiftUI",
     description:
       "A minimal SwiftUI learning project with a tabbed shell: Home · Certificates · Projects · Blogs · Settings. Mock data, learner-friendly, contributions welcome.",
