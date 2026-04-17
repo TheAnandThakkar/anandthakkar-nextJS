@@ -27,7 +27,7 @@ export default function SocialPreviewCard({
   url,
   title,
   description,
-  image = "/preview-image.png",
+  image = "/headshot.jpg",
   hashtags = [],
   via,
 }: Props) {

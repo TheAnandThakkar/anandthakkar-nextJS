@@ -31,7 +31,9 @@ export function BlogPostGrid({ posts }: { posts: BlogPostItem[] }) {
           : null;
         const summary =
           post.metadata.summary || post.metadata.description || "";
-        const img = post.metadata.image || "/preview-image.png";
+        const img =
+          post.metadata.image ||
+          `/og?title=${encodeURIComponent(post.metadata.title)}`;
 
         return (
           <div

@@ -1,8 +1,12 @@
 import { Contributions } from "../components/contributions";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
     title: 'Projects | Anand Thakkar',
     description: 'Portfolio of open-source contributions, software experiments, and technical projects by Anand Thakkar.',
+    alternates: {
+        canonical: "/projects",
+    },
 };
 
 export default function ProjectsPage() {

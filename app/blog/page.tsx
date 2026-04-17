@@ -2,11 +2,15 @@ import { getBlogPosts } from "app/blog/utils";
 import BackButton from "app/components/back-button";
 import { BlogListingClient } from "app/components/blog-listing-client";
 import type { BlogPostItem } from "app/components/blog-post-grid";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Writing",
   description:
     "Essays and technical notes, search by title and sort by date. Long-form voice on software, systems, and finance × technology.",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export default function BlogPage() {

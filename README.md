@@ -62,8 +62,6 @@ npm run start
 # Lint (same as CI)
 npm run lint
 
-# Regenerate small WebP avatar from public/headshot.jpg (optional)
-npm run optimize-images
 ```
 
 **Environment variables?**  
@@ -97,11 +95,11 @@ The footer can show **total visits** using [Upstash Redis](https://upstash.com/)
    npm run dev
    ```
 3. **Personalize**:
-   - Replace **headshot**, **resume**, and **social links**.
+   - Replace **headshot** and **social links**.
    - Edit hero/summary text in `app/page.tsx`.
    - Update data lists in `app/data/*` (experience, awards, contributions).
    - Add or update blog posts in `app/blog/*` (depending on your setup).
-   - Swap the OG preview image at `/public/preview-image.png`.
+   - Update social preview image paths if you customize metadata/cards.
 4. **Commit & push**:
    ```bash
    git add .

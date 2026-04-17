@@ -1,5 +1,6 @@
 // app/blog/[slug]/page.tsx
 import Image from "next/image";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CustomMDX } from "app/components/mdx";
 import { formatDate, getBlogPosts } from "app/blog/utils";
@@ -35,6 +36,9 @@ export async function generateMetadata({
   return {
     title,
     description,
+    alternates: {
+      canonical: `${baseUrl}/blog/${post.slug}`,
+    },
     openGraph: {
       title,
       description,
@@ -60,8 +64,22 @@ export default async function Blog({
 }) {
   const { slug } = await params;
 
-  const post = getBlogPosts().find((p) => p.slug === slug);
+  const allPosts = getBlogPosts();
+  const post = allPosts.find((p) => p.slug === slug);
   if (!post) notFound();
+
+  const relatedPosts = [...allPosts]
+    .filter((p) => p.slug !== post.slug)
+    .sort((a, b) => {
+      const ta = a.metadata.publishedAt
+        ? new Date(a.metadata.publishedAt).getTime()
+        : 0;
+      const tb = b.metadata.publishedAt
+        ? new Date(b.metadata.publishedAt).getTime()
+        : 0;
+      return tb - ta;
+    })
+    .slice(0, 3);
 
   const heroImageUrl = post.metadata.image
     ? `${baseUrl}${post.metadata.image}`
@@ -164,6 +182,39 @@ export default async function Blog({
 
         {/* Share Section */}
         <SharePost title={post.metadata.title} slug={post.slug} />
+
+        {/* Related posts for internal linking and crawl depth */}
+        {relatedPosts.length > 0 && (
+          <section className="mt-14 border-t border-neutral-100 pt-10 dark:border-neutral-900">
+            <h2 className="mb-6 text-2xl font-bold tracking-tight text-neutral-900 dark:text-white">
+              Related posts
+            </h2>
+            <div className="grid gap-4 sm:grid-cols-2">
+              {relatedPosts.map((item) => {
+                const summary = item.metadata.summary || "";
+                return (
+                  <Link
+                    key={item.slug}
+                    href={`/blog/${item.slug}`}
+                    className="group rounded-xl border border-neutral-200 bg-white p-4 transition-colors hover:border-magenta/40 dark:border-neutral-800 dark:bg-neutral-900"
+                  >
+                    <p className="text-xs font-medium text-magenta">
+                      {formatDate(item.metadata.publishedAt)}
+                    </p>
+                    <h3 className="mt-1 text-base font-semibold leading-snug text-neutral-900 transition-colors group-hover:text-magenta dark:text-white">
+                      {item.metadata.title}
+                    </h3>
+                    {summary && (
+                      <p className="mt-2 line-clamp-2 text-sm text-neutral-600 dark:text-neutral-400">
+                        {summary}
+                      </p>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          </section>
+        )}
 
       </section>
     </div>

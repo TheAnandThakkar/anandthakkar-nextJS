@@ -1,9 +1,13 @@
 import { Experience } from "../components/experience";
 import { Awards } from "../components/awards";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
     title: 'About | Anand Thakkar',
     description: 'Work experience, awards, and professional milestones of Anand Thakkar, a Software Developer specializing in Fintech and AWS Cloud.',
+    alternates: {
+        canonical: "/about",
+    },
 };
 
 export default function AboutPage() {

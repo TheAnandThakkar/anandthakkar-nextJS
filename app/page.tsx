@@ -6,8 +6,14 @@ import { HeroActions } from "./components/hero-actions";
 import { HeroVisitBadge } from "./components/hero-visit-badge";
 import { About } from "./components/about";
 import { SectionHeading } from "./components/section-heading";
+import type { Metadata } from "next";
 
 export const revalidate = 86400;
+export const metadata: Metadata = {
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export default function Page() {
   return (
