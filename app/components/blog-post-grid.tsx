@@ -13,7 +13,16 @@ export type BlogPostItem = {
   };
 };
 
-export function BlogPostGrid({ posts }: { posts: BlogPostItem[] }) {
+type BlogPostGridProps = {
+  posts: BlogPostItem[];
+  /** `contain` keeps full 16:9 image visible (letterbox if needed). */
+  imageDisplay?: "cover" | "contain";
+};
+
+export function BlogPostGrid({
+  posts,
+  imageDisplay = "cover",
+}: BlogPostGridProps) {
   if (posts.length === 0) {
     return (
       <p className="text-neutral-600 dark:text-neutral-400">
@@ -46,12 +55,18 @@ export function BlogPostGrid({ posts }: { posts: BlogPostItem[] }) {
                 <Image
                   src={img}
                   alt={post.metadata.title}
-                  width={800}
-                  height={420}
-                  className="h-44 w-full rounded-xl object-cover transition-transform duration-200 group-hover:scale-[1.02]"
+                  width={1920}
+                  height={1080}
+                  className={`aspect-video w-full rounded-xl transition-transform duration-200 group-hover:scale-[1.02] ${
+                    imageDisplay === "contain"
+                      ? "object-contain bg-neutral-100 dark:bg-neutral-900"
+                      : "object-cover"
+                  }`}
                   priority={false}
                 />
-                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent rounded-b-xl" />
+                {imageDisplay === "cover" && (
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent rounded-b-xl" />
+                )}
               </div>
 
               <div className="p-3">

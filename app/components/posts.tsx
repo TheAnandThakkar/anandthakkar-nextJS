@@ -62,7 +62,7 @@ export function BlogPosts({ limit, showLoadMore }: BlogPostsProps = {}) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <BlogPostGrid posts={visible} />
+      <BlogPostGrid posts={visible} imageDisplay="contain" />
 
       {hasMore && (
         <div className="relative mt-12 sm:mt-14">
