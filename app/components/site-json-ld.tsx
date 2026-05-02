@@ -8,14 +8,18 @@ export function SiteJsonLd() {
   const siteUrl = baseUrl;
   const personId = `${siteUrl}#person`;
   const websiteId = `${siteUrl}#website`;
+  const profilePageId = `${siteUrl}#profile-page`;
+  const headshotUrl = `${siteUrl}/headshot.jpg`;
 
   const imageObject = {
     "@context": "https://schema.org",
     "@type": "ImageObject",
     "@id": `${siteUrl}#headshot`,
-    url: `${siteUrl}/headshot.jpg`,
-    contentUrl: `${siteUrl}/headshot.jpg`,
+    url: headshotUrl,
+    contentUrl: headshotUrl,
+    thumbnailUrl: headshotUrl,
     caption: "Anand Thakkar headshot",
+    representativeOfPage: true,
     width: 2519,
     height: 2519,
   };
@@ -37,7 +41,10 @@ export function SiteJsonLd() {
     jobTitle: "Software Developer",
     description: "Software Developer specializing in Fintech, SaaS, and AWS Cloud.",
     url: siteUrl,
-    image: { "@id": `${siteUrl}#headshot` },
+    image: [
+      { "@id": `${siteUrl}#headshot` },
+      headshotUrl,
+    ],
     logo: { "@id": `${siteUrl}#headshot` },
     sameAs: [
       "https://github.com/TheAnandThakkar",
@@ -77,6 +84,16 @@ export function SiteJsonLd() {
     },
   };
 
+  const profilePageJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    "@id": profilePageId,
+    url: siteUrl,
+    name: "Anand Thakkar",
+    mainEntity: { "@id": personId },
+    primaryImageOfPage: { "@id": `${siteUrl}#headshot` },
+  };
+
   return (
     <>
       <script
@@ -90,6 +107,10 @@ export function SiteJsonLd() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(profilePageJsonLd) }}
       />
     </>
   );
