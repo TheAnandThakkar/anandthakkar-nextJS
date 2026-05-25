@@ -39,7 +39,7 @@ If you like this project:
 
 ## 📦 Getting started (clone my repo)
 
-> Requires **Node 20+** (LTS recommended) and **npm** (or **pnpm**/**yarn**).
+> Requires **Node 20+** (LTS recommended) and **npm**.
 
 ```bash
 # 1) Clone this repository
@@ -48,8 +48,6 @@ cd anandthakkar
 
 # 2) Install dependencies
 npm install
-# (or) pnpm install
-# (or) yarn
 
 # 3) Run locally
 npm run dev
@@ -63,6 +61,8 @@ npm run start
 npm run lint
 
 ```
+
+This project uses npm as its package manager. Keep dependency changes in `package-lock.json`.
 
 **Environment variables?**  
 For most use-cases, none are required. Copy `.env.example` to `.env.local` if you use optional features.

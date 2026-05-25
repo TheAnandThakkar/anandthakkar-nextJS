@@ -23,7 +23,7 @@ export default function Page() {
       <section id="home" className="relative lg:min-h-screen flex flex-col lg:block overflow-hidden">
         {/* Background image: portrait/tablet use cover + face-biased position; landscape (pre-lg) uses height-first sizing so wide viewports don’t crop the face; desktop full-bleed cover */}
         <div
-          className="pointer-events-none z-0 w-full overflow-hidden bg-[url('/anand_thakkar_bg.png')] bg-no-repeat h-[55vh] min-h-[260px] sm:min-h-[280px] md:min-h-[300px] max-lg:landscape:h-[min(72vh,560px)] max-lg:landscape:min-h-[320px] bg-cover bg-[position:50%_18%] sm:bg-[position:48%_16%] md:bg-[position:50%_12%] max-lg:landscape:bg-[length:auto_100%] max-lg:landscape:bg-center lg:h-auto lg:min-h-0 lg:max-h-none lg:absolute lg:inset-0 lg:bg-cover lg:bg-[position:center_center]"
+          className="pointer-events-none z-0 w-full overflow-hidden bg-[url('/anand_thakkar_bg.webp')] bg-no-repeat h-[40vh] min-h-[240px] sm:h-[48vh] sm:min-h-[280px] md:min-h-[300px] max-lg:landscape:h-[min(72vh,560px)] max-lg:landscape:min-h-[320px] bg-cover bg-[position:50%_18%] sm:bg-[position:48%_16%] md:bg-[position:50%_12%] max-lg:landscape:bg-[length:auto_100%] max-lg:landscape:bg-center lg:h-auto lg:min-h-0 lg:max-h-none lg:absolute lg:inset-0 lg:bg-cover lg:bg-[position:center_center]"
           aria-hidden
         />
 
@@ -46,12 +46,13 @@ export default function Page() {
           {/* subtle top shadow on mobile to blend with the image above it */}
           <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/80 to-transparent lg:hidden pointer-events-none z-10" />
 
-          <div className="container-main relative z-20 h-full flex justify-end items-center py-12 lg:py-24 lg:m-0 lg:max-w-none lg:pr-[10%]">
-            <div className="flex flex-col w-full lg:w-1/2 items-center text-center">
+          <div className="container-main relative z-20 h-full flex justify-center lg:justify-end items-center py-8 sm:py-10 lg:py-24 lg:m-0 lg:max-w-none lg:pr-[10%]">
+            <div className="flex min-w-0 max-w-full flex-col w-full lg:w-1/2 items-center text-center">
               <HeroVisitBadge />
 
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-white mb-6 mt-4 lg:mt-0">
+              <h1 className="max-w-full text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-white mb-4 sm:mb-6 mt-3 lg:mt-0">
                 Hi, I&apos;m{" "}
+                <br className="sm:hidden" />
                 <span className="bg-gradient-to-r from-[#7B2FF7] to-[#E91E63] bg-clip-text text-transparent">
                   Anand
                 </span>
@@ -59,11 +60,13 @@ export default function Page() {
                 <span className="text-white">Thakkar</span>
               </h1>
 
-              <p className="text-xl sm:text-2xl text-neutral-200 leading-relaxed mb-4 font-medium">
-                Software Developer · Fintech/SaaS
+              <p className="max-w-full text-lg sm:text-2xl text-neutral-200 leading-relaxed mb-3 sm:mb-4 font-medium">
+                <span className="inline-block">Software Developer</span>
+                <span className="mx-1">·</span>
+                <span className="inline-block">Fintech/SaaS</span>
               </p>
 
-              <p className="text-base sm:text-lg text-neutral-300 leading-relaxed mb-8">
+              <p className="max-w-full px-2 sm:px-0 text-sm sm:text-lg text-neutral-300 leading-relaxed mb-5 sm:mb-8">
                 Finance and technology are converging to reshape the global <br className="hidden lg:block" />
                 economy. At that intersection, every line of code is an opportunity to <br className="hidden lg:block" />
                 make financial access faster, smarter, and more human.
@@ -85,7 +88,7 @@ export default function Page() {
       </section>
 
       {/* ======= ABOUT ======= */}
-      <section id="about" className="py-8 sm:py-10 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-white/10">
+      <section id="about" className="scroll-mt-12 py-8 sm:py-10 bg-white dark:bg-neutral-900 border-t border-neutral-200 dark:border-white/10">
         <div className="container-main">
           <SectionHeading
             accent="magenta"
@@ -97,7 +100,7 @@ export default function Page() {
       </section>
 
       {/* ======= EXPERIENCE ======= */}
-      <section id="experience" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+      <section id="experience" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
           <SectionHeading
             accent="violet"
@@ -109,7 +112,7 @@ export default function Page() {
       </section>
 
       {/* ======= AWARDS / CERTIFICATIONS ======= */}
-      <section id="recognition" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+      <section id="recognition" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
           <SectionHeading
             accent="magenta"
@@ -121,7 +124,7 @@ export default function Page() {
       </section>
 
       {/* ======= OPEN SOURCE ======= */}
-      <section id="projects" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+      <section id="projects" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
           <SectionHeading
             accent="brand-rose"
@@ -133,7 +136,7 @@ export default function Page() {
       </section>
 
       {/* ======= BLOG ======= */}
-      <section id="blog" className="py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+      <section id="blog" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
           <SectionHeading
             accent="magenta"
@@ -145,7 +148,7 @@ export default function Page() {
       </section>
 
       {/* ======= FOOTER CTA ======= */}
-      <section className="py-16 bg-neutral-50 dark:bg-neutral-950 border-t border-neutral-100 dark:border-neutral-900">
+      <section id="contact" className="scroll-mt-12 py-16 bg-neutral-50 dark:bg-neutral-950 border-t border-neutral-100 dark:border-neutral-900">
         <div className="container-main text-center">
           <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white mb-4">Let&apos;s Shape What&apos;s Next</h2>
           <p className="text-neutral-600 dark:text-neutral-400 max-w-lg mx-auto mb-8">

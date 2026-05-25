@@ -4,7 +4,7 @@ import { useVisitorCount } from "app/lib/use-visitor-count";
 import { IoPulseOutline } from "react-icons/io5";
 
 export const VISITOR_COUNT_SINCE_ISO = "2026-03-21";
-export const VISITOR_COUNT_SINCE_LABEL = "March 21, 2026";
+export const VISITOR_COUNT_SINCE_LABEL = "Mar 21, 2026";
 
 type Variant = "hero" | "footer";
 
@@ -18,6 +18,7 @@ const RESERVED_MIN_H = "min-h-[2.75rem] sm:min-h-[1.75rem]";
 export function VisitorCountLine({ variant }: { variant: Variant }) {
   const { count, loading, configured } = useVisitorCount();
   const isHero = variant === "hero";
+  const visitorLabel = count === 1 ? "visitor" : "visitors";
 
   const wrapClass = isHero ? "mb-4 w-full px-2 text-center" : "w-full";
 
@@ -79,7 +80,7 @@ export function VisitorCountLine({ variant }: { variant: Variant }) {
           ·
         </span>
         <span>
-          Number of visitors since{" "}
+          {visitorLabel} since{" "}
           <time dateTime={VISITOR_COUNT_SINCE_ISO} className={timeClass}>
             {VISITOR_COUNT_SINCE_LABEL}
           </time>

@@ -36,11 +36,41 @@ export type VisitorCountState = {
 let cached: VisitorCountState | null = null;
 let inflight: Promise<VisitorCountState> | null = null;
 
+function normalizeVisitorResponse(data: ApiResponse): VisitorCountState {
+  if ("error" in data && data.error === "visitorId required") {
+    return { count: null, loading: false, configured: false };
+  }
+  if (!("configured" in data)) {
+    return { count: null, loading: false, configured: false };
+  }
+  if (!data.configured || data.count == null) {
+    return { count: null, loading: false, configured: data.configured };
+  }
+  if ("error" in data && data.error === true) {
+    return { count: null, loading: false, configured: true };
+  }
+  return { count: data.count, loading: false, configured: true };
+}
+
+async function fetchCurrentVisitorCount(): Promise<VisitorCountState> {
+  const res = await fetch("/api/visitors", {
+    method: "GET",
+    cache: "no-store",
+  });
+
+  if (!res.ok) {
+    return { count: null, loading: false, configured: false };
+  }
+
+  const data = (await res.json()) as ApiResponse;
+  return normalizeVisitorResponse(data);
+}
+
 async function fetchVisitorCount(): Promise<VisitorCountState> {
   try {
     const visitorId = getOrCreateVisitorId();
     if (!visitorId) {
-      return { count: null, loading: false, configured: false };
+      return fetchCurrentVisitorCount();
     }
 
     const res = await fetch("/api/visitors", {
@@ -49,23 +79,25 @@ async function fetchVisitorCount(): Promise<VisitorCountState> {
       body: JSON.stringify({ visitorId }),
       cache: "no-store",
     });
-    const data = (await res.json()) as ApiResponse;
 
-    if ("error" in data && data.error === "visitorId required") {
-      return { count: null, loading: false, configured: false };
+    if (!res.ok) {
+      return fetchCurrentVisitorCount();
     }
-    if (!("configured" in data)) {
-      return { count: null, loading: false, configured: false };
+
+    const data = (await res.json()) as ApiResponse;
+    const state = normalizeVisitorResponse(data);
+
+    if (state.configured && state.count == null) {
+      return fetchCurrentVisitorCount();
     }
-    if (!data.configured || data.count == null) {
-      return { count: null, loading: false, configured: false };
-    }
-    if ("error" in data && data.error === true) {
-      return { count: null, loading: false, configured: true };
-    }
-    return { count: data.count, loading: false, configured: true };
+
+    return state;
   } catch {
-    return { count: null, loading: false, configured: false };
+    return fetchCurrentVisitorCount().catch(() => ({
+      count: null,
+      loading: false,
+      configured: false,
+    }));
   }
 }
 

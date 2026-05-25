@@ -20,8 +20,8 @@ export function SiteJsonLd() {
     thumbnailUrl: headshotUrl,
     caption: "Anand Thakkar headshot",
     representativeOfPage: true,
-    width: 2519,
-    height: 2519,
+    width: 1200,
+    height: 1200,
   };
 
   const websiteJsonLd = {

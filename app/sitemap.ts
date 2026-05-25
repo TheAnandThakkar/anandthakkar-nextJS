@@ -17,7 +17,7 @@ export default async function sitemap() {
     if (route === "") {
       return {
         ...routeData,
-        images: [`${baseUrl}/headshot.jpg`],
+        images: [`${baseUrl}/opengraph-image`],
       };
     }
 

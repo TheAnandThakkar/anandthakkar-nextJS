@@ -18,13 +18,18 @@ export function Experience() {
             <div className="flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
               {job.logo ? (
                 <div className="shrink-0 w-14 h-14 rounded-xl border border-neutral-100 dark:border-neutral-800 bg-neutral-50 dark:bg-neutral-900 flex items-center justify-center shadow-sm overflow-hidden">
-                  <Image
-                    src={job.logo}
-                    alt={`${job.company} logo`}
-                    width={LOGO_SIZE}
-                    height={LOGO_SIZE}
-                    className="object-contain"
-                  />
+                  <div
+                    className="relative"
+                    style={{ width: LOGO_SIZE, height: LOGO_SIZE }}
+                  >
+                    <Image
+                      src={job.logo}
+                      alt={`${job.company} logo`}
+                      fill
+                      sizes={`${LOGO_SIZE}px`}
+                      className="object-contain"
+                    />
+                  </div>
                 </div>
               ) : null}
 

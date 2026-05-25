@@ -15,9 +15,10 @@ const NAV_SECTIONS = [
 ] as const;
 
 const SECTION_IDS = NAV_SECTIONS.map((s) => s.href.replace("#", ""));
+const CONTACT_HREF = "mailto:anand.thakkar@outlook.com?subject=Hello%20Anand";
 
 function navItemClass(active: boolean) {
-  return `px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+  return `px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
     active
       ? "bg-magenta/10 text-magenta dark:text-magenta dark:bg-magenta/15"
       : "text-neutral-600 dark:text-white/70 hover:text-neutral-900 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-white/10"
@@ -139,6 +140,12 @@ export function Navbar() {
                       {label}
                     </Link>
                   ))}
+              <a
+                href={CONTACT_HREF}
+                className="ml-1 inline-flex items-center justify-center rounded-lg bg-magenta px-3 lg:px-4 py-2 text-sm font-semibold text-white transition-all duration-200 hover:bg-magenta/90 hover:shadow-md hover:shadow-magenta/20 active:scale-[0.98]"
+              >
+                Contact
+              </a>
             </div>
 
             <div className="flex items-center gap-1 sm:gap-2">
@@ -173,7 +180,9 @@ export function Navbar() {
             aria-label="Section links"
           >
             {isHome
-              ? NAV_SECTIONS.map(({ href, label }) => {
+              ? (
+                <>
+                  {NAV_SECTIONS.map(({ href, label }) => {
                   const id = href.replace("#", "");
                   const active = activeSectionId === id;
                   return (
@@ -194,8 +203,19 @@ export function Navbar() {
                       {label}
                     </button>
                   );
-                })
-              : NAV_SECTIONS.map(({ href, label }) => (
+                  })}
+                  <a
+                    href={CONTACT_HREF}
+                    className="mt-2 inline-flex items-center justify-center rounded-lg bg-magenta px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-magenta/90"
+                    onClick={closeMenu}
+                  >
+                    Contact
+                  </a>
+                </>
+              )
+              : (
+                <>
+                  {NAV_SECTIONS.map(({ href, label }) => (
                   <Link
                     key={href}
                     href={`/${href}`}
@@ -204,7 +224,16 @@ export function Navbar() {
                   >
                     {label}
                   </Link>
-                ))}
+                  ))}
+                  <a
+                    href={CONTACT_HREF}
+                    className="mt-2 inline-flex items-center justify-center rounded-lg bg-magenta px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-magenta/90"
+                    onClick={closeMenu}
+                  >
+                    Contact
+                  </a>
+                </>
+              )}
           </div>
         )}
       </div>

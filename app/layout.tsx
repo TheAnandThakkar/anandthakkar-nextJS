@@ -63,10 +63,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${baseUrl}/headshot.jpg`,
-        width: 2519,
-        height: 2519,
-        alt: "Anand Thakkar headshot",
+        url: `${baseUrl}/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Anand Thakkar, Software Developer building fintech and SaaS systems",
       },
     ],
   },
@@ -76,7 +76,7 @@ export const metadata: Metadata = {
     description:
       "Anand Thakkar is a Software Developer building at the intersection of finance and technology, creating products that make financial access faster, smarter, and more human.",
     creator: "@TheAnandThakkar",
-    images: [`${baseUrl}/headshot.jpg`],
+    images: [`${baseUrl}/twitter-image`],
   },
   robots: {
     index: true,

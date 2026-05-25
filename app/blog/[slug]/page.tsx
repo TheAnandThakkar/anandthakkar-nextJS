@@ -166,7 +166,7 @@ export default async function Blog({
         {post.metadata.image && (
           <div className="mb-8">
             <Image
-              src={post.metadata.image} // e.g. "/ai_vs_developer.png"
+              src={post.metadata.image} // e.g. "/ai_vs_developer.webp"
               alt={post.metadata.title}
               width={1200}
               height={630}
