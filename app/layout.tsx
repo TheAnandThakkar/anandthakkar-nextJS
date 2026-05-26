@@ -10,6 +10,10 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { baseUrl } from "./sitemap";
 
+const siteTitle = "Anand Thakkar - Fintech & SaaS Developer Portfolio";
+const siteDescription =
+  "Software developer building finance-aware web platforms, backend APIs, and cloud systems across fintech, SaaS, and open source.";
+
 /** Light-first default; dark styles follow system preference. */
 export const viewport: Viewport = {
   themeColor: "#ffffff",
@@ -19,7 +23,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(baseUrl),
   title: {
-    default: "Anand Thakkar",
+    default: siteTitle,
     template: "%s | Anand Thakkar",
   },
   keywords: [
@@ -51,32 +55,30 @@ export const metadata: Metadata = {
     "TheAnandThakkar on Facebook",
     "AnandHThakkar on YouTube",
   ],
-  description:
-    "Anand Thakkar is a Software Developer building at the intersection of finance and technology, creating products that make financial access faster, smarter, and more human.",
+  description: siteDescription,
   openGraph: {
-    title: "Anand Thakkar",
-    description:
-      "Anand Thakkar is a Software Developer building at the intersection of finance and technology, creating products that make financial access faster, smarter, and more human.",
+    title: siteTitle,
+    description: siteDescription,
     url: baseUrl,
     siteName: "Anand Thakkar",
     locale: "en_US",
     type: "website",
     images: [
       {
-        url: `${baseUrl}/opengraph-image`,
+        url: `${baseUrl}/opengraph-image.jpg`,
         width: 1200,
         height: 630,
+        type: "image/jpeg",
         alt: "Anand Thakkar, Software Developer building fintech and SaaS systems",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anand Thakkar",
-    description:
-      "Anand Thakkar is a Software Developer building at the intersection of finance and technology, creating products that make financial access faster, smarter, and more human.",
+    title: siteTitle,
+    description: siteDescription,
     creator: "@TheAnandThakkar",
-    images: [`${baseUrl}/twitter-image`],
+    images: [`${baseUrl}/opengraph-image.jpg`],
   },
   robots: {
     index: true,

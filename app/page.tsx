@@ -50,12 +50,16 @@ export default function Page() {
             <div className="flex min-w-0 max-w-full flex-col w-full lg:w-1/2 items-center text-center">
               <HeroVisitBadge />
 
-              <h1 className="max-w-full text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-white mb-4 sm:mb-6 mt-3 lg:mt-0">
+              <h1
+                aria-label="Hi, I'm Anand Thakkar"
+                className="max-w-full text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight leading-none text-white mb-4 sm:mb-6 mt-3 lg:mt-0"
+              >
                 Hi, I&apos;m{" "}
                 <br className="sm:hidden" />
                 <span className="bg-gradient-to-r from-[#7B2FF7] to-[#E91E63] bg-clip-text text-transparent">
                   Anand
                 </span>
+                {" "}
                 <br />
                 <span className="text-white">Thakkar</span>
               </h1>
