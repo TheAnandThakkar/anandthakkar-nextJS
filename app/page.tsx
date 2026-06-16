@@ -1,10 +1,12 @@
 import { BlogPosts } from "app/components/posts";
-import { Contributions } from "./components/contributions";
-import { Awards } from "./components/awards";
-import { Experience } from "./components/experience";
 import { HeroActions } from "./components/hero-actions";
 import { HeroVisitBadge } from "./components/hero-visit-badge";
 import { About } from "./components/about";
+import { Journey } from "./components/journey";
+import { Philosophy } from "./components/philosophy";
+import { Now } from "./components/now";
+import { Moments } from "./components/moments";
+import { Subscribe } from "./components/subscribe";
 import { SectionHeading } from "./components/section-heading";
 import type { Metadata } from "next";
 
@@ -21,29 +23,22 @@ export default function Page() {
 
       {/* ======= HERO ======= */}
       <section id="home" className="relative lg:min-h-screen flex flex-col lg:block overflow-hidden">
-        {/* Background image: portrait/tablet use cover + face-biased position; landscape (pre-lg) uses height-first sizing so wide viewports don’t crop the face; desktop full-bleed cover */}
         <div
           className="pointer-events-none z-0 w-full overflow-hidden bg-[url('/anand_thakkar_bg.webp')] bg-no-repeat h-[40vh] min-h-[240px] sm:h-[48vh] sm:min-h-[280px] md:min-h-[300px] max-lg:landscape:h-[min(72vh,560px)] max-lg:landscape:min-h-[320px] bg-cover bg-[position:50%_18%] sm:bg-[position:48%_16%] md:bg-[position:50%_12%] max-lg:landscape:bg-[length:auto_100%] max-lg:landscape:bg-center lg:h-auto lg:min-h-0 lg:max-h-none lg:absolute lg:inset-0 lg:bg-cover lg:bg-[position:center_center]"
           aria-hidden
         />
 
-        {/* Desktop Gradient Overlay (hidden on mobile) */}
         <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-transparent via-neutral-950/40 to-neutral-950/90 pointer-events-none z-10" />
 
-        {/* Content Container */}
         <div className="relative z-20 flex-1 flex flex-col justify-center lg:min-h-screen overflow-hidden lg:overflow-visible">
 
-          {/* Mobile Ambient Glow Background (Behind the glass) */}
           <div className="absolute inset-0 lg:hidden bg-[#050505] z-0">
             <div className="absolute top-[5%] -left-[10%] w-[20rem] h-[20rem] bg-green-500/40 rounded-full blur-[80px]" />
             <div className="absolute top-[40%] right-[0%] w-[18rem] h-[18rem] bg-orange-500/40 rounded-full blur-[80px]" />
             <div className="absolute bottom-[5%] left-[15%] w-[22rem] h-[22rem] bg-[#c47731]/40 rounded-full blur-[90px]" />
           </div>
 
-          {/* Frosted Black Glass Overlay (Mobile only) */}
           <div className="absolute inset-0 lg:hidden z-0 bg-black/30 backdrop-blur-[50px] border-t border-white/10" />
-
-          {/* subtle top shadow on mobile to blend with the image above it */}
           <div className="absolute top-0 left-0 right-0 h-24 bg-gradient-to-b from-black/80 to-transparent lg:hidden pointer-events-none z-10" />
 
           <div className="container-main relative z-20 h-full flex justify-center lg:justify-end items-center py-8 sm:py-10 lg:py-24 lg:m-0 lg:max-w-none lg:pr-[10%]">
@@ -65,25 +60,23 @@ export default function Page() {
               </h1>
 
               <p className="max-w-full text-lg sm:text-2xl text-neutral-200 leading-relaxed mb-3 sm:mb-4 font-medium">
-                <span className="inline-block">Software Developer</span>
+                <span className="inline-block">Builder</span>
                 <span className="mx-1">·</span>
-                <span className="inline-block">Fintech/SaaS</span>
+                <span className="inline-block">Finance × Tech</span>
               </p>
 
               <p className="max-w-full px-2 sm:px-0 text-sm sm:text-lg text-neutral-300 leading-relaxed mb-5 sm:mb-8">
-                Finance and technology are converging to reshape the global <br className="hidden lg:block" />
-                economy. At that intersection, every line of code is an opportunity to <br className="hidden lg:block" />
-                make financial access faster, smarter, and more human.
+                I spent eight years inside India&apos;s financial system. <br className="hidden lg:block" />
+                Then I started writing code. Now I live at the intersection of both. <br className="hidden lg:block" />
+                This is where I write about everything I find there.
               </p>
 
-              {/* Client component for interactive scroll buttons */}
               <HeroActions />
 
             </div>
           </div>
         </div>
 
-        {/* Scroll indicator - hidden on mobile so it doesn't overlap the white background block */}
         <div className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-neutral-300 dark:text-neutral-600 motion-reduce:animate-none animate-bounce">
           <div className="w-5 h-8 rounded-full border border-neutral-300 dark:border-neutral-600 flex items-start justify-center pt-1">
             <div className="w-1 h-2 rounded-full bg-neutral-300 dark:bg-neutral-600" />
@@ -96,46 +89,58 @@ export default function Page() {
         <div className="container-main">
           <SectionHeading
             accent="magenta"
-            title="About Me"
-            subtitle="Background, focus areas, and what I care about in software and finance."
+            title="About"
+            subtitle="Who I am and how I got here."
           />
           <About />
         </div>
       </section>
 
-      {/* ======= EXPERIENCE ======= */}
-      <section id="experience" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+      {/* ======= NOW ======= */}
+      <section id="now" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
           <SectionHeading
             accent="violet"
-            title="Work Experience"
-            subtitle="Roles and impact across fintech, SaaS, and cloud, where I’ve shipped and learned."
+            title="Now"
+            subtitle="What I'm doing, building, and thinking about at this moment."
           />
-          <Experience />
+          <Now />
         </div>
       </section>
 
-      {/* ======= AWARDS / CERTIFICATIONS ======= */}
-      <section id="recognition" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+      {/* ======= JOURNEY ======= */}
+      <section id="journey" className="scroll-mt-12 py-8 sm:py-10 bg-white dark:bg-neutral-900">
         <div className="container-main">
           <SectionHeading
             accent="magenta"
-            title="Recognition"
-            subtitle="Certifications and credentials that back how I build and ship."
+            title="The Journey"
+            subtitle="Where I've been and how each chapter shaped the next."
           />
-          <Awards />
+          <Journey />
         </div>
       </section>
 
-      {/* ======= OPEN SOURCE ======= */}
-      <section id="projects" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+      {/* ======= MOMENTS ======= */}
+      <section id="moments" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
           <SectionHeading
-            accent="brand-rose"
-            title="Open Source & Contributions"
-            subtitle="Public repos I maintain, tools, experiments, and things others can fork or learn from."
+            accent="magenta"
+            title="Moments"
+            subtitle="Glimpses from the journey, on and off the screen."
           />
-          <Contributions />
+          <Moments />
+        </div>
+      </section>
+
+      {/* ======= PHILOSOPHY ======= */}
+      <section id="philosophy" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+        <div className="container-main">
+          <SectionHeading
+            accent="violet"
+            title="Things I Believe"
+            subtitle="The ideas that shape how I think, build, and write."
+          />
+          <Philosophy />
         </div>
       </section>
 
@@ -143,11 +148,20 @@ export default function Page() {
       <section id="blog" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main">
           <SectionHeading
-            accent="magenta"
-            title="Blog"
-            subtitle="Longer notes on engineering, systems, and building at the edge of finance and tech."
+            accent="violet"
+            title="Writing"
+            subtitle="Long-form thoughts on finance, technology, and what happens when the two collide."
           />
           <BlogPosts limit={4} showLoadMore />
+        </div>
+      </section>
+
+      {/* ======= SUBSCRIBE ======= */}
+      <section id="subscribe" className="scroll-mt-12 py-12 sm:py-16 bg-white dark:bg-neutral-900 border-t border-neutral-100 dark:border-neutral-800">
+        <div className="container-main text-center">
+          <h2 className="section-title mb-2">Follow the Journey</h2>
+          <p className="section-subtitle mx-auto mb-8">When I write something worth reading, I&apos;ll send it your way.</p>
+          <Subscribe />
         </div>
       </section>
 

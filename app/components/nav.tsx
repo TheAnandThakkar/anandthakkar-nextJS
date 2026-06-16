@@ -8,10 +8,10 @@ import { scrollToSectionId } from "app/lib/scroll";
 
 const NAV_SECTIONS = [
   { href: "#about", label: "About" },
-  { href: "#experience", label: "Experience" },
-  { href: "#recognition", label: "Recognition" },
-  { href: "#projects", label: "Projects" },
-  { href: "#blog", label: "Blog" },
+  { href: "#now", label: "Now" },
+  { href: "#journey", label: "Journey" },
+  { href: "#philosophy", label: "Beliefs" },
+  { href: "#blog", label: "Writing" },
 ] as const;
 
 const SECTION_IDS = NAV_SECTIONS.map((s) => s.href.replace("#", ""));
@@ -114,7 +114,7 @@ export function Navbar() {
           </Link>
 
           <div className="flex items-center gap-2 sm:gap-6">
-            <div className="hidden md:flex items-center gap-1">
+            <div className="hidden lg:flex items-center gap-1">
               {isHome
                 ? NAV_SECTIONS.map(({ href, label }) => {
                     const id = href.replace("#", "");
@@ -152,7 +152,7 @@ export function Navbar() {
               <button
                 ref={menuButtonRef}
                 type="button"
-                className="md:hidden flex flex-col gap-1.5 p-2 text-neutral-600 dark:text-white/70 hover:text-neutral-900 dark:hover:text-white"
+                className="lg:hidden flex flex-col gap-1.5 p-2 text-neutral-600 dark:text-white/70 hover:text-neutral-900 dark:hover:text-white"
                 onClick={() => setMenuOpen((o) => !o)}
                 aria-expanded={menuOpen}
                 aria-controls="mobile-nav-menu"
@@ -175,7 +175,7 @@ export function Navbar() {
         {menuOpen && (
           <div
             id="mobile-nav-menu"
-            className="md:hidden bg-white/98 dark:bg-neutral-950/98 border-t border-neutral-200 dark:border-white/10 py-4 pb-6 flex flex-col gap-1"
+            className="lg:hidden bg-white/98 dark:bg-neutral-950/98 border-t border-neutral-200 dark:border-white/10 py-4 pb-6 flex flex-col gap-1"
             role="navigation"
             aria-label="Section links"
           >

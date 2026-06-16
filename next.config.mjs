@@ -35,6 +35,16 @@ const securityHeaders = [
 const nextConfig = {
   images: {
     qualities: [75, 85],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "opengraph.githubassets.com",
+      },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
+    ],
   },
   async headers() {
     return [
