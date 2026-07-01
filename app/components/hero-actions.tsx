@@ -24,10 +24,10 @@ export function HeroActions() {
       </div>
       <button
         type="button"
-        onClick={() => scrollToSectionId("experience")}
+        onClick={() => scrollToSectionId("about")}
         className="text-neutral-400 hover:text-magenta text-sm font-medium transition-colors flex items-center gap-1"
       >
-        Explore my work ↓
+        Read my story ↓
       </button>
     </div>
   );

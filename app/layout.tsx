@@ -10,9 +10,9 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { baseUrl } from "./sitemap";
 
-const siteTitle = "Anand Thakkar - Fintech & SaaS Developer Portfolio";
+const siteTitle = "Anand Thakkar - Building at the Intersection of Finance & Tech";
 const siteDescription =
-  "Software developer building finance-aware web platforms, backend APIs, and cloud systems across fintech, SaaS, and open source.";
+  "From India's tax system to building fintech software. Anand Thakkar on finance, technology, and what happens when the two collide.";
 
 /** Light-first default; dark styles follow system preference. */
 export const viewport: Viewport = {

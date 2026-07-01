@@ -1,7 +1,7 @@
 const nowItems = [
   {
     label: "New chapter",
-    text: "Starting as Senior Technical Lead at HCLTech's GIFT City office in July 2026. India's first IFSC, the country's international financial nerve centre. The finance brain and the engineering brain are finally in the same room.",
+    text: "Now a Senior Technical Lead at HCLTech's GIFT City office. India's first IFSC, the country's international financial nerve centre. The finance brain and the engineering brain are finally in the same room.",
   },
   {
     label: "Building",
@@ -21,7 +21,7 @@ export function Now() {
   return (
     <div className="max-w-3xl space-y-6">
       <p className="text-sm text-neutral-400 dark:text-neutral-500 font-medium uppercase tracking-widest">
-        Last updated · June 2026
+        Last updated · July 2026
       </p>
       <div className="space-y-6">
         {nowItems.map((item) => (

@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element -- ImageResponse (Satori) requires a plain img; next/image is unsupported in OG image generation */
 import { ImageResponse } from "next/og";
 import { readFile } from "fs/promises";
 import path from "path";
