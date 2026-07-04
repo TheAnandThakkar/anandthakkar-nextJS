@@ -208,10 +208,34 @@ input[type='email'] {
 }
 
 table {
-  display: block;
-  max-width: fit-content;
-  overflow-x: auto;
-  white-space: nowrap;
+  width: 100%;
+  margin: 1.75rem 0;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  @apply rounded-xl border border-neutral-200 dark:border-neutral-800;
+}
+
+th {
+  padding: 0.875rem 1.25rem;
+  text-align: left;
+  @apply border-b border-neutral-200 bg-neutral-50 font-semibold text-neutral-900 dark:border-neutral-800 dark:bg-neutral-900 dark:text-white;
+}
+
+td {
+  padding: 0.875rem 1.25rem;
+  vertical-align: top;
+  @apply border-b border-neutral-100 text-neutral-700 dark:border-neutral-800/60 dark:text-neutral-300;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+tbody tr:nth-child(even) {
+  @apply bg-neutral-50/60 dark:bg-neutral-900/40;
 }
 
 .title {

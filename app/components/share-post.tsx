@@ -2,10 +2,15 @@
 
 import { useState } from "react";
 import { FaXTwitter, FaLinkedinIn, FaWhatsapp, FaLink } from "react-icons/fa6";
+// Matches baseUrl in app/sitemap.ts (not imported: that module pulls in fs,
+// which cannot be bundled into a client component).
+const baseUrl = "https://www.anandthakkar.com";
 
 export default function SharePost({ title, slug }: { title: string; slug: string }) {
     const [copied, setCopied] = useState(false);
-    const url = typeof window !== "undefined" ? window.location.href : `https://anandthakkar.dev/blog/${slug}`;
+    // Canonical URL, identical on server and client (avoids hydration mismatch
+    // and stale-domain share links).
+    const url = `${baseUrl}/blog/${slug}`;
 
     const encodedUrl = encodeURIComponent(url);
     const encodedTitle = encodeURIComponent(title);

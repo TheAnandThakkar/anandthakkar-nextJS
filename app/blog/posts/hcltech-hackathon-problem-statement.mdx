@@ -1,0 +1,164 @@
+---
+title: "HCLTech Hackathon Problem Statement: The Exact Challenge, Explained (Free PDF)"
+publishedAt: "2026-07-04"
+author: "Anand Thakkar"
+summary: "The sanitized problem statement from the HCLTech GIFT City hackathon, broken down flow by flow, with a free PDF download you can use for your own preparation."
+description: "Download the sanitized HCLTech hackathon problem statement (Java Full Stack, credit card application system) and understand every flow, scoring rule, and expectation before your next hackathon."
+image: "/hcltech-problem-statement-thumbnail.png"
+tags: ["hcltech", "hackathon", "problem-statement", "java", "spring-boot", "react", "microservices", "fintech", "interview-preparation"]
+---
+
+"What do they actually ask you to build in a company hackathon?"
+
+Since I wrote about [my HCLTech GIFT City hackathon experience](/blog/hcltech-hackathon-gift-city), this is the question people have asked me the most. Developers preparing for their first hackathon, candidates interviewing at fintech companies, and engineers who simply want a realistic weekend project.
+
+So here it is. The complete sanitized problem statement from the Java Full Stack track, explained flow by flow. You can also download it as a PDF and keep it for your own preparation.
+
+> **A note on "sanitized":** this is a public-safe rewrite of the hackathon use case. Event-internal formatting and names have been removed, and it is not the official source document. The substance is intact though. The flows, the rules, and the engineering expectations are all here.
+
+## The challenge in one sentence
+
+Build a **credit card application system** for a sample bank. It starts at the application form, goes through credit scoring and card issuance, and ends with first-time PIN setup. All of it in **one day**, as a working Java full stack solution.
+
+Easy to describe. Not so easy to build well. Let me show you why.
+
+## The expected architecture
+
+Before any feature, the problem statement sets architectural expectations:
+
+- **Java backend services** for the main business flows
+- **React frontend** for an interactive user journey
+- **API gateway** or an equivalent routing layer for service access
+- **Service boundaries** suitable for application, credit rating, card activation, and PIN setup flows
+- **Database persistence** for customer, application, card, score, and audit data
+- **Event-driven communication** where useful, for example Kafka for service-to-service events
+
+Read that list again. The jury is not looking for one big Spring Boot monolith with four controllers. They want to see whether you can draw service boundaries. It is a system design question hiding inside a coding task.
+
+## Flow 1: Apply for a new credit card
+
+A new customer submits a credit card application with minimal required information:
+
+- Basic user information
+- Employment information
+- Identity document type and document number
+
+On valid submission, the system triggers a **credit rating check** for the customer. That trigger is your first service-to-service interaction, and your first chance to show whether you think in synchronous calls or in events.
+
+## Flow 2: Customer credit rating
+
+The credit rating service returns an existing numeric score if one is available. If not, it calculates one from the customer's salary and existing credit card count:
+
+<table>
+  <thead>
+    <tr>
+      <th>Condition</th>
+      <th>Score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Already holds 2 or more credit cards</td>
+      <td>300</td>
+    </tr>
+    <tr>
+      <td>Annual salary greater than 200,000 USD</td>
+      <td>500</td>
+    </tr>
+    <tr>
+      <td>Annual salary between 50,000 and 200,000 USD</td>
+      <td>150</td>
+    </tr>
+    <tr>
+      <td>Annual salary below 50,000 USD</td>
+      <td>50</td>
+    </tr>
+  </tbody>
+</table>
+
+The acceptance expectation: **update the customer's credit score after validating customer information.**
+
+Look at that table again. The conditions overlap. A customer can hold two cards and also earn above 200,000 USD. Which rule wins? The statement does not say. I believe that ambiguity is intentional. Writing down your assumption and coding it consistently is worth more than silently picking one.
+
+## Flow 3: Approve or activate the credit card
+
+Based on the calculated score, the system approves a card or asks for more documents:
+
+<table>
+  <thead>
+    <tr>
+      <th>Score</th>
+      <th>Decision / Card Type</th>
+      <th>Limit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>500</td>
+      <td>Platinum card</td>
+      <td>40,000 USD</td>
+    </tr>
+    <tr>
+      <td>300</td>
+      <td>Gold card</td>
+      <td>20,000 USD</td>
+    </tr>
+    <tr>
+      <td>150</td>
+      <td>Visa card</td>
+      <td>10,000 USD</td>
+    </tr>
+    <tr>
+      <td>50</td>
+      <td>Request additional documents</td>
+      <td>N/A</td>
+    </tr>
+  </tbody>
+</table>
+
+Acceptance expectation: **generate a card number and a first-time PIN for approved customers.**
+
+Out of scope: physical card delivery and the workflow after additional documents are requested. That saved us a lot of time on the day.
+
+## Flow 4: First-time login and PIN change
+
+The final flow closes the loop. A new cardholder changes their default PIN after validating:
+
+- Credit card number
+- First-time PIN
+- The identity document ID used during the application
+- New PIN and confirmation PIN
+
+On valid submission, the system updates the PIN and creates an audit entry. That audit entry is easy to skip under time pressure, and it is exactly the kind of detail a fintech jury checks.
+
+## The review expectations (where rankings are decided)
+
+The statement ends with what the jury actually evaluates:
+
+- Mandatory-field and format validations
+- Business validations for **all** flows
+- Functional programming style where appropriate, using JDK 8+ features
+- Unit test cases where applicable
+- Consistent error handling across APIs and UI flows
+
+On the hackathon floor, this section is what separated the teams. Everyone had a form that submitted. Very few had validations on every flow, unit tests, and errors that behaved the same way in the API and the UI.
+
+## How to use this for your preparation
+
+If you are preparing for a hackathon or a fintech interview, do not just read the PDF. Run the drill:
+
+1. **Timebox it.** Give yourself one day, like the real event. The constraint is the lesson.
+2. **Design before you code.** Spend the first 30 minutes on service boundaries and the data model. It pays back three times over.
+3. **Build vertical, not horizontal.** One complete flow from apply to score to approve beats four half-finished ones.
+4. **Write down your assumptions.** The score rules overlap and some edge cases are missing. Note your decisions in the README the way you would explain them to a jury.
+5. **Leave an hour for polish.** Validations, error messages, and a clean demo path are what people remember.
+
+## Download the problem statement
+
+The full sanitized brief is one page of flows, tables, and expectations. Download it below and keep it handy for your next practice run:
+
+<DownloadButton href="/hcltech-hackathon-problem-statement-sanitized.pdf" />
+
+If you want the story of how the day actually went, with the floor, the pressure, and the jury questions, and how this hackathon eventually led to my role at HCLTech, read the companion post: [From Hackathon to Senior Technical Lead: My HCLTech GIFT City Experience](/blog/hcltech-hackathon-gift-city).
+
+And if you build your own version of this system, I would love to see it. My inbox is open.

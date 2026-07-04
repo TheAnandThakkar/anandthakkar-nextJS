@@ -149,19 +149,63 @@ function ProblemStatement({ href }: ProblemStatementProps) {
         ))}
       </ol>
 
-      <p className="!m-0 text-sm text-neutral-600 dark:text-neutral-400">
-        Full sanitized brief:{' '}
-        <a
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-semibold text-magenta no-underline hover:text-magenta/80"
+      <a
+        href={href}
+        download
+        className="flex w-full items-center justify-center gap-3 rounded-2xl bg-magenta px-8 py-5 text-lg font-bold text-white !no-underline shadow-lg shadow-magenta/25 transition-transform hover:scale-[1.02] hover:bg-magenta/90 sm:w-auto sm:self-start sm:px-10"
+      >
+        <svg
+          aria-hidden="true"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
         >
-          open PDF
-        </a>
-      </p>
+          <path d="M12 3v12" />
+          <path d="m7 10 5 5 5-5" />
+          <path d="M5 21h14" />
+        </svg>
+        Download PDF
+      </a>
     </section>
   )
+}
+
+/** Big yellow call-to-action download button, styled to match the blog thumbnail. */
+function DownloadButton({ href, label = "FREE PDF DOWNLOAD" }: { href: string; label?: string }) {
+  return (
+    <a
+      href={href}
+      download
+      className="not-prose my-8 flex w-full items-center justify-center gap-3 rounded-2xl px-8 py-5 text-lg font-extrabold tracking-wide !no-underline transition-transform hover:scale-[1.02] sm:w-auto sm:px-12"
+      style={{
+        backgroundColor: "#facc15",
+        color: "#111111",
+        boxShadow: "0 10px 40px rgba(250, 204, 21, 0.35)",
+      }}
+    >
+      <svg
+        aria-hidden="true"
+        width="22"
+        height="22"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="3"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <path d="M12 3v12" />
+        <path d="m7 10 5 5 5-5" />
+        <path d="M5 21h14" />
+      </svg>
+      {label}
+    </a>
+  );
 }
 
 function Code({ children, ...props }) {
@@ -212,6 +256,7 @@ const components = {
   Image: RoundedImage,
   ImageGrid,
   ProblemStatement,
+  DownloadButton,
   a: CustomLink,
   code: Code,
   Table,
