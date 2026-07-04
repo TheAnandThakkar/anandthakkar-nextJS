@@ -4,6 +4,33 @@ import { baseUrl } from "app/sitemap";
  * Person + WebSite + ImageObject JSON-LD for Google rich results.
  * Lives in root layout because `app/head.tsx` is not used by the App Router.
  */
+/** Milestone photos from the Moments section — declared so Google Images indexes them. */
+const momentPhotos = [
+  {
+    path: "/hcltech-joining.jpg",
+    caption:
+      "Anand Thakkar on his first day as Senior Technical Lead at HCLTech, GIFT City, 2026",
+  },
+  {
+    path: "/gdg-devfest-2022.jpg",
+    caption: "Anand Thakkar at his first Google Developer Group DevFest, 2022",
+  },
+  {
+    path: "/first-it-job-2022.jpg",
+    caption:
+      "Anand Thakkar at his first IT job as a software developer, 2022",
+  },
+  {
+    path: "/family-business-2018.jpg",
+    caption: "Anand Thakkar taking charge of the family business, 2018",
+  },
+  {
+    path: "/techspark-2017-bengaluru.jpg",
+    caption:
+      "Anand Thakkar as a delegate at his first TechSpark, Bengaluru, 2017",
+  },
+];
+
 export function SiteJsonLd() {
   const siteUrl = baseUrl;
   const personId = `${siteUrl}#person`;
@@ -24,6 +51,15 @@ export function SiteJsonLd() {
     height: 1200,
   };
 
+  const momentImageObjects = momentPhotos.map((photo) => ({
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    "@id": `${siteUrl}${photo.path}#image`,
+    url: `${siteUrl}${photo.path}`,
+    contentUrl: `${siteUrl}${photo.path}`,
+    caption: photo.caption,
+  }));
+
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -38,12 +74,14 @@ export function SiteJsonLd() {
     "@id": personId,
     name: "Anand Thakkar",
     alternateName: ["TheAnandThakkar"],
-    jobTitle: "Software Developer",
-    description: "Software Developer specializing in Fintech, SaaS, and AWS Cloud.",
+    jobTitle: "Senior Technical Lead",
+    description:
+      "Senior Technical Lead at HCLTech (GIFT City) specializing in Fintech, SaaS, and AWS Cloud.",
     url: siteUrl,
     image: [
       { "@id": `${siteUrl}#headshot` },
       headshotUrl,
+      ...momentPhotos.map((photo) => ({ "@id": `${siteUrl}${photo.path}#image` })),
     ],
     logo: { "@id": `${siteUrl}#headshot` },
     sameAs: [
@@ -52,7 +90,11 @@ export function SiteJsonLd() {
       "https://x.com/TheAnandThakkar",
       "https://anandthakkar.dev",
     ],
-    worksFor: { "@type": "Organization", name: "Agile Infoways" },
+    worksFor: {
+      "@type": "Organization",
+      name: "HCLTech",
+      url: "https://www.hcltech.com",
+    },
     knowsAbout: [
       "Software development",
       "Backend engineering",
@@ -100,6 +142,13 @@ export function SiteJsonLd() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(imageObject) }}
       />
+      {momentImageObjects.map((obj) => (
+        <script
+          key={obj["@id"]}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(obj) }}
+        />
+      ))}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}

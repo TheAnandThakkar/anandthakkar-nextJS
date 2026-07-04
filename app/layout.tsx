@@ -28,6 +28,9 @@ export const metadata: Metadata = {
   },
   keywords: [
     "Anand Thakkar",
+    "Anand Thakkar HCLTech",
+    "Anand Thakkar Senior Technical Lead",
+    "Anand Thakkar GIFT City",
     "Anand Thakkar Software Developer",
     "Anand Thakkar from Ahmedabad",
     "Anand Thakkar from Gujarat",
