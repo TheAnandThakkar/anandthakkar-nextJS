@@ -12,6 +12,11 @@ const momentPhotos = [
       "Anand Thakkar on his first day as Senior Technical Lead at HCLTech, GIFT City, 2026",
   },
   {
+    path: "/cape-town-2023.jpg",
+    caption:
+      "Anand Thakkar at the Cape of Good Hope, the most south-western point of the African continent, Cape Town, 2023",
+  },
+  {
     path: "/gdg-devfest-2022.jpg",
     caption: "Anand Thakkar at his first Google Developer Group DevFest, 2022",
   },
@@ -28,6 +33,11 @@ const momentPhotos = [
     path: "/techspark-2017-bengaluru.jpg",
     caption:
       "Anand Thakkar as a delegate at his first TechSpark, Bengaluru, 2017",
+  },
+  {
+    path: "/taxaltus-techsparks-2017.jpg",
+    caption:
+      "TechSparks 2017 delegate badge with Anand Thakkar representing Taxaltus, Bengaluru",
   },
 ];
 
@@ -78,10 +88,12 @@ export function SiteJsonLd() {
     description:
       "Senior Technical Lead at HCLTech (GIFT City) specializing in Fintech, SaaS, and AWS Cloud.",
     url: siteUrl,
+    // Only the headshot here: this is what Google shows next to search results
+    // for "Anand Thakkar". Moments photos are indexed separately via their own
+    // ImageObject scripts and the image sitemap.
     image: [
       { "@id": `${siteUrl}#headshot` },
       headshotUrl,
-      ...momentPhotos.map((photo) => ({ "@id": `${siteUrl}${photo.path}#image` })),
     ],
     logo: { "@id": `${siteUrl}#headshot` },
     sameAs: [

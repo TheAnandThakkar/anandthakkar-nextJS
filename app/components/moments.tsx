@@ -1,45 +1,22 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { moments, type Moment } from "app/data/moments";
 
-type Moment = {
-  src: string;
-  alt: string;
-  caption: string;
+type MomentsProps = {
+  /** Show only the first N moments (newest first). Omit to show all. */
+  limit?: number;
+  /** Show the "view all" card when there are more moments than the limit. */
+  showViewAll?: boolean;
+  /** Show the year filter dropdown (used on the /moments gallery page). */
+  showFilter?: boolean;
 };
 
-// Milestones in reverse-chronological order (latest first).
-const moments: Moment[] = [
-  {
-    src: "/hcltech-joining.jpg",
-    alt: "Anand Thakkar on his first day as Senior Technical Lead at HCLTech, GIFT City, 2026",
-    caption: "Day one as Senior Technical Lead at HCLTech, GIFT City, 2026",
-  },
-  {
-    src: "/gdg-devfest-2022.jpg",
-    alt: "Anand Thakkar at his first Google Developer Group DevFest, 2022",
-    caption: "My first GDG DevFest, 2022",
-  },
-  {
-    src: "/first-it-job-2022.jpg",
-    alt: "Anand Thakkar at his desk during his first IT job as a software developer, 2022",
-    caption: "My very first IT job as a software developer, 2022",
-  },
-  {
-    src: "/family-business-2018.jpg",
-    alt: "Anand Thakkar taking charge of the family business, 2018",
-    caption: "Taking charge of a family business, 2018",
-  },
-  {
-    src: "/techspark-2017-bengaluru.jpg",
-    alt: "Anand Thakkar as a delegate at his first TechSpark, Bengaluru, 2017",
-    caption: "My first TechSpark as a delegate, Bengaluru, 2017",
-  },
-];
-
-export function Moments() {
+export function Moments({ limit, showViewAll, showFilter }: MomentsProps = {}) {
   const [active, setActive] = useState<Moment | null>(null);
+  const [year, setYear] = useState<string>("all");
 
   const close = useCallback(() => setActive(null), []);
 
@@ -58,10 +35,16 @@ export function Moments() {
     };
   }, [active, close]);
 
+  const visible =
+    typeof limit === "number" ? moments.slice(0, limit) : moments;
+  const hasMore = Boolean(
+    showViewAll && typeof limit === "number" && moments.length > limit
+  );
+
   return (
     <>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {moments.map((m) => (
+        {visible.map((m) => (
           <figure
             key={m.src}
             className="group relative overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800"
@@ -89,6 +72,44 @@ export function Moments() {
           </figure>
         ))}
       </div>
+
+      {hasMore && (
+        <div className="relative mt-10">
+          <div
+            className="pointer-events-none absolute inset-x-0 -top-6 h-px bg-gradient-to-r from-transparent via-neutral-200 to-transparent dark:via-neutral-800"
+            aria-hidden
+          />
+          <Link
+            href="/moments"
+            className="group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-neutral-200/90 bg-gradient-to-br from-white via-white to-neutral-50/90 p-5 shadow-sm transition-all duration-300 hover:border-magenta/30 hover:shadow-md dark:border-neutral-800 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-950/90 dark:hover:border-magenta/35 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-6"
+            aria-label={`View all moments. Showing ${visible.length} of ${moments.length} on the home page.`}
+          >
+            <div
+              className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-magenta/[0.06] opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100 dark:bg-magenta/10"
+              aria-hidden
+            />
+            <div className="relative min-w-0">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
+                Full gallery
+              </p>
+              <p className="mt-1.5 text-sm leading-snug text-neutral-600 dark:text-neutral-300">
+                You&apos;re seeing the latest {visible.length} of{" "}
+                {moments.length} moments, continue to the gallery for every
+                photo.
+              </p>
+            </div>
+            <span className="relative inline-flex shrink-0 items-center justify-center gap-2 self-stretch rounded-xl bg-neutral-900 px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 group-hover:bg-magenta group-hover:shadow-lg group-hover:shadow-magenta/25 dark:bg-white dark:text-neutral-900 dark:group-hover:bg-magenta dark:group-hover:text-white sm:self-center sm:py-3.5">
+              <span>View all moments</span>
+              <span
+                className="inline-block transition-transform duration-300 group-hover:translate-x-0.5"
+                aria-hidden
+              >
+                →
+              </span>
+            </span>
+          </Link>
+        </div>
+      )}
 
       {active && (
         <div

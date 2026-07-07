@@ -8,6 +8,7 @@ import { Now } from "./components/now";
 import { Moments } from "./components/moments";
 import { Subscribe } from "./components/subscribe";
 import { SectionHeading } from "./components/section-heading";
+import { SocialHighlights } from "./components/social-highlights";
 import type { Metadata } from "next";
 
 export const revalidate = 86400;
@@ -128,7 +129,7 @@ export default function Page() {
             title="Moments"
             subtitle="Glimpses from the journey, on and off the screen."
           />
-          <Moments />
+          <Moments limit={6} showViewAll />
         </div>
       </section>
 
@@ -153,6 +154,18 @@ export default function Page() {
             subtitle="Long-form thoughts on finance, technology, and what happens when the two collide."
           />
           <BlogPosts limit={4} showLoadMore />
+        </div>
+      </section>
+
+      {/* ======= SOCIAL HIGHLIGHTS ======= */}
+      <section id="social" className="scroll-mt-12 py-8 sm:py-10 bg-white dark:bg-neutral-900 border-t border-neutral-100 dark:border-neutral-800">
+        <div className="container-main">
+          <SectionHeading
+            accent="magenta"
+            title="Social Highlights"
+            subtitle="Posts and conversations that found an audience."
+          />
+          <SocialHighlights />
         </div>
       </section>
 

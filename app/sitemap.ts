@@ -7,10 +7,12 @@ const homepageImages = [
   "/opengraph-image",
   "/headshot.jpg",
   "/hcltech-joining.jpg",
+  "/cape-town-2023.jpg",
   "/gdg-devfest-2022.jpg",
   "/first-it-job-2022.jpg",
   "/family-business-2018.jpg",
   "/techspark-2017-bengaluru.jpg",
+  "/taxaltus-techsparks-2017.jpg",
 ].map((path) => `${baseUrl}${path}`);
 
 export default async function sitemap() {
@@ -19,13 +21,14 @@ export default async function sitemap() {
     lastModified: post.metadata.publishedAt,
   }));
 
-  const staticRoutes = ["", "/blog", "/about"].map((route) => {
+  const staticRoutes = ["", "/blog", "/about", "/moments"].map((route) => {
     const routeData = {
       url: `${baseUrl}${route}`,
       lastModified: new Date().toISOString().split("T")[0],
     };
 
-    if (route === "") {
+    // Declare the photos on both pages that display them.
+    if (route === "" || route === "/moments") {
       return {
         ...routeData,
         images: homepageImages,
