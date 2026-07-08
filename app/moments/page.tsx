@@ -43,7 +43,7 @@ export default function MomentsPage() {
           City. Click any photo to see it full screen.
         </p>
 
-        <Moments />
+        <Moments showFilter />
       </div>
     </section>
   );

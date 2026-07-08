@@ -35,16 +35,9 @@ const securityHeaders = [
 const nextConfig = {
   images: {
     qualities: [75, 85],
-    remotePatterns: [
-      {
-        protocol: "https",
-        hostname: "opengraph.githubassets.com",
-      },
-      {
-        protocol: "https",
-        hostname: "images.unsplash.com",
-      },
-    ],
+    // All images are self-hosted; photos only change by getting a new filename,
+    // so optimized variants can be cached long-term.
+    minimumCacheTTL: 2678400, // 31 days
   },
   async headers() {
     return [

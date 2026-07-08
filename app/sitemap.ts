@@ -7,6 +7,7 @@ const homepageImages = [
   "/opengraph-image",
   "/headshot.jpg",
   "/hcltech-joining.jpg",
+  "/singapore-2024.jpg",
   "/cape-town-2023.jpg",
   "/gdg-devfest-2022.jpg",
   "/first-it-job-2022.jpg",

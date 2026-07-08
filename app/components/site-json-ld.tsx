@@ -12,6 +12,11 @@ const momentPhotos = [
       "Anand Thakkar on his first day as Senior Technical Lead at HCLTech, GIFT City, 2026",
   },
   {
+    path: "/singapore-2024.jpg",
+    caption:
+      "Anand Thakkar in front of the Buddha Tooth Relic Temple with Singapore's skyscrapers behind, 2024",
+  },
+  {
     path: "/cape-town-2023.jpg",
     caption:
       "Anand Thakkar at the Cape of Good Hope, the most south-western point of the African continent, Cape Town, 2023",

@@ -10,6 +10,7 @@ const NAV_SECTIONS = [
   { href: "#about", label: "About" },
   { href: "#now", label: "Now" },
   { href: "#journey", label: "Journey" },
+  { href: "#moments", label: "Moments" },
   { href: "#philosophy", label: "Beliefs" },
   { href: "#blog", label: "Writing" },
 ] as const;

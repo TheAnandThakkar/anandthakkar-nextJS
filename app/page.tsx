@@ -21,6 +21,10 @@ export const metadata: Metadata = {
 export default function Page() {
   return (
     <div className="relative">
+      {/* Hero background is a CSS background-image, invisible to the preload
+          scanner; preloading it directly improves LCP. React hoists this link
+          into <head>. */}
+      <link rel="preload" as="image" href="/anand_thakkar_bg.webp" />
 
       {/* ======= HERO ======= */}
       <section id="home" className="relative lg:min-h-screen flex flex-col lg:block overflow-hidden">

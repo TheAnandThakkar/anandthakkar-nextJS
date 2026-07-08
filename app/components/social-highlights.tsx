@@ -27,7 +27,7 @@ const highlights: LinkedInHighlight[] = [
     stats: [
       { icon: "impressions", label: "Impressions", value: "20K+" },
       { icon: "reactions", label: "Reactions", value: "50+" },
-      { icon: "recognition", label: "Recognized by", value: "Scaler" },
+      { icon: "recognition", label: "Recognition", value: "Scaler" },
     ],
   },
   {
@@ -115,11 +115,11 @@ export function SocialHighlights() {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    className="h-4 w-4 shrink-0"
+                    className="hidden h-4 w-4 shrink-0 sm:block"
                   >
                     {statIcons[stat.icon]}
                   </svg>
-                  <span className="text-[11px] font-semibold uppercase tracking-widest">
+                  <span className="whitespace-nowrap text-[10px] font-semibold uppercase tracking-wider sm:text-[11px] sm:tracking-widest">
                     {stat.label}
                   </span>
                 </span>
