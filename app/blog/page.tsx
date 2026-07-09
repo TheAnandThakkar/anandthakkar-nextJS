@@ -10,6 +10,9 @@ export const metadata: Metadata = {
     "Essays and technical notes, search by title and sort by date. Long-form voice on software, systems, and finance × technology.",
   alternates: {
     canonical: "/blog",
+    types: {
+      "application/rss+xml": "/rss.xml",
+    },
   },
 };
 

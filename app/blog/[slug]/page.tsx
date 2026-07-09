@@ -171,7 +171,7 @@ export default async function Blog({
               width={1200}
               height={630}
               className="w-full h-auto rounded-xl border border-neutral-200 dark:border-neutral-800"
-              priority={false}
+              priority
             />
           </div>
         )}

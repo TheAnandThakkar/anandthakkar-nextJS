@@ -45,6 +45,17 @@ const nextConfig = {
         source: "/:path*",
         headers: securityHeaders,
       },
+      {
+        // Static photos and icons in /public change by getting a new filename,
+        // so they can be cached for 30 days instead of revalidating every visit.
+        source: "/:all*(jpg|jpeg|png|webp|ico)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=2592000, stale-while-revalidate=86400",
+          },
+        ],
+      },
     ];
   },
 };

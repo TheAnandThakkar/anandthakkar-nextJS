@@ -59,6 +59,11 @@ export const metadata: Metadata = {
     "AnandHThakkar on YouTube",
   ],
   description: siteDescription,
+  alternates: {
+    types: {
+      "application/rss+xml": "/rss.xml",
+    },
+  },
   openGraph: {
     title: siteTitle,
     description: siteDescription,
