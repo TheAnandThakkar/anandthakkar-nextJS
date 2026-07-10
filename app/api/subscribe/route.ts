@@ -118,11 +118,18 @@ export async function POST(req: NextRequest) {
     const resend = new Resend(apiKey);
 
     if (AUDIENCE_ID) {
-      await resend.contacts.create({
+      // The SDK returns errors instead of throwing; surface them in the logs,
+      // otherwise a wrong audience id silently loses every subscriber.
+      const { error: contactError } = await resend.contacts.create({
         email,
         audienceId: AUDIENCE_ID,
         unsubscribed: false,
       });
+      if (contactError) {
+        console.error("resend.contacts.create failed:", contactError);
+      }
+    } else {
+      console.error("RESEND_AUDIENCE_ID is not set; subscriber not saved.");
     }
 
     await resend.emails.send({
