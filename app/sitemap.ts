@@ -23,7 +23,7 @@ export default async function sitemap() {
     lastModified: post.metadata.publishedAt,
   }));
 
-  const staticRoutes = ["", "/blog", "/about", "/moments"].map((route) => {
+  const staticRoutes = ["", "/blog", "/about", "/moments", "/subscribe"].map((route) => {
     const routeData = {
       url: `${baseUrl}${route}`,
       lastModified: new Date().toISOString().split("T")[0],

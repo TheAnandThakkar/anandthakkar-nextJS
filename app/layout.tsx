@@ -6,6 +6,7 @@ import { GeistMono } from "geist/font/mono";
 import Footer from "./components/footer";
 import { Navbar } from "./components/nav";
 import { SiteJsonLd } from "./components/site-json-ld";
+import { SubscribePopup } from "./components/subscribe-popup";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { baseUrl } from "./sitemap";
@@ -143,6 +144,7 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
+        <SubscribePopup />
         <Analytics />
         <SpeedInsights />
       </body>
