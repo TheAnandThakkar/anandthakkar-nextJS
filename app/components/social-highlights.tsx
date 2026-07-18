@@ -36,9 +36,9 @@ const highlights: LinkedInHighlight[] = [
       "“Delighted to join HCLTech as a Senior Technical Lead at GIFT City today!”",
     date: "July 2026",
     stats: [
-      { icon: "impressions", label: "Impressions", value: "15K+" },
+      { icon: "impressions", label: "Impressions", value: "30K+" },
       { icon: "comments", label: "Comments", value: "100+" },
-      { icon: "reactions", label: "Reactions", value: "300+" },
+      { icon: "reactions", label: "Reactions", value: "500+" },
     ],
   },
 ];
