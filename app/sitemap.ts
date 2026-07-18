@@ -6,6 +6,7 @@ export const baseUrl = "https://www.anandthakkar.com";
 const homepageImages = [
   "/opengraph-image",
   "/headshot.jpg",
+  "/hcltech-inauguration-2026.jpg",
   "/hcltech-joining.jpg",
   "/singapore-2024.jpg",
   "/cape-town-2023.jpg",

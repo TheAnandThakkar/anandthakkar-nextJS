@@ -7,6 +7,11 @@ import { baseUrl } from "app/sitemap";
 /** Milestone photos from the Moments section — declared so Google Images indexes them. */
 const momentPhotos = [
   {
+    path: "/hcltech-inauguration-2026.jpg",
+    caption:
+      "Anand Thakkar interacting with Shri Harsh Sanghavi, Deputy Chief Minister of Gujarat, at the inauguration of HCLTech's GIFT City campus, 2026",
+  },
+  {
     path: "/hcltech-joining.jpg",
     caption:
       "Anand Thakkar on his first day as Senior Technical Lead at HCLTech, GIFT City, 2026",

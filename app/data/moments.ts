@@ -8,6 +8,13 @@ export type Moment = {
 // Milestones in reverse-chronological order (latest first).
 export const moments: Moment[] = [
   {
+    src: "/hcltech-inauguration-2026.jpg",
+    alt: "Anand Thakkar interacting with Shri Harsh Sanghavi, Deputy Chief Minister of Gujarat, at the inauguration of HCLTech's GIFT City campus, 17th July 2026",
+    caption:
+      "Honoured to meet Shri Harsh Sanghavi, Hon'ble Deputy Chief Minister of Gujarat, during the inauguration of HCLTech's new campus at GIFT City, Gandhinagar. I had the opportunity to share my professional journey with him and welcome him to our new campus. I told him it is a privilege to be part of this campus, and that opportunities like this let many professionals build global careers while staying closer to their families. It was encouraging to hear his appreciation for that perspective. 17th July, 2026",
+    year: 2026,
+  },
+  {
     src: "/hcltech-joining.jpg",
     alt: "Anand Thakkar on his first day as Senior Technical Lead at HCLTech, GIFT City, 2026",
     caption: "Day one as Senior Technical Lead at HCLTech, GIFT City, 2026",
