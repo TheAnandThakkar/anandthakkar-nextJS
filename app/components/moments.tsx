@@ -5,6 +5,21 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { moments } from "app/data/moments";
 
+const MONTH_NAMES = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+] as const;
+
 type MomentsProps = {
   /** Show only the first N moments (newest first). Omit to show all. */
   limit?: number;
@@ -17,15 +32,32 @@ type MomentsProps = {
 export function Moments({ limit, showViewAll, showFilter }: MomentsProps = {}) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [year, setYear] = useState<string>("all");
+  const [month, setMonth] = useState<string>("all");
   const touchStartX = useRef<number | null>(null);
 
   const years = Array.from(new Set(moments.map((m) => m.year))).sort(
     (a, b) => b - a
   );
-  const filtered =
+
+  // Scope by year first; this set drives both the month options and the grid.
+  const byYear =
     showFilter && year !== "all"
       ? moments.filter((m) => m.year === Number(year))
       : moments;
+
+  // Distinct months present in the current year scope, chronological.
+  const availableMonths = Array.from(
+    new Set(
+      byYear
+        .filter((m) => typeof m.month === "number")
+        .map((m) => m.month as number)
+    )
+  ).sort((a, b) => a - b);
+
+  const filtered =
+    showFilter && month !== "all"
+      ? byYear.filter((m) => m.month === Number(month))
+      : byYear;
   const visible =
     typeof limit === "number" ? filtered.slice(0, limit) : filtered;
   const hasMore = Boolean(
@@ -67,29 +99,58 @@ export function Moments({ limit, showViewAll, showFilter }: MomentsProps = {}) {
     <>
       {showFilter && (
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="w-full sm:w-auto sm:min-w-[11rem]">
-            <label
-              htmlFor="moments-year"
-              className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400"
-            >
-              Year
-            </label>
-            <select
-              id="moments-year"
-              value={year}
-              onChange={(e) => {
-                setYear(e.target.value);
-                setActiveIndex(null);
-              }}
-              className="w-full cursor-pointer rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm text-neutral-900 shadow-sm outline-none transition-colors focus:border-magenta focus:ring-2 focus:ring-magenta/20 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white"
-            >
-              <option value="all">All years</option>
-              {years.map((y) => (
-                <option key={y} value={y}>
-                  {y}
-                </option>
-              ))}
-            </select>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end">
+            <div className="w-full sm:w-auto sm:min-w-[10rem]">
+              <label
+                htmlFor="moments-year"
+                className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400"
+              >
+                Year
+              </label>
+              <select
+                id="moments-year"
+                value={year}
+                onChange={(e) => {
+                  setYear(e.target.value);
+                  setMonth("all");
+                  setActiveIndex(null);
+                }}
+                className="w-full cursor-pointer rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm text-neutral-900 shadow-sm outline-none transition-colors focus:border-magenta focus:ring-2 focus:ring-magenta/20 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white"
+              >
+                <option value="all">All years</option>
+                {years.map((y) => (
+                  <option key={y} value={y}>
+                    {y}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="w-full sm:w-auto sm:min-w-[10rem]">
+              <label
+                htmlFor="moments-month"
+                className="mb-1.5 block text-xs font-semibold uppercase tracking-wider text-neutral-500 dark:text-neutral-400"
+              >
+                Month
+              </label>
+              <select
+                id="moments-month"
+                value={month}
+                onChange={(e) => {
+                  setMonth(e.target.value);
+                  setActiveIndex(null);
+                }}
+                disabled={availableMonths.length === 0}
+                className="w-full cursor-pointer rounded-xl border border-neutral-200 bg-white px-4 py-2.5 text-sm text-neutral-900 shadow-sm outline-none transition-colors focus:border-magenta focus:ring-2 focus:ring-magenta/20 disabled:cursor-not-allowed disabled:opacity-60 dark:border-neutral-700 dark:bg-neutral-900 dark:text-white"
+              >
+                <option value="all">All months</option>
+                {availableMonths.map((m) => (
+                  <option key={m} value={m}>
+                    {MONTH_NAMES[m - 1]}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
           <p className="text-sm text-neutral-500 dark:text-neutral-400">
             Showing{" "}
@@ -296,7 +357,10 @@ export function Moments({ limit, showViewAll, showFilter }: MomentsProps = {}) {
                   Anand Thakkar
                 </p>
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                  Moments · {active.year}
+                  Moments ·{" "}
+                  {typeof active.month === "number"
+                    ? `${MONTH_NAMES[active.month - 1]} ${active.year}`
+                    : active.year}
                 </p>
               </div>
             </div>
