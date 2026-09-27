@@ -3,19 +3,18 @@
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { SUBSCRIBED_KEY, useSubscribe } from "app/lib/use-subscribe";
 
 const SESSION_KEY = "subscribe-popup-shown";
-const SUBSCRIBED_KEY = "subscribed";
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-type State = "idle" | "loading" | "success" | "error";
+/** Show once the reader is this far through the page... */
+const SCROLL_TRIGGER = 0.5;
+/** ...or after this long on the page, whichever comes first. */
+const TIME_TRIGGER_MS = 25_000;
 
 export function SubscribePopup() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [email, setEmail] = useState("");
-  const [state, setState] = useState<State>("idle");
-  const [errorMsg, setErrorMsg] = useState("");
+  const { email, setEmail, state, errorMsg, handleSubmit } = useSubscribe();
 
   useEffect(() => {
     // Skip on the dedicated subscribe page, for subscribers, and if already
@@ -27,13 +26,38 @@ export function SubscribePopup() {
     } catch {
       return;
     }
-    const timer = setTimeout(() => {
+
+    let shown = false;
+    const show = () => {
+      if (shown) return;
+      shown = true;
+      cleanup();
       try {
         sessionStorage.setItem(SESSION_KEY, "1");
       } catch {}
       setOpen(true);
-    }, 4000);
-    return () => clearTimeout(timer);
+    };
+
+    let frame = 0;
+    const check = () => {
+      frame = 0;
+      const scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
+      if (scrollable > 0 && window.scrollY / scrollable >= SCROLL_TRIGGER) show();
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(check);
+    };
+
+    const timer = setTimeout(show, TIME_TRIGGER_MS);
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    function cleanup() {
+      clearTimeout(timer);
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+    }
+    return cleanup;
   }, [pathname]);
 
   useEffect(() => {
@@ -45,40 +69,14 @@ export function SubscribePopup() {
     return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
-  if (!open) return null;
+  // Auto-close after a successful signup; cleared if the popup unmounts first.
+  useEffect(() => {
+    if (state !== "success") return;
+    const t = setTimeout(() => setOpen(false), 2600);
+    return () => clearTimeout(t);
+  }, [state]);
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    const trimmed = email.trim();
-    if (!EMAIL_RE.test(trimmed)) {
-      setErrorMsg("Please enter a valid email address.");
-      setState("error");
-      return;
-    }
-    setState("loading");
-    setErrorMsg("");
-    try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: trimmed }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setErrorMsg(data.error ?? "Something went wrong.");
-        setState("error");
-        return;
-      }
-      setState("success");
-      try {
-        localStorage.setItem(SUBSCRIBED_KEY, "1");
-      } catch {}
-      setTimeout(() => setOpen(false), 2600);
-    } catch {
-      setErrorMsg("Could not connect. Please try again.");
-      setState("error");
-    }
-  }
+  if (!open) return null;
 
   return (
     <div

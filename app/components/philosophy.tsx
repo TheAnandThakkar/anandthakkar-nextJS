@@ -27,9 +27,9 @@ export function Philosophy() {
       {beliefs.map((belief) => (
         <div
           key={belief.number}
-          className="card p-6 sm:p-8 flex flex-col gap-3"
+          className="rounded-2xl border border-neutral-200 bg-neutral-50 p-6 sm:p-8 flex flex-col gap-3 dark:border-neutral-800 dark:bg-neutral-950"
         >
-          <span className="text-3xl font-black text-magenta/20 dark:text-magenta/15 leading-none select-none">
+          <span className="text-3xl font-black text-magenta/45 dark:text-magenta/60 leading-none select-none">
             {belief.number}
           </span>
           <h3 className="text-lg font-bold text-neutral-900 dark:text-white leading-snug">

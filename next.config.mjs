@@ -33,7 +33,11 @@ const securityHeaders = [
 ];
 
 const nextConfig = {
+  poweredByHeader: false,
   images: {
+    // AVIF is typically 20-30% smaller than WebP for photos; browsers that
+    // don't support it fall back to WebP automatically.
+    formats: ["image/avif", "image/webp"],
     qualities: [75, 85],
     // All images are self-hosted; photos only change by getting a new filename,
     // so optimized variants can be cached long-term.

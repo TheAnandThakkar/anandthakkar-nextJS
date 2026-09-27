@@ -48,7 +48,7 @@ function Table({ data }) {
 }
 
 function CustomLink(props) {
-  const href = props.href
+  const href: string = props.href ?? ''
 
   if (href.startsWith('/')) {
     return (
@@ -209,13 +209,24 @@ function DownloadButton({ href, label = "FREE PDF DOWNLOAD" }: { href: string; l
 }
 
 function Code({ children, ...props }) {
+  if (typeof children !== 'string') return <code {...props}>{children}</code>
   const codeHTML = highlight(children)
   return <code dangerouslySetInnerHTML={{ __html: codeHTML }} {...props} />
 }
 
-function slugify(str) {
+/** Plain text of a React node, so headings containing `code`, links or emphasis get a real id. */
+function textOf(node: React.ReactNode): string {
+  if (node == null || typeof node === 'boolean') return ''
+  if (typeof node === 'string' || typeof node === 'number') return String(node)
+  if (Array.isArray(node)) return node.map(textOf).join('')
+  if (React.isValidElement<{ children?: React.ReactNode }>(node)) {
+    return textOf(node.props.children)
+  }
+  return ''
+}
+
+function slugify(str: string) {
   return str
-    .toString()
     .toLowerCase()
     .trim() // Remove whitespace from both ends of a string
     .replace(/\s+/g, '-') // Replace spaces with -
@@ -226,7 +237,7 @@ function slugify(str) {
 
 function createHeading(level) {
   const Heading = ({ children }) => {
-    const slug = slugify(children)
+    const slug = slugify(textOf(children))
     return React.createElement(
       `h${level}`,
       { id: slug },
@@ -266,7 +277,7 @@ export function CustomMDX(props) {
   return (
     <MDXRemote
       {...props}
-      components={{ ...components, ...(props.components || {}) }}
+      components={props.components ? { ...components, ...props.components } : components}
     />
   )
 }

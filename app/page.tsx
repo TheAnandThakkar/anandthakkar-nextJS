@@ -9,6 +9,8 @@ import { Moments } from "./components/moments";
 import { Subscribe } from "./components/subscribe";
 import { SectionHeading } from "./components/section-heading";
 import { SocialHighlights } from "./components/social-highlights";
+import { CONTACT_MAILTO } from "./lib/site";
+import { moments } from "./data/moments";
 import type { Metadata } from "next";
 
 export const revalidate = 86400;
@@ -136,12 +138,12 @@ export default function Page() {
             title="Moments"
             subtitle="Glimpses from the journey, on and off the screen."
           />
-          <Moments limit={6} showViewAll />
+          <Moments items={moments.slice(0, 6)} total={moments.length} showViewAll />
         </div>
       </section>
 
       {/* ======= PHILOSOPHY ======= */}
-      <section id="philosophy" className="scroll-mt-12 py-8 sm:py-10 bg-neutral-50 dark:bg-neutral-950">
+      <section id="philosophy" className="scroll-mt-12 py-8 sm:py-10 bg-white dark:bg-neutral-900">
         <div className="container-main">
           <SectionHeading
             accent="violet"
@@ -165,7 +167,7 @@ export default function Page() {
       </section>
 
       {/* ======= SOCIAL HIGHLIGHTS ======= */}
-      <section id="social" className="scroll-mt-12 py-8 sm:py-10 bg-white dark:bg-neutral-900 border-t border-neutral-100 dark:border-neutral-800">
+      <section id="social" className="scroll-mt-12 py-8 sm:py-10 bg-white dark:bg-neutral-900">
         <div className="container-main">
           <SectionHeading
             accent="magenta"
@@ -177,7 +179,7 @@ export default function Page() {
       </section>
 
       {/* ======= SUBSCRIBE ======= */}
-      <section id="subscribe" className="scroll-mt-12 py-12 sm:py-16 bg-white dark:bg-neutral-900 border-t border-neutral-100 dark:border-neutral-800">
+      <section id="subscribe" className="scroll-mt-12 py-12 sm:py-16 bg-neutral-50 dark:bg-neutral-950">
         <div className="container-main text-center">
           <h2 className="section-title mb-2">Follow the Journey</h2>
           <p className="section-subtitle mx-auto mb-8">When I write something worth reading, I&apos;ll send it your way.</p>
@@ -186,14 +188,14 @@ export default function Page() {
       </section>
 
       {/* ======= FOOTER CTA ======= */}
-      <section id="contact" className="scroll-mt-12 py-16 bg-neutral-50 dark:bg-neutral-950 border-t border-neutral-100 dark:border-neutral-900">
+      <section id="contact" className="scroll-mt-12 py-16 bg-white dark:bg-neutral-900">
         <div className="container-main text-center">
-          <h2 className="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white mb-4">Let&apos;s Shape What&apos;s Next</h2>
+          <h2 className="text-3xl sm:text-4xl font-bold text-navy dark:text-magenta mb-4">Let&apos;s Shape What&apos;s Next</h2>
           <p className="text-neutral-600 dark:text-neutral-400 max-w-lg mx-auto mb-8">
             The intersection of finance, AI, and software is evolving fast. If you&apos;re building something meaningful in that space, or just want to exchange ideas, let&apos;s connect.
           </p>
           <a
-            href="mailto:anand.thakkar@outlook.com?subject=Hello%20Anand"
+            href={CONTACT_MAILTO}
             className="btn-primary"
           >
             Let&apos;s Connect

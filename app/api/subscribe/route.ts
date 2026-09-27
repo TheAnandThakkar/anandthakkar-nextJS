@@ -1,8 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Resend } from "resend";
+import { baseUrl as SITE_URL, CONTACT_EMAIL, EMAIL_RE } from "app/lib/site";
 
 const AUDIENCE_ID = process.env.RESEND_AUDIENCE_ID ?? "";
-const SITE_URL = "https://www.anandthakkar.com";
+
+// One client per server instance, created on first use.
+let resendClient: Resend | null = null;
+function getResend(apiKey: string) {
+  resendClient ??= new Resend(apiKey);
+  return resendClient;
+}
 
 const welcomeEmailHtml = `<!DOCTYPE html>
 <html lang="en">
@@ -108,40 +115,58 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Service unavailable." }, { status: 503 });
   }
 
+  let email: string;
   try {
-    const { email } = await req.json();
+    const body = await req.json();
+    email = typeof body?.email === "string" ? body.email.trim().toLowerCase() : "";
+  } catch {
+    return NextResponse.json({ error: "Invalid email." }, { status: 400 });
+  }
 
-    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: "Invalid email." }, { status: 400 });
-    }
+  // 254 = max length of a valid address; also caps what we forward to Resend.
+  if (!email || email.length > 254 || !EMAIL_RE.test(email)) {
+    return NextResponse.json({ error: "Invalid email." }, { status: 400 });
+  }
 
-    const resend = new Resend(apiKey);
+  try {
+    const resend = getResend(apiKey);
 
-    if (AUDIENCE_ID) {
-      // The SDK returns errors instead of throwing; surface them in the logs,
-      // otherwise a wrong audience id silently loses every subscriber.
-      const { error: contactError } = await resend.contacts.create({
-        email,
-        audienceId: AUDIENCE_ID,
-        unsubscribed: false,
-      });
-      if (contactError) {
-        console.error("resend.contacts.create failed:", contactError);
-      }
-    } else {
+    // Saving the contact and sending the welcome email are independent,
+    // so run them concurrently instead of back to back.
+    const saveContact = AUDIENCE_ID
+      ? resend.contacts.create({ email, audienceId: AUDIENCE_ID, unsubscribed: false })
+      : Promise.resolve(null);
+    if (!AUDIENCE_ID) {
       console.error("RESEND_AUDIENCE_ID is not set; subscriber not saved.");
     }
 
-    await resend.emails.send({
-      from: "Anand Thakkar <hello@anandthakkar.com>",
-      replyTo: "anand.thakkar@outlook.com",
-      to: email,
-      subject: "Welcome to anandthakkar.com",
-      html: welcomeEmailHtml,
-    });
+    const [contactResult, sendResult] = await Promise.all([
+      saveContact,
+      resend.emails.send({
+        from: "Anand Thakkar <hello@anandthakkar.com>",
+        replyTo: CONTACT_EMAIL,
+        to: email,
+        subject: "Welcome to anandthakkar.com",
+        html: welcomeEmailHtml,
+      }),
+    ]);
+
+    // The SDK returns errors instead of throwing; surface them in the logs,
+    // otherwise a wrong audience id silently loses every subscriber.
+    if (contactResult?.error) {
+      console.error("resend.contacts.create failed:", contactResult.error);
+    }
+    if (sendResult.error) {
+      console.error("resend.emails.send failed:", sendResult.error);
+      // Still a success for the visitor if we saved them; only fail when both failed.
+      if (!AUDIENCE_ID || contactResult?.error) {
+        return NextResponse.json({ error: "Something went wrong." }, { status: 502 });
+      }
+    }
 
     return NextResponse.json({ ok: true });
-  } catch {
+  } catch (e) {
+    console.error("[subscribe]", e);
     return NextResponse.json({ error: "Something went wrong." }, { status: 500 });
   }
 }

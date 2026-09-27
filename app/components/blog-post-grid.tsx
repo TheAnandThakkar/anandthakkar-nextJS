@@ -57,12 +57,14 @@ export function BlogPostGrid({
                   alt={post.metadata.title}
                   width={1920}
                   height={1080}
+                  // Cards are at most half of the 1024px container; without this
+                  // the browser downloads the full 1920/3840px variant per card.
+                  sizes="(min-width: 1024px) 496px, (min-width: 640px) 50vw, 100vw"
                   className={`aspect-video w-full rounded-xl transition-transform duration-200 group-hover:scale-[1.02] ${
                     imageDisplay === "contain"
                       ? "object-contain bg-neutral-100 dark:bg-neutral-900"
                       : "object-cover"
                   }`}
-                  priority={false}
                 />
                 {imageDisplay === "cover" && (
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-black/30 to-transparent rounded-b-xl" />
@@ -82,7 +84,7 @@ export function BlogPostGrid({
 
                 <div className="mt-4 flex items-center justify-between">
                   {dateStr && (
-                    <span className="block text-xs font-semibold text-magenta bg-magenta/10 px-2 py-0.5 rounded-sm">
+                    <span className="block text-xs font-medium text-neutral-500 dark:text-neutral-400">
                       {dateStr}
                     </span>
                   )}

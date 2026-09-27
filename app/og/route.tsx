@@ -2,7 +2,7 @@ import { ImageResponse } from 'next/og'
 
 export function GET(request: Request) {
   const url = new URL(request.url)
-  const title = url.searchParams.get('title') || 'Next.js Portfolio Starter'
+  const title = (url.searchParams.get('title') || 'Anand Thakkar').slice(0, 200)
 
   return new ImageResponse(
     (
@@ -17,6 +17,10 @@ export function GET(request: Request) {
     {
       width: 1200,
       height: 630,
+      // Output depends only on `title`, so let the CDN keep it.
+      headers: {
+        'Cache-Control': 'public, max-age=86400, s-maxage=31536000, stale-while-revalidate=86400',
+      },
     }
   )
 }

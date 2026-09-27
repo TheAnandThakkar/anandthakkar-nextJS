@@ -3,10 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CustomMDX } from "app/components/mdx";
-import { formatDate, getBlogPosts } from "app/blog/utils";
-import { baseUrl } from "app/sitemap";
+import { formatDate, getBlogPost, getBlogPosts } from "app/blog/utils";
+import { baseUrl } from "app/lib/site";
 import BackButton from "app/components/back-button";
 import SharePost from "app/components/share-post";
+
+// Every post is known at build time; unknown slugs 404 without a render.
+export const dynamicParams = false;
 
 // Build static paths for all posts
 export async function generateStaticParams() {
@@ -14,14 +17,13 @@ export async function generateStaticParams() {
   return posts.map((p) => ({ slug: p.slug }));
 }
 
-// 🔧 Await `params` here (Next 14.2.x can pass it as a Promise)
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const post = getBlogPosts().find((p) => p.slug === slug);
+  const post = getBlogPost(slug);
   if (!post) return {};
 
   const {
@@ -56,7 +58,6 @@ export async function generateMetadata({
   };
 }
 
-// 🔧 And await `params` here too
 export default async function Blog({
   params,
 }: {
@@ -64,21 +65,12 @@ export default async function Blog({
 }) {
   const { slug } = await params;
 
-  const allPosts = getBlogPosts();
-  const post = allPosts.find((p) => p.slug === slug);
+  const post = getBlogPost(slug);
   if (!post) notFound();
 
-  const relatedPosts = [...allPosts]
+  // getBlogPosts() is already newest-first.
+  const relatedPosts = getBlogPosts()
     .filter((p) => p.slug !== post.slug)
-    .sort((a, b) => {
-      const ta = a.metadata.publishedAt
-        ? new Date(a.metadata.publishedAt).getTime()
-        : 0;
-      const tb = b.metadata.publishedAt
-        ? new Date(b.metadata.publishedAt).getTime()
-        : 0;
-      return tb - ta;
-    })
     .slice(0, 3);
 
   const heroImageUrl = post.metadata.image
@@ -170,6 +162,7 @@ export default async function Blog({
               alt={post.metadata.title}
               width={1200}
               height={630}
+              sizes="(min-width: 768px) 768px, 100vw"
               className="w-full h-auto rounded-xl border border-neutral-200 dark:border-neutral-800"
               priority
             />

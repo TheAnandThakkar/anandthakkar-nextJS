@@ -1,5 +1,5 @@
 import { getBlogPosts } from "app/blog/utils";
-import { baseUrl } from "app/sitemap";
+import { baseUrl } from "app/lib/site";
 
 export const dynamic = "force-static";
 
@@ -13,13 +13,8 @@ function escapeXml(value: string): string {
 }
 
 export function GET() {
-  const posts = getBlogPosts()
-    .filter((post) => post.metadata.publishedAt)
-    .sort(
-      (a, b) =>
-        new Date(b.metadata.publishedAt).getTime() -
-        new Date(a.metadata.publishedAt).getTime()
-    );
+  // Already sorted newest-first by the loader.
+  const posts = getBlogPosts().filter((post) => post.metadata.publishedAt);
 
   const items = posts
     .map((post) => {

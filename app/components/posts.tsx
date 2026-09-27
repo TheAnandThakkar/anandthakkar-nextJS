@@ -1,9 +1,8 @@
 // app/components/posts.tsx
 import Link from "next/link";
 import { getBlogPosts } from "app/blog/utils";
-import { BlogPostGrid, type BlogPostItem } from "./blog-post-grid";
-
-type Blog = BlogPostItem;
+import { baseUrl } from "app/lib/site";
+import { BlogPostGrid } from "./blog-post-grid";
 
 type BlogPostsProps = {
   /** If set, only the first N posts (after newest-first sort) are shown. */
@@ -13,17 +12,8 @@ type BlogPostsProps = {
 };
 
 export function BlogPosts({ limit, showLoadMore }: BlogPostsProps = {}) {
-  const allBlogs = getBlogPosts() as Blog[];
-
-  const blogs = [...allBlogs].sort((a, b) => {
-    const ta = a.metadata.publishedAt
-      ? new Date(a.metadata.publishedAt).getTime()
-      : 0;
-    const tb = b.metadata.publishedAt
-      ? new Date(b.metadata.publishedAt).getTime()
-      : 0;
-    return tb - ta;
-  });
+  // Already sorted newest-first by the loader.
+  const blogs = getBlogPosts();
 
   const visible =
     typeof limit === "number" && limit > 0 ? blogs.slice(0, limit) : blogs;
@@ -47,16 +37,16 @@ export function BlogPosts({ limit, showLoadMore }: BlogPostsProps = {}) {
       "@type": "BlogPosting",
       headline: p.metadata.title,
       datePublished: p.metadata.publishedAt,
-      url: `https://www.anandthakkar.com/blog/${p.slug}`,
+      url: `${baseUrl}/blog/${p.slug}`,
       description: p.metadata.summary || p.metadata.description || "",
       author: { "@type": "Person", name: "Anand Thakkar" },
       image: p.metadata.image
-        ? `https://www.anandthakkar.com${p.metadata.image}`
+        ? `${baseUrl}${p.metadata.image}`
         : undefined,
     }));
 
   return (
-    <section id="blog">
+    <div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -102,6 +92,6 @@ export function BlogPosts({ limit, showLoadMore }: BlogPostsProps = {}) {
           </Link>
         </div>
       )}
-    </section>
+    </div>
   );
 }

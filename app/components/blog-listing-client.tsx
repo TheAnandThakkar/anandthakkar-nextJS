@@ -11,25 +11,19 @@ export function BlogListingClient({ posts }: Props) {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<"desc" | "asc">("desc");
 
+  // `posts` arrives newest-first from the server, so "oldest first" is just
+  // the reverse; no per-keystroke re-sorting or Date parsing needed.
+  const ordered = useMemo(
+    () => (sort === "desc" ? posts : [...posts].reverse()),
+    [posts, sort]
+  );
+
   const filtered = useMemo(() => {
-    if (posts.length === 0) return [];
     const q = query.trim().toLowerCase();
-    const list = q
-      ? posts.filter((p) => p.metadata.title.toLowerCase().includes(q))
-      : [...posts];
-
-    list.sort((a, b) => {
-      const ta = a.metadata.publishedAt
-        ? new Date(a.metadata.publishedAt).getTime()
-        : 0;
-      const tb = b.metadata.publishedAt
-        ? new Date(b.metadata.publishedAt).getTime()
-        : 0;
-      return sort === "desc" ? tb - ta : ta - tb;
-    });
-
-    return list;
-  }, [posts, query, sort]);
+    return q
+      ? ordered.filter((p) => p.metadata.title.toLowerCase().includes(q))
+      : ordered;
+  }, [ordered, query]);
 
   if (posts.length === 0) {
     return (

@@ -2,9 +2,7 @@
 
 import { useState } from "react";
 import { FaXTwitter, FaLinkedinIn, FaWhatsapp, FaLink } from "react-icons/fa6";
-// Matches baseUrl in app/sitemap.ts (not imported: that module pulls in fs,
-// which cannot be bundled into a client component).
-const baseUrl = "https://www.anandthakkar.com";
+import { baseUrl } from "app/lib/site";
 
 export default function SharePost({ title, slug }: { title: string; slug: string }) {
     const [copied, setCopied] = useState(false);

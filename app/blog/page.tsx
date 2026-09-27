@@ -1,4 +1,5 @@
 import { getBlogPosts } from "app/blog/utils";
+import { baseUrl } from "app/lib/site";
 import BackButton from "app/components/back-button";
 import { BlogListingClient } from "app/components/blog-listing-client";
 import type { BlogPostItem } from "app/components/blog-post-grid";
@@ -17,7 +18,11 @@ export const metadata: Metadata = {
 };
 
 export default function BlogPage() {
-  const posts = getBlogPosts() as BlogPostItem[];
+  // Only ship the fields the client grid needs, not the full MDX bodies.
+  const posts: BlogPostItem[] = getBlogPosts().map(({ slug, metadata }) => ({
+    slug,
+    metadata,
+  }));
 
   const jsonLd = posts
     .filter((p) => !!p.metadata.publishedAt)
@@ -26,11 +31,11 @@ export default function BlogPage() {
       "@type": "BlogPosting",
       headline: p.metadata.title,
       datePublished: p.metadata.publishedAt,
-      url: `https://www.anandthakkar.com/blog/${p.slug}`,
+      url: `${baseUrl}/blog/${p.slug}`,
       description: p.metadata.summary || p.metadata.description || "",
       author: { "@type": "Person", name: "Anand Thakkar" },
       image: p.metadata.image
-        ? `https://www.anandthakkar.com${p.metadata.image}`
+        ? `${baseUrl}${p.metadata.image}`
         : undefined,
     }));
 

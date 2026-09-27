@@ -3,15 +3,16 @@ import Image from "next/image";
 export function About() {
   return (
     <div className="max-w-4xl space-y-6">
-      {/* Portrait floats right; text wraps to the left across all breakpoints */}
-      <div className="float-right ml-5 mb-4 sm:ml-7 w-32 sm:w-48 lg:w-72">
+      {/* Portrait sits above the text on phones (a float would squeeze the copy
+          into a narrow column); from `sm` up it floats right and text wraps. */}
+      <div className="mx-auto mb-8 w-44 sm:float-right sm:mx-0 sm:mb-4 sm:ml-7 sm:w-48 lg:w-72">
         <div className="relative">
           <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-neutral-200 dark:border-neutral-800 shadow-sm">
             <Image
               src="/headshot.jpg"
               alt="Anand Thakkar"
               fill
-              sizes="(min-width: 1024px) 288px, (min-width: 640px) 192px, 128px"
+              sizes="(min-width: 1024px) 288px, (min-width: 640px) 192px, 176px"
               className="object-cover object-center"
             />
           </div>

@@ -3,11 +3,23 @@ import { ImageResponse } from "next/og";
 import { readFile } from "fs/promises";
 import path from "path";
 
-export async function socialImageResponse() {
-  const headshot = await readFile(
+// Read + base64-encode the headshot once per server instance; the OG and
+// Twitter image routes share it instead of hitting the disk on every render.
+let headshotSrcPromise: Promise<string> | null = null;
+function getHeadshotSrc() {
+  headshotSrcPromise ??= readFile(
     path.join(process.cwd(), "public", "headshot.jpg")
-  );
-  const headshotSrc = `data:image/jpeg;base64,${headshot.toString("base64")}`;
+  )
+    .then((buf) => `data:image/jpeg;base64,${buf.toString("base64")}`)
+    .catch((err) => {
+      headshotSrcPromise = null; // allow a retry on the next request
+      throw err;
+    });
+  return headshotSrcPromise;
+}
+
+export async function socialImageResponse() {
+  const headshotSrc = await getHeadshotSrc();
 
   return new ImageResponse(
     (

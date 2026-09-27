@@ -9,20 +9,41 @@ const DEDUPE_PREFIX = "visitor:dedupe:";
 
 const DEDUPE_TTL_SEC = 60 * 60 * 24 * 365 * 10; // 10 years
 
-function isRedisConfigured() {
-  return Boolean(process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN);
+const VISITOR_ID_RE = /^[a-zA-Z0-9-]{8,128}$/;
+
+// One client per server instance, created on first use (reused across warm invocations).
+let redisClient: Redis | null = null;
+
+function getRedis(): Redis | null {
+  if (!process.env.UPSTASH_REDIS_REST_URL || !process.env.UPSTASH_REDIS_REST_TOKEN) {
+    return null;
+  }
+  redisClient ??= Redis.fromEnv();
+  return redisClient;
 }
 
 function sanitizeVisitorId(raw: unknown): string | null {
-  if (typeof raw !== "string" || raw.length < 8 || raw.length > 128) return null;
-  if (!/^[a-zA-Z0-9-]+$/.test(raw)) return null;
-  return raw;
+  return typeof raw === "string" && VISITOR_ID_RE.test(raw) ? raw : null;
 }
 
+function toCount(raw: unknown): number {
+  if (typeof raw === "number") return raw;
+  return raw != null ? parseInt(String(raw), 10) || 0 : 0;
+}
+
+const notConfigured = () => NextResponse.json({ count: null, configured: false as const });
+
+const failed = (e: unknown) => {
+  console.error("[visitors]", e);
+  return NextResponse.json(
+    { count: null, configured: true as const, error: true as const },
+    { status: 500 }
+  );
+};
+
 export async function POST(request: Request) {
-  if (!isRedisConfigured()) {
-    return NextResponse.json({ count: null, configured: false as const });
-  }
+  const redis = getRedis();
+  if (!redis) return notConfigured();
 
   let body: { visitorId?: unknown } = {};
   try {
@@ -36,40 +57,32 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "visitorId required" as const }, { status: 400 });
   }
 
-  const redis = Redis.fromEnv();
-
   try {
-    const dedupeKey = `${DEDUPE_PREFIX}${visitorId}`;
-    const firstTime = await redis.set(dedupeKey, "1", { nx: true, ex: DEDUPE_TTL_SEC });
+    // Dedupe check and current total in ONE round trip. Returning visitors
+    // (the common case) are done after this; first-timers need one more INCR,
+    // whose return value is the new total, so no extra GET is needed.
+    const [firstTime, current] = await redis
+      .pipeline()
+      .set(`${DEDUPE_PREFIX}${visitorId}`, "1", { nx: true, ex: DEDUPE_TTL_SEC })
+      .get<string | number>(VISITOR_KEY)
+      .exec<[string | null, string | number | null]>();
 
-    if (firstTime) {
-      await redis.incr(VISITOR_KEY);
-    }
-
-    const raw = await redis.get<string | number>(VISITOR_KEY);
-    const count =
-      typeof raw === "number" ? raw : raw != null ? parseInt(String(raw), 10) || 0 : 0;
+    const count = firstTime ? await redis.incr(VISITOR_KEY) : toCount(current);
 
     return NextResponse.json({ count, configured: true as const });
   } catch (e) {
-    console.error("[visitors]", e);
-    return NextResponse.json({ count: null, configured: true as const, error: true as const }, { status: 500 });
+    return failed(e);
   }
 }
 
 export async function GET() {
-  if (!isRedisConfigured()) {
-    return NextResponse.json({ count: null, configured: false as const });
-  }
+  const redis = getRedis();
+  if (!redis) return notConfigured();
 
   try {
-    const redis = Redis.fromEnv();
-    const raw = await redis.get<string | number>(VISITOR_KEY);
-    const count =
-      typeof raw === "number" ? raw : raw != null ? parseInt(String(raw), 10) || 0 : 0;
+    const count = toCount(await redis.get<string | number>(VISITOR_KEY));
     return NextResponse.json({ count, configured: true as const });
   } catch (e) {
-    console.error("[visitors]", e);
-    return NextResponse.json({ count: null, configured: true as const, error: true as const }, { status: 500 });
+    return failed(e);
   }
 }

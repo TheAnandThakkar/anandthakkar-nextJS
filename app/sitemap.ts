@@ -1,6 +1,8 @@
 import { getBlogPosts } from "app/blog/utils";
+import { baseUrl } from "app/lib/site";
 
-export const baseUrl = "https://www.anandthakkar.com";
+// Re-exported for existing imports; prefer importing from `app/lib/site`.
+export { baseUrl };
 
 /** Homepage images declared for Google Images indexing (headshot + Moments photos). */
 const homepageImages = [
@@ -23,10 +25,12 @@ export default async function sitemap() {
     lastModified: post.metadata.publishedAt,
   }));
 
+  const today = new Date().toISOString().split("T")[0];
+
   const staticRoutes = ["", "/blog", "/about", "/moments", "/subscribe"].map((route) => {
     const routeData = {
       url: `${baseUrl}${route}`,
-      lastModified: new Date().toISOString().split("T")[0],
+      lastModified: today,
     };
 
     // Declare the photos on both pages that display them.

@@ -1,4 +1,4 @@
-import { baseUrl } from "app/sitemap";
+import { baseUrl } from "app/lib/site";
 
 /**
  * Person + WebSite + ImageObject JSON-LD for Google rich results.

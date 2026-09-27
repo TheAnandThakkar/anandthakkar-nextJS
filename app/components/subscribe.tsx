@@ -1,41 +1,9 @@
 "use client";
 
-import { useState } from "react";
-
-type State = "idle" | "loading" | "success" | "error";
+import { useSubscribe } from "app/lib/use-subscribe";
 
 export function Subscribe() {
-  const [email, setEmail] = useState("");
-  const [state, setState] = useState<State>("idle");
-  const [errorMsg, setErrorMsg] = useState("");
-
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    setState("loading");
-    setErrorMsg("");
-
-    try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setErrorMsg(data.error ?? "Something went wrong.");
-        setState("error");
-        return;
-      }
-
-      setState("success");
-      setEmail("");
-    } catch {
-      setErrorMsg("Could not connect. Please try again.");
-      setState("error");
-    }
-  }
+  const { email, setEmail, state, errorMsg, handleSubmit } = useSubscribe();
 
   if (state === "success") {
     return (

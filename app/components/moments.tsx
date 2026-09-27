@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { moments } from "app/data/moments";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { Moment } from "app/data/moments";
 
 const MONTH_NAMES = [
   "January",
@@ -21,48 +21,61 @@ const MONTH_NAMES = [
 ] as const;
 
 type MomentsProps = {
-  /** Show only the first N moments (newest first). Omit to show all. */
-  limit?: number;
+  /**
+   * Moments to render (newest first). Passed from a server component so the
+   * full data set isn't bundled into client JS; the home page only sends the
+   * few it shows.
+   */
+  items: Moment[];
+  /** Total number of moments that exist (defaults to `items.length`). */
+  total?: number;
   /** Show the "view all" card when there are more moments than the limit. */
   showViewAll?: boolean;
   /** Show the year filter dropdown (used on the /moments gallery page). */
   showFilter?: boolean;
 };
 
-export function Moments({ limit, showViewAll, showFilter }: MomentsProps = {}) {
+export function Moments({ items, total = items.length, showViewAll, showFilter }: MomentsProps) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const [year, setYear] = useState<string>("all");
   const [month, setMonth] = useState<string>("all");
   const touchStartX = useRef<number | null>(null);
 
-  const years = Array.from(new Set(moments.map((m) => m.year))).sort(
-    (a, b) => b - a
+  const years = useMemo(
+    () => Array.from(new Set(items.map((m) => m.year))).sort((a, b) => b - a),
+    [items]
   );
 
   // Scope by year first; this set drives both the month options and the grid.
-  const byYear =
-    showFilter && year !== "all"
-      ? moments.filter((m) => m.year === Number(year))
-      : moments;
+  const byYear = useMemo(
+    () =>
+      showFilter && year !== "all"
+        ? items.filter((m) => m.year === Number(year))
+        : items,
+    [items, showFilter, year]
+  );
 
   // Distinct months present in the current year scope, chronological.
-  const availableMonths = Array.from(
-    new Set(
-      byYear
-        .filter((m) => typeof m.month === "number")
-        .map((m) => m.month as number)
-    )
-  ).sort((a, b) => a - b);
-
-  const filtered =
-    showFilter && month !== "all"
-      ? byYear.filter((m) => m.month === Number(month))
-      : byYear;
-  const visible =
-    typeof limit === "number" ? filtered.slice(0, limit) : filtered;
-  const hasMore = Boolean(
-    showViewAll && typeof limit === "number" && moments.length > limit
+  const availableMonths = useMemo(
+    () =>
+      Array.from(
+        new Set(
+          byYear
+            .filter((m) => typeof m.month === "number")
+            .map((m) => m.month as number)
+        )
+      ).sort((a, b) => a - b),
+    [byYear]
   );
+
+  const visible = useMemo(
+    () =>
+      showFilter && month !== "all"
+        ? byYear.filter((m) => m.month === Number(month))
+        : byYear,
+    [byYear, showFilter, month]
+  );
+  const hasMore = Boolean(showViewAll && total > items.length);
 
   const close = useCallback(() => setActiveIndex(null), []);
 
@@ -159,7 +172,7 @@ export function Moments({ limit, showViewAll, showFilter }: MomentsProps = {}) {
             </span>{" "}
             of{" "}
             <span className="font-semibold text-neutral-900 dark:text-white">
-              {moments.length}
+              {total}
             </span>{" "}
             moments
           </p>
@@ -209,7 +222,7 @@ export function Moments({ limit, showViewAll, showFilter }: MomentsProps = {}) {
           <Link
             href="/moments"
             className="group relative flex flex-col gap-4 overflow-hidden rounded-2xl border border-neutral-200/90 bg-gradient-to-br from-white via-white to-neutral-50/90 p-5 shadow-sm transition-all duration-300 hover:border-magenta/30 hover:shadow-md dark:border-neutral-800 dark:from-neutral-900 dark:via-neutral-900 dark:to-neutral-950/90 dark:hover:border-magenta/35 sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:p-6"
-            aria-label={`View all moments. Showing ${visible.length} of ${moments.length} on the home page.`}
+            aria-label={`View all moments. Showing ${visible.length} of ${total} on the home page.`}
           >
             <div
               className="pointer-events-none absolute -right-12 -top-12 h-40 w-40 rounded-full bg-magenta/[0.06] opacity-0 blur-2xl transition-opacity duration-300 group-hover:opacity-100 dark:bg-magenta/10"
@@ -221,7 +234,7 @@ export function Moments({ limit, showViewAll, showFilter }: MomentsProps = {}) {
               </p>
               <p className="mt-1.5 text-sm leading-snug text-neutral-600 dark:text-neutral-300">
                 You&apos;re seeing the latest {visible.length} of{" "}
-                {moments.length} moments, continue to the gallery for every
+                {total} moments, continue to the gallery for every
                 photo.
               </p>
             </div>

@@ -4,7 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { scrollToSectionId } from "app/lib/scroll";
+import { NAVBAR_HEIGHT_PX, scrollToSectionId } from "app/lib/scroll";
+import { CONTACT_MAILTO } from "app/lib/site";
 
 const NAV_SECTIONS = [
   { href: "#about", label: "About" },
@@ -16,7 +17,7 @@ const NAV_SECTIONS = [
 ] as const;
 
 const SECTION_IDS = NAV_SECTIONS.map((s) => s.href.replace("#", ""));
-const CONTACT_HREF = "mailto:anand.thakkar@outlook.com?subject=Hello%20Anand";
+const CONTACT_HREF = CONTACT_MAILTO;
 
 function navItemClass(active: boolean) {
   return `px-3 lg:px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
@@ -56,24 +57,34 @@ export function Navbar() {
       return;
     }
 
+    // Look the sections up once instead of on every scroll event.
+    const sections = SECTION_IDS.map((id) => document.getElementById(id)).filter(
+      (el): el is HTMLElement => el !== null
+    );
+
+    let frame = 0;
     const updateActive = () => {
-      const navH = 48;
-      const marker = window.scrollY + navH + 120;
+      frame = 0;
+      const marker = window.scrollY + NAVBAR_HEIGHT_PX + 120;
       let current: string | null = null;
-      for (const id of SECTION_IDS) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        if (el.offsetTop <= marker) current = id;
+      for (const el of sections) {
+        if (el.offsetTop <= marker) current = el.id;
       }
       setActiveSectionId(current);
     };
 
+    // Coalesce scroll/resize bursts into at most one layout read per frame.
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(updateActive);
+    };
+
     updateActive();
-    window.addEventListener("scroll", updateActive, { passive: true });
-    window.addEventListener("resize", updateActive, { passive: true });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
     return () => {
-      window.removeEventListener("scroll", updateActive);
-      window.removeEventListener("resize", updateActive);
+      if (frame) cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, [isHome]);
 

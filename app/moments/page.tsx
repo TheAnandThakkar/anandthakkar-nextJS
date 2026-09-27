@@ -1,7 +1,7 @@
 import BackButton from "app/components/back-button";
 import { Moments } from "app/components/moments";
 import { moments } from "app/data/moments";
-import { baseUrl } from "app/sitemap";
+import { baseUrl } from "app/lib/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -43,7 +43,7 @@ export default function MomentsPage() {
           City. Click any photo to see it full screen.
         </p>
 
-        <Moments showFilter />
+        <Moments items={moments} showFilter />
       </div>
     </section>
   );

@@ -9,7 +9,7 @@ import { SiteJsonLd } from "./components/site-json-ld";
 import { SubscribePopup } from "./components/subscribe-popup";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { baseUrl } from "./sitemap";
+import { baseUrl } from "./lib/site";
 
 const siteTitle = "Anand Thakkar - Building at the Intersection of Finance & Tech";
 const siteDescription =
